@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
+use App\Models\Poi;
+use App\Models\Path;
 
 class User extends Authenticatable
 {
@@ -17,7 +20,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'pseudo',
+        'role',
+        'organization',
+        'firstname',
+        'lastname',
+        'phone',
         'email',
         'password',
     ];
@@ -43,5 +51,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the roles associated with the user.
+     */
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Get the pois visited by the user.
+     */
+    public function pois() {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Get the paths visited by the user.
+     */
+    public function paths() {
+        return $this->belongsToMany(Role::class);
     }
 }
