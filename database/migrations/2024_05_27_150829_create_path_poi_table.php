@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('path_poi', function (Blueprint $table) {
             $table->id();
+            $table->integer('position')->unsigned();
             $table->bigInteger('path_id')->unsigned();
             $table->bigInteger('poi_id')->unsigned();
             $table->foreign('path_id')->references('id')->on('paths')

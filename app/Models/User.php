@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
 use App\Models\Poi;
 use App\Models\Path;
+use App\Models\Review;
+use App\Models\PoiHistory;
+use App\Models\PathHistory;
+use App\Models\Achievement;
 
 class User extends Authenticatable
 {
@@ -73,4 +77,39 @@ class User extends Authenticatable
     public function paths() {
         return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Get the reviews written by the user.
+     */
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the poi_histories for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function poiHistories() {
+        return $this->hasMany(PoiHistory::class);
+    }
+
+    /**
+     * Get the path_histories for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pathHistories() {
+        return $this->hasMany(PathHistory::class);
+    }
+
+    /**
+     * Get the achievements for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function getAchievements() {
+        return $this->hasMany(Achievement::class);
+    }
+
 }
