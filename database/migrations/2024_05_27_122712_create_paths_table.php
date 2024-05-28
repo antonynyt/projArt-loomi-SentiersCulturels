@@ -23,6 +23,11 @@ return new class extends Migration
             $table->string('difficulty');
             $table->boolean('is_handicap_accessible')->default(false);
             $table->json('geojson');
+            $table->foreignId('theme_id')
+                ->references('id')
+                ->on('themes')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
     }

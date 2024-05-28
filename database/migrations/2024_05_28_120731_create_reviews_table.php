@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->integer('rating')->unsigned();
             $table->foreignId('path_id')
                 ->references('id')
                 ->on('paths')
