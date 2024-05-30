@@ -47,11 +47,11 @@ onMounted(() => {
 
     watch(() => path.value, (newPath) => {
         console.log(newPath)
-        map.getSource('path').setData(newPath);
+        map.value.getSource('path').setData(newPath);
     });
 
     watch(() => props.poi, (newPOI) => {
-        map.getSource('POI').setData(newPOI);
+        map.value.getSource('POI').setData(newPOI);
     });
 
     map.value.on('load', async () => {
