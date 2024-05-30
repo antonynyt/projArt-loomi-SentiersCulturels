@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, watch } from 'vue';
-import { Map, NavigationControl, GeolocateControl, Popup, Marker, addImage } from 'maplibre-gl';
+import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { onUnmounted } from 'vue';
 import { ref, shallowRef, markRaw } from 'vue';
+
 const props = defineProps({
     path: {
         type: String,
