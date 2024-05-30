@@ -12,8 +12,17 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                'off-white': '#FAF9F6',
+                'midnight-blue': '#101720',
+                'green': '#B5F9BB',
+                'blue': '#B5F5F9',
+                'beige': '#FFEED6',
+                'purple': '#9747FF',
+                'red': '#F59F99',
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['PPAvenir', ...defaultTheme.fontFamily.sans],
             },
         },
     },

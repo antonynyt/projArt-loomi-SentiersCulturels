@@ -1,6 +1,5 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
 
 const props = defineProps({
     label: {
@@ -13,13 +12,25 @@ const props = defineProps({
     },
 });
 
-const active = ref(false);
-
 </script>
 
+
 <template>
-    <Link :href class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" :aria-label="props.label"> 
+    <Link :href class="inline-flex flex-col font-normal items-center justify-center text-midnight-blue px-5 hover:bg-gray-50" :aria-label="props.label" :class="{ 'active': $page.url === props.href }" > 
         <slot />
-        <span class="text-sm mt-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{{ props.label }}</span>
+        <span class="text-sm mt-1">{{ props.label }}</span>
     </Link>
 </template>
+<style>
+
+.active svg[data-filled] {
+    visibility: visible;
+    display: block;
+}
+
+.active svg[data-outlined], svg[data-filled] {
+    visibility: hidden;
+    display: none;
+}
+
+</style>
