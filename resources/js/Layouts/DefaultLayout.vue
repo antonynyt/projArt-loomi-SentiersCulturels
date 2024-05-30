@@ -1,6 +1,5 @@
 <script setup>
 import NavBar from '@/Components/NavBar.vue';
-import SearchBar from '@/Components/SearchBar.vue';
 </script>
 
 <template>

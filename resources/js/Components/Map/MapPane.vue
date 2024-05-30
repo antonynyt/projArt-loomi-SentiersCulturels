@@ -3,7 +3,7 @@ import { onMounted, watch } from 'vue';
 import { Map, NavigationControl, GeolocateControl, Popup, Marker, addImage } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { onUnmounted } from 'vue';
-import { ref } from 'vue';
+import { ref, shallowRef, markRaw } from 'vue';
 const props = defineProps({
     path: {
         type: String,
@@ -30,18 +30,19 @@ const switzerlandBounds = [
     [10.5, 47.8] // Northeast coordinates
 ];
 
-let map;
+const mapContainer = shallowRef(null);
+const map = shallowRef(null);
 
 onMounted(() => {
-    map = new Map({
-        container: 'map',
+    map.value = markRaw(new Map({
+        container: mapContainer.value,
         style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
         // style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json',
         center: [6.6, 46.6], //centrer sur Vaud
         minZoom: 8,
         zoom: 10,
         maxBounds: switzerlandBounds,
-    });
+    }));
 
     watch(() => path.value, (newPath) => {
         console.log(newPath)
@@ -52,16 +53,16 @@ onMounted(() => {
         map.getSource('POI').setData(newPOI);
     });
 
-    map.on('load', async () => {
+    map.value.on('load', async () => {
 
         // if path add path on the map
         
-        map.addSource('path', {
+        map.value.addSource('path', {
             type: 'geojson',
             data: path,
         });
     
-        map.addLayer({
+        map.value.addLayer({
             'id': 'path',
             'type': 'line',
             'source': 'path',
@@ -77,21 +78,21 @@ onMounted(() => {
 
         //Source: https://www.jawg.io/docs/integration/maplibre-gl-js/cluster/#11.08/48.8686/2.2959
         //TODO: Changer les icones
-        const treeCluster = await map.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree-cluster.png")
-        map.addImage("tree-cluster", treeCluster.data);
+        const treeCluster = await map.value.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree-cluster.png")
+        map.value.addImage("tree-cluster", treeCluster.data);
 
-        const tree = await map.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree.png")
-        map.addImage("tree", tree.data);
+        const tree = await map.value.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree.png")
+        map.value.addImage("tree", tree.data);
 
         // add path POIs on the map
-        map.addSource('pathPoints', {
+        map.value.addSource('pathPoints', {
             type: 'geojson',
             data: props.poi,
             cluster: true,
             clusterRadius: 50
         });
 
-        map.addLayer({
+        map.value.addLayer({
             id: "point-label",
             type: "symbol",
             source: "pathPoints",
@@ -112,7 +113,7 @@ onMounted(() => {
             },
         });
 
-        map.addLayer({
+        map.value.addLayer({
             id: "pathPoint",
             type: "symbol",
             source: "pathPoints",
@@ -142,12 +143,12 @@ onMounted(() => {
             },
         });
 
-        map.on("click", "pathPoint", async (e) => {
+        map.value.on("click", "pathPoint", async (e) => {
             const feature = e.features[0];
             const clusterId = feature.properties.cluster_id;
             if (clusterId) {
-                const zoom = await map.getSource("pathPoints").getClusterExpansionZoom(clusterId)
-                map.easeTo({
+                const zoom = await map.value.getSource("pathPoints").getClusterExpansionZoom(clusterId)
+                map.value.easeTo({
                     center: feature.geometry.coordinates,
                     zoom: zoom + 0.5,
                 });
@@ -163,7 +164,7 @@ onMounted(() => {
 
     // Fly to specific location
     if (props.options.flyTo) {
-        map.flyTo({
+        map.value.flyTo({
             center: props.options.flyTo,
             zoom: 15
         });
@@ -171,7 +172,7 @@ onMounted(() => {
 
     //Navigation options
     if (props.options.controls) {
-        map.addControl(new NavigationControl(), 'bottom-right')
+        map.value.addControl(new NavigationControl(), 'bottom-right')
     }
 
     const geoLocation = new GeolocateControl({
@@ -181,7 +182,7 @@ onMounted(() => {
         trackUserLocation: true
     })
 
-    map.addControl(geoLocation, 'bottom-right')
+    map.value.addControl(geoLocation, 'bottom-right')
 
     // Fly to user location
     if (props.options.flyToUserLocation) {
@@ -192,12 +193,20 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    map.remove();
+    map.value?.remove();
 });
 
 </script>
 
+<template>
+    <div ref="mapContainer" class="w-full h-full"></div>
+</template>
+
 <style>
+.maplibregl-canvas:focus {
+    outline: none;
+}
+
 .maplibregl-popup {
     max-width: 200px;
 }
@@ -206,7 +215,3 @@ onUnmounted(() => {
     cursor: pointer;
 }
 </style>
-
-<template>
-    <div id="map" class="w-full h-full"></div>
-</template>
