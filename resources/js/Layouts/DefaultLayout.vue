@@ -4,7 +4,7 @@ import SearchBar from '@/Components/SearchBar.vue';
 </script>
 
 <template>
-    <div class="flex flex-col h-dvh w-full">
+    <div class="flex flex-col w-full">
         <slot />
         <NavBar/>
     </div>
