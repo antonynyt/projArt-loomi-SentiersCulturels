@@ -1,11 +1,10 @@
 <script setup>
 import NavBar from '@/Components/NavBar.vue';
-import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
     <div class="flex flex-col w-full mb-24 justify-center">
-        <div class="w-full max-w-lg mt-24 grid-cols-4 px-5 mx-auto">
+        <div class="w-full max-w-lg mt-8 grid-cols-4 px-5 mx-auto">
             <slot />
         </div>
         <NavBar/>
