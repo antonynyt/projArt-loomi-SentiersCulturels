@@ -21,7 +21,6 @@ class Poi extends Model
         'title',
         'short_descr',
         'descr',
-        'image',
         'adress_label',
         'lat',
         'long',
@@ -49,5 +48,14 @@ class Poi extends Model
      */
     public function poiHistories() {
         return $this->hasMany(PoiHistory::class);
+    }
+
+    /**
+     * Get the poi_fact for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function poiFact() {
+        return $this->hasMany(PoiFact::class);
     }
 }

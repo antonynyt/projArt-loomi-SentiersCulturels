@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('paths', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('short_descr');
             $table->string('descr');
             $table->integer('duration');
             $table->integer('distance');

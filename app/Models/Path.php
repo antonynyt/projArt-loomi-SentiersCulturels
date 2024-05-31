@@ -21,7 +21,6 @@ class Path extends Model
      */
     protected $fillable = [
         'title',
-        'short_descr',
         'descr',
         'duration',
         'distance',
