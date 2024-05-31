@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('short_descr');
             $table->string('descr');
-            $table->string('image')->nullable();
             $table->string('adress_label');
             $table->double('lat');
             $table->double('long');

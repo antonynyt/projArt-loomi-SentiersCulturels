@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('path_histories', function (Blueprint $table) {
+        Schema::create('poi_facts', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_favorite')->default(false);
-            $table->boolean('is_finished')->default(false);
-            $table->foreignId('path_id')
+            $table->string('title');
+            $table->string('content');
+            $table->foreignId('poi_id')
                 ->references('id')
-                ->on('paths')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
-            $table->foreignId('user_id')
-                ->references('id')
-                ->on('users')
+                ->on('pois')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->timestamps();
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('path_histories');
+        Schema::dropIfExists('poi_facts');
     }
 };
