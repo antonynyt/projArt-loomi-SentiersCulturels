@@ -1,22 +1,48 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import Hammer from 'hammerjs';
 
 const isOpen = ref(false);
+const drawer = ref(null);
+const drawerContent = ref(null);
+let hammer = null;
 
 const toggleDrawer = () => {
-    isOpen.value = !isOpen.value
+    isOpen.value = !isOpen.value;
 }
+
+const handlePan = (event) => {
+    console.log(drawerContent.value.scrollTop);
+        if (event.additionalEvent === 'panup' && !isOpen.value) {
+            isOpen.value = true;
+        } else if (event.additionalEvent === 'pandown' && isOpen.value && drawerContent.value.scrollTop < 5) {
+            isOpen.value = false;
+        }
+};
+
+onMounted(() => {
+    hammer = new Hammer(drawer.value);
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL, threshold: 30});
+
+    hammer.on('panup pandown', handlePan);
+});
+
+onUnmounted(() => {
+    if (hammer) {
+        hammer.destroy();
+    }
+});
 </script>
 
 <template>
     <div v-if="isOpen" class="absolute top-0 bottom-80 w-full" @click="toggleDrawer"></div>
-    <div class="fixed bottom-20 left-0 w-full h-[60dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
+    <div ref="drawer" class="fixed bottom-20 left-0 w-full h-[60dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
         :class="isOpen ? 'translate-y-0' : 'translate-y-full'">
-        <div class="p-5 overflow-auto h-full max-w-lg mx-auto">
+        <div ref="drawerContent" class="p-5 overflow-auto h-full max-w-lg mx-auto">
             <slot />
         </div>
-        <div class="fixed pt-4 top-[-130px] w-full h-[130px] bg-white flex flex-col rounded-t-3xl">
-            <div class="flex justify-center items-center cursor-pointer"
+        <div class="fixed top-[-125px] w-full h-[125px] bg-white flex flex-col rounded-t-3xl">
+            <div class="flex py-4 justify-center items-center cursor-pointer"
                 @click="toggleDrawer">
                 <svg class="text-gray-300" xmlns="http://www.w3.org/2000/svg" width="48" height="9" viewBox="0 0 48 9.5"
                     fill="currentColor">
@@ -26,7 +52,7 @@ const toggleDrawer = () => {
                         d="M0 6.11317C0 4.92203 0.859869 3.9049 2.0344 3.70669L22.336 0.280796C23.4376 0.0949128 24.5624 0.0949126 25.664 0.280796L45.9656 3.70669C47.1401 3.9049 48 4.92203 48 6.11317V6.11317C48 7.62325 46.6424 8.77091 45.1534 8.51964L25.664 5.2308C24.5624 5.04491 23.4376 5.04491 22.336 5.2308L2.84659 8.51964C1.35756 8.77091 0 7.62325 0 6.11317V6.11317Z" />
                 </svg>
             </div>
-            <div class="p-5 pb-0 w-full max-w-lg mx-auto">
+            <div class="py-1 px-5 w-full max-w-lg mx-auto">
                 <slot name="tab" />
             </div>
         </div>
