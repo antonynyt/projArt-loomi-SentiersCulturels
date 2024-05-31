@@ -1,20 +1,12 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
+import NavBar from '@/Components/NavBar.vue';
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-            </Link>
-        </div>
-
-        <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
-        >
+    <div class="flex flex-col w-full mb-24 justify-center">
+        <div class="w-full max-w-lg mt-24 grid-cols-4 px-5 mx-auto">
             <slot />
         </div>
+        <NavBar/>
     </div>
 </template>
