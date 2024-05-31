@@ -173,7 +173,7 @@ onMounted(() => {
 
     //Navigation options
     if (props.options.controls) {
-        map.value.addControl(new NavigationControl(), 'bottom-right')
+        map.value.addControl(new NavigationControl(), 'top-right')
     }
 
     const geoLocation = new GeolocateControl({
@@ -183,7 +183,7 @@ onMounted(() => {
         trackUserLocation: true
     })
 
-    map.value.addControl(geoLocation, 'bottom-right')
+    map.value.addControl(geoLocation, 'top-right')
 
     // Fly to user location
     if (props.options.flyToUserLocation) {
