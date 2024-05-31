@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import TheHeader from '@/Components/App/TheHeader.vue';
 
 const form = useForm({
     name: '',
@@ -23,6 +24,12 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
+
+        <TheHeader title="Créer un compte" class="mb-8" />
+
+        <div class="mb-4 text-sm text-gray-600">
+            Créer un compte te permettras de gérer tes favoris, voir tes progrès et écrire des commentaires.
+        </div>
 
         <form @submit.prevent="submit">
             <div>
@@ -57,7 +64,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Mot de passe" />
 
                 <TextInput
                     id="password"
@@ -72,7 +79,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmer le mot de passe" />
 
                 <TextInput
                     id="password_confirmation"
@@ -89,13 +96,13 @@ const submit = () => {
             <div class="flex items-center justify-end mt-4">
                 <Link
                     :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="underline text-sm text-purple hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    Déjà un compte? Connecte-toi ici.
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                    Créer mon compte
                 </PrimaryButton>
             </div>
         </form>
