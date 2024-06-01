@@ -38,6 +38,7 @@ onMounted(() => {
     map.value = markRaw(new Map({
         container: mapContainer.value,
         style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+        // style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json',
         // style: 'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json',
         center: [6.6, 46.6], //centrer sur Vaud
         minZoom: 8,
@@ -79,11 +80,11 @@ onMounted(() => {
 
         //Source: https://www.jawg.io/docs/integration/maplibre-gl-js/cluster/#11.08/48.8686/2.2959
         //TODO: Changer les icones
-        const treeCluster = await map.value.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree-cluster.png")
-        map.value.addImage("tree-cluster", treeCluster.data);
+        const sentierCluster = await map.value.loadImage("/assets/icons/sentier-cluster.png")
+        map.value.addImage("sentier-cluster", sentierCluster.data);
 
-        const tree = await map.value.loadImage("https://jawg.github.io/maplibre-gl-js-examples/icons/cluster/tree.png")
-        map.value.addImage("tree", tree.data);
+        const sentier = await map.value.loadImage("/assets/icons/sentier.png")
+        map.value.addImage("sentier", sentier.data);
 
         // add path POIs on the map
         map.value.addSource('pathPoints', {
@@ -100,11 +101,13 @@ onMounted(() => {
             filter: ["!", ["has", "point_count"]],
             layout: {
                 "text-field": ["get", "Name"], //TODO: changer le champ en fonction de la DB
+                "icon-padding": 0,
                 "text-padding": 0,
-                "text-allow-overlap": false,
-                "text-size": 11,
-                "text-font": ["Roboto Regular", "Noto Regular"],
-                "text-offset": [0, 1.75],
+                "text-overlap": "always",
+                "icon-overlap": "always",
+                "text-size": 12,
+                "text-font": ["Roboto Bold", "Noto Bold"],
+                "text-offset": [0, 1.8],
                 "text-anchor": "top",
             },
             paint: {
@@ -119,7 +122,7 @@ onMounted(() => {
             type: "symbol",
             source: "pathPoints",
             layout: {
-                "icon-image": ["case", ["has", "point_count"], "tree-cluster", "tree"],
+                "icon-image": ["case", ["has", "point_count"], "sentier-cluster", "sentier"],
                 // Display the cluster point count if >= 2
                 "text-field": [
                     "step",
@@ -139,7 +142,7 @@ onMounted(() => {
             },
             paint: {
                 "text-color": "#5C5C5C",
-                "text-translate": [13, -14],
+                "text-translate": [14, 13],
                 "text-translate-anchor": "viewport",
             },
         });
