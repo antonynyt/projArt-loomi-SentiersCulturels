@@ -5,7 +5,7 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
 // import SearchBar from '@/Components/SearchBar.vue';
 import TheDrawer from '@/Components/App/TheDrawer.vue';
-import AppTab from '@/Components/App/AppTab.vue';
+import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
 
 const props = defineProps({
     path: {
@@ -29,6 +29,16 @@ const filterByTab = (tab) => {
     console.log(activeTab.value);
 }
 
+//close drawer onclick
+const isOpen = ref(false);
+
+// Handle drawer close event from child
+const handleDrawerClose = (value) => {
+    isOpen.value = value;
+}
+
+//GUIDE: use isOpen.value = false; to close drawer
+
 </script>
 
 <template>
@@ -41,53 +51,15 @@ const filterByTab = (tab) => {
         <div class="map__container h-[calc(100dvh-80px)]">
             <MapGL :path :poi :options />
         </div>
-        <TheDrawer>
+        <TheDrawer :isOpen @update:isOpen="handleDrawerClose">
             <template #tab>
-                <AppTab @setActiveTab="filterByTab"/>
+                <AppTabSwitch @setActiveTab="filterByTab"/>
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <ul>
                 <li>dsada</li>
                 <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsada</li>
-                <li>dsd</li>
+                <!-- <button @click="toggleDrawer">hdskajdlka</button> -->
             </ul>
         </TheDrawer>
     </DefaultLayout>

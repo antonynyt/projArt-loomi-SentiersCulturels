@@ -16,10 +16,10 @@ const emit = defineEmits(['setActiveTab']);
 <template>
     <ul class="flex justify-evenly border border-black rounded-full w-full p-1 text-center font-medium">
         <li :class="{ 'bg-midnight-blue text-white': activeTab === 'sentiers' }" class="w-full rounded-full">
-            <a href="#" class="w-full inline-block px-4 py-3" @click="setActiveTab('sentiers')">Sentiers</a>
+            <a href="#" class="text-sm w-full inline-block px-4 py-3" @click="setActiveTab('sentiers')">Sentiers</a>
         </li>
         <li :class="{ 'bg-midnight-blue text-white': activeTab === 'lieux' }" class="w-full rounded-full">
-            <a href="#" class="w-full inline-block px-4 py-3" @click="setActiveTab('lieux')">Lieux</a>
+            <a href="#" class="text-sm w-full inline-block px-4 py-3" @click="setActiveTab('lieux')">Lieux</a>
         </li>
     </ul>
 </template>

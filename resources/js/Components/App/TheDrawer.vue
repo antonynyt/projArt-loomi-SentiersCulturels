@@ -1,28 +1,43 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import Hammer from 'hammerjs';
 
-const isOpen = ref(false);
+const props = defineProps({
+    isOpen: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const emit = defineEmits(['update:isOpen']);
+
+const isOpen = ref(props.isOpen);
 const drawer = ref(null);
 const drawerContent = ref(null);
 let hammer = null;
 
 const toggleDrawer = () => {
     isOpen.value = !isOpen.value;
-}
+    emit('update:isOpen', isOpen.value);
+};
+
+watch(() => props.isOpen, (newVal) => {
+    isOpen.value = newVal;
+});
 
 const handlePan = (event) => {
     console.log(drawerContent.value.scrollTop);
-        if (event.additionalEvent === 'panup' && !isOpen.value) {
-            isOpen.value = true;
-        } else if (event.additionalEvent === 'pandown' && isOpen.value && drawerContent.value.scrollTop < 5) {
-            isOpen.value = false;
-        }
+    if (event.additionalEvent === 'panup' && !isOpen.value) {
+        isOpen.value = true;
+    } else if (event.additionalEvent === 'pandown' && isOpen.value && drawerContent.value.scrollTop < 5) {
+        isOpen.value = false;
+    }
+    emit('update:isOpen', isOpen.value);
 };
 
 onMounted(() => {
     hammer = new Hammer(drawer.value);
-    hammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL, threshold: 30});
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL, threshold: 30 });
 
     hammer.on('panup pandown', handlePan);
 });
@@ -35,15 +50,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div v-if="isOpen" class="absolute top-0 bottom-80 w-full" @click="toggleDrawer"></div>
-    <div ref="drawer" class="fixed bottom-20 left-0 w-full h-[60dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
+    <Transition>
+        <div v-if="isOpen" class="absolute top-0 bottom-0 w-full bg-midnight-blue bg-opacity-30 z-10 cursor-pointer"
+            @click="toggleDrawer"></div>
+    </Transition>
+    <div ref="drawer"
+        class="fixed bottom-20 left-0 w-full h-[60dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
         :class="isOpen ? 'translate-y-0' : 'translate-y-full'">
         <div ref="drawerContent" class="p-5 overflow-auto h-full max-w-lg mx-auto">
             <slot />
         </div>
-        <div class="fixed top-[-125px] w-full h-[125px] bg-white flex flex-col rounded-t-3xl">
-            <div class="flex py-4 justify-center items-center cursor-pointer"
-                @click="toggleDrawer">
+        <div class="fixed top-[-120px] w-full h-[120px] bg-white flex flex-col rounded-t-3xl">
+            <div class="flex py-4 justify-center items-center cursor-pointer" @click="toggleDrawer">
                 <svg class="text-gray-300" xmlns="http://www.w3.org/2000/svg" width="48" height="9" viewBox="0 0 48 9.5"
                     fill="currentColor">
                     <path v-if="isOpen"
@@ -59,9 +77,14 @@ onUnmounted(() => {
     </div>
 </template>
 
-<style>
-html {
-    overflow: hidden;
-    overscroll-behavior: none;
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>
