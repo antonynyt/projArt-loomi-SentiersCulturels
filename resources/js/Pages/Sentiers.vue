@@ -1,5 +1,5 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
@@ -8,12 +8,16 @@ import TheDrawer from '@/Components/App/TheDrawer.vue';
 import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
 
 const props = defineProps({
+    pathPoints: {
+        type: String,
+        required: true,
+    },
     path: {
         type: String,
     },
     poi: {
         type: String,
-        required: true,
+        required: false,
     },
 });
 
@@ -21,12 +25,14 @@ const options = ref({
     controls: true
 });
 
-//emited from AppTab setActiveTab
-const activeTab = ref('sentiers');
-
 const filterByTab = (tab) => {
-    activeTab.value = tab;
-    console.log(activeTab.value);
+    if (tab === 'sentiers') {
+        console.log('sentiers');
+        //SELECT * FROM POI WHERE POI.ordre = 0 inner join sentiers
+    } else {
+        console.log('lieux');
+        //SELECT * FROM POI
+    }
 }
 
 //close drawer onclick
@@ -49,7 +55,7 @@ const handleDrawerClose = (value) => {
     <DefaultLayout>
         <!-- <SearchBar/> -->
         <div class="map__container h-[calc(100dvh-80px)]">
-            <MapGL :path :poi :options />
+            <MapGL :path :poi :pathPoints :options />
         </div>
         <TheDrawer :isOpen @update:isOpen="handleDrawerClose">
             <template #tab>
