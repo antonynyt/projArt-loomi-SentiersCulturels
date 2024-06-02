@@ -1,52 +1,90 @@
+// Constants
+const PATH_SOURCE = "path";
+const PATH_LAYER = "path";
+const PATH_POINTS_SOURCE = "pathPoints";
+const PATH_POINT_LAYER = "pathPoint";
+const PATH_POINT_LABEL_LAYER = "point-label";
+const POI_SOURCE = "POI";
+const POI_LAYER = "POI";
+const POI_LABEL_LAYER = "POI-label";
+
+// load an image into the map
+const loadImage = async (map, id, url) => {
+    const image = await map.value.loadImage(url);
+    map.value.addImage(id, image.data);
+};
+
+// add a GeoJSON source to the map
+const addGeoJSONSource = (map, sourceId, data, cluster = false, clusterRadius = 50) => {
+    map.value.addSource(sourceId, {
+        type: "geojson",
+        data,
+        cluster,
+        clusterRadius,
+    });
+};
+
+// add a layer to the map
+const addLayer = (map, layerConfig, beforeId = null) => {
+    map.value.addLayer(layerConfig, beforeId);
+};
+
+// handle click events on clusters
+const handleClusterClick = async (map, sourceId, clusterId, coordinates) => {
+    const zoom = await map.value.getSource(sourceId).getClusterExpansionZoom(clusterId);
+    map.value.easeTo({
+        center: coordinates,
+        zoom: zoom + 0.5,
+    });
+};
+
+// handle click events on features
+const handleFeatureClick = (feature, path, poi) => {
+    // console.info("CLICKED", feature)
+    if (path && poi) {
+        path.value = feature.properties.path;
+        poi.value = feature.properties.poi;
+    }
+    //add to hash
+    window.location.hash = feature.properties.Name;
+    
+
+};
+
+// add a path layer to the map
 export const addPathLayer = (map, path) => {
     if (path.value) {
-        map.value.addSource("path", {
-            type: "geojson",
-            data: path.value,
-        });
-
-        map.value.addLayer(
-            {
-                id: "path",
-                type: "line",
-                source: "path",
-                layout: {
-                    "line-join": "round",
-                    "line-cap": "round",
-                },
-                paint: {
-                    "line-color": "#693AF5",
-                    "line-width": 8,
-                },
+        addGeoJSONSource(map, PATH_SOURCE, path.value);
+        addLayer(map, {
+            id: PATH_LAYER,
+            type: "line",
+            source: PATH_SOURCE,
+            layout: {
+                "line-join": "round",
+                "line-cap": "round",
             },
-            "point-label"
-        );
+            paint: {
+                "line-color": "#693AF5",
+                "line-width": 8,
+            },
+        }, PATH_POINT_LABEL_LAYER);
     }
 };
 
+// add path points layer and handle interactions
 export const addPathPointLayer = async (map, pathPoints, path, poi) => {
-    const sentierCluster = await map.value.loadImage(
-        "/assets/icons/sentier-cluster.png"
-    );
-    map.value.addImage("sentier-cluster", sentierCluster.data);
+    await loadImage(map, "sentier-cluster", "/assets/icons/sentier-cluster.png");
+    await loadImage(map, "sentier", "/assets/icons/sentier.png");
 
-    const sentier = await map.value.loadImage("/assets/icons/sentier.png");
-    map.value.addImage("sentier", sentier.data);
+    addGeoJSONSource(map, PATH_POINTS_SOURCE, pathPoints.value, true, 50);
 
-    map.value.addSource("pathPoints", {
-        type: "geojson",
-        data: pathPoints.value,
-        cluster: true,
-        clusterRadius: 50,
-    });
-
-    map.value.addLayer({
-        id: "point-label",
+    addLayer(map, {
+        id: PATH_POINT_LABEL_LAYER,
         type: "symbol",
-        source: "pathPoints",
+        source: PATH_POINTS_SOURCE,
         filter: ["!", ["has", "point_count"]],
         layout: {
-            "text-field": ["get", "Name"], //TODO: changer le champ en fonction de la DB
+            "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
             "icon-padding": 0,
             "text-padding": 0,
             "text-overlap": "always",
@@ -63,29 +101,18 @@ export const addPathPointLayer = async (map, pathPoints, path, poi) => {
         },
     });
 
-    map.value.addLayer({
-        id: "pathPoint",
+    addLayer(map, {
+        id: PATH_POINT_LAYER,
         type: "symbol",
-        source: "pathPoints",
+        source: PATH_POINTS_SOURCE,
         layout: {
-            "icon-image": [
-                "case",
-                ["has", "point_count"],
-                "sentier-cluster",
-                "sentier",
-            ],
+            "icon-image": ["case", ["has", "point_count"], "sentier-cluster", "sentier"],
             "text-field": [
                 "step",
                 ["get", "point_count"],
                 "",
                 2,
-                [
-                    "step",
-                    ["get", "point_count"],
-                    ["get", "point_count"],
-                    99,
-                    "99+",
-                ],
+                ["step", ["get", "point_count"], ["get", "point_count"], 99, "99+"],
             ],
             "text-size": 12,
             "text-font": ["Roboto Bold", "Noto Bold"],
@@ -98,54 +125,33 @@ export const addPathPointLayer = async (map, pathPoints, path, poi) => {
         },
     });
 
-    map.value.on("click", "pathPoint", async (e) => {
+    map.value.on("click", PATH_POINT_LAYER, async (e) => {
         const feature = e.features[0];
         const clusterId = feature.properties.cluster_id;
-        if (clusterId) {
-            const zoom = await map.value
-                .getSource("pathPoints")
-                .getClusterExpansionZoom(clusterId);
-            map.value.easeTo({
-                center: feature.geometry.coordinates,
-                zoom: zoom + 0.5,
-            });
-        } else {
-            console.log(feature.properties.Name);
-            console.log(feature.properties.poi);
 
-            //EMIT EVENT ????
-            path.value = feature.properties.path;
-            poi.value = feature.properties.poi;
-            // addPOILayer(map, feature.properties.poi, path);
-            // Inertia.visit(`/sentiers/2`, { preserveState: true });
+        if (clusterId) {
+            await handleClusterClick(map, PATH_POINTS_SOURCE, clusterId, feature.geometry.coordinates);
+        } else {
+            handleFeatureClick(feature, path, poi);
         }
     });
 };
 
+// add POI layer and handle interactions
 export const addPOILayer = async (map, poi, path) => {
     if (poi.value) {
-        const sentierCluster = await map.value.loadImage(
-            "/assets/icons/sentier-cluster.png"
-        );
-        map.value.addImage("poi-cluster", sentierCluster.data);
+        await loadImage(map, "poi-cluster", "/assets/icons/sentier-cluster.png");
+        await loadImage(map, "poi", "/assets/icons/sentier.png");
 
-        const sentier = await map.value.loadImage("/assets/icons/sentier.png");
-        map.value.addImage("poi", sentier.data);
+        addGeoJSONSource(map, POI_SOURCE, poi.value, true, 50);
 
-        map.value.addSource("POI", {
-            type: "geojson",
-            data: poi.value,
-            cluster: true,
-            clusterRadius: 50,
-        });
-
-        map.value.addLayer({
-            id: "POI-label",
+        addLayer(map, {
+            id: POI_LABEL_LAYER,
             type: "symbol",
-            source: "POI",
+            source: POI_SOURCE,
             filter: ["!", ["has", "point_count"]],
             layout: {
-                "text-field": ["get", "Name"], //TODO: changer le champ en fonction de la DB
+                "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
                 "icon-padding": 0,
                 "text-padding": 0,
                 "text-overlap": "always",
@@ -162,29 +168,18 @@ export const addPOILayer = async (map, poi, path) => {
             },
         });
 
-        map.value.addLayer({
-            id: "POI",
+        addLayer(map, {
+            id: POI_LAYER,
             type: "symbol",
-            source: "POI",
+            source: POI_SOURCE,
             layout: {
-                "icon-image": [
-                    "case",
-                    ["has", "point_count"],
-                    "poi-cluster",
-                    "poi",
-                ],
+                "icon-image": ["case", ["has", "point_count"], "poi-cluster", "poi"],
                 "text-field": [
                     "step",
                     ["get", "point_count"],
                     "",
                     2,
-                    [
-                        "step",
-                        ["get", "point_count"],
-                        ["get", "point_count"],
-                        99,
-                        "99+",
-                    ],
+                    ["step", ["get", "point_count"], ["get", "point_count"], 99, "99+"],
                 ],
                 "text-size": 12,
                 "text-font": ["Roboto Bold", "Noto Bold"],
@@ -197,21 +192,15 @@ export const addPOILayer = async (map, poi, path) => {
             },
         });
 
-        // map.value.on("click", "pathPoint", async (e) => {
-        //     const feature = e.features[0];
-        //     const clusterId = feature.properties.cluster_id;
-        //     if (clusterId) {
-        //         const zoom = await map.value.getSource("pathPoints").getClusterExpansionZoom(clusterId);
-        //         map.value.easeTo({
-        //             center: feature.geometry.coordinates,
-        //             zoom: zoom + 0.5,
-        //         });
-        //     } else {
-        //         console.log(feature.properties.Name);
-        //         console.log(feature.properties.poi);
-        //         path.value = feature.properties.path;
-        //         poi.value = feature.properties.poi;
-        //     }
-        // });
+        map.value.on("click", POI_LAYER, async (e) => {
+            const feature = e.features[0];
+            const clusterId = feature.properties.cluster_id;
+    
+            if (clusterId) {
+                await handleClusterClick(map, POI_SOURCE, clusterId, feature.geometry.coordinates);
+            } else {
+                handleFeatureClick(feature);
+            }
+        });
     }
 };
