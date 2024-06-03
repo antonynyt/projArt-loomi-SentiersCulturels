@@ -21,17 +21,18 @@ Route::get('/', function () {
     ]);
 })->name('explorer');
 
-Route::get('/sentiers', function () {
-    return Inertia::render('Sentiers', [
+Route::get('/map', function () {
+    return Inertia::render('Map', [
         'pathPoints' => file_get_contents('storage/sentiers/sentiers.geojson'),
     ]);
 });
 
-Route::get('/sentiers/{id}', function () {
+Route::get('/map/{id}', function () {
     $id = request()->route('id');
-    return Inertia::render('Sentiers', [
+    return Inertia::render('Map', [
         'path' => file_get_contents("storage/sentiers/$id/path.geojson"),
         'poi' => file_get_contents("storage/sentiers/$id/poi.geojson"),
+        'showPath' => true,
     ]);
 });
 

@@ -32,7 +32,7 @@ const isUrl = (...urls) => {
                 </svg>
             </NavBarElement>
 
-            <NavBarElement label="Sentiers" href='/sentiers' :class="{'active': isUrl('sentiers')}">
+            <NavBarElement label="Carte" href='/map' :class="{'active': isUrl('map')}">
                 <svg data-outlined class="w-6 h-6 group-hover:text-blue-600" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="23" height="24" viewBox="0 0 23 24" fill="CurrentColor">
                     <path

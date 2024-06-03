@@ -44,7 +44,7 @@ const props = defineProps({
             <img :src="thumbnail" :alt="title" class="object-cover rounded-lg aspect-square h-24">
             <div class="grow flex flex-col justify-center px-5">
                 <h3 class="text-lg font-medium text-midnight-blue">
-                    <a :href="href">{{ title }}</a>
+                    {{ title }}
                 </h3>
                 <p class="text-sm text-gray-500">{{ location }}</p>
                 <div v-if="infos" class="flex flex-row justify-between mt-2">

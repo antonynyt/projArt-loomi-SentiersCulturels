@@ -3,11 +3,11 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
-// import SearchBar from '@/Components/SearchBar.vue';
 import TheDrawer from '@/Components/App/TheDrawer.vue';
 import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
 import { mapContainer, map, pathPoints, poi, path } from '../Components/Map/stores/mapStore';
 import AppElementCard from '@/Components/App/AppElementCard.vue';
+import AppDetailsOverlay from '@/Components/App/AppDetailsOverlay.vue';
 
 const props = defineProps({
     pathPoints: {
@@ -19,7 +19,13 @@ const props = defineProps({
     poi: {
         type: String,
     },
+    showPath: {
+        type: Boolean,
+        default: false,
+    }
 });
+
+const showPath = ref(props.showPath);
 
 pathPoints.value = props.pathPoints;
 poi.value = props.poi;
@@ -39,9 +45,9 @@ watch(() => props.poi, (newVal) => {
 
 watch(() => props.path, (newVal) => {
     if (newVal) {
+        showPath.value = true;
         path.value = newVal;
         const json = JSON.parse(newVal);
-        console.log(json.features[0].geometry.coordinates[0]);
         map.value.easeTo({
             center: json.features[0].geometry.coordinates[0],
             zoom: 16
@@ -68,18 +74,18 @@ const filterByTab = (tab) => {
 }
 
 //close drawer onclick
-const isOpen = ref(false);
+const drawerIsOpen = ref(false);
 
 // Handle drawer close event from child
 const handleDrawerClose = (value) => {
-    isOpen.value = value;
+    drawerIsOpen.value = value;
 }
 
 const toggleDrawer = () => {
-    isOpen.value = !isOpen.value;
+    drawerIsOpen.value = !drawerIsOpen.value;
 }
 
-//GUIDE: use isOpen.value = false; to close drawer
+//GUIDE: use drawerIsOpen.value = false; to close drawer
 
 </script>
 
@@ -93,7 +99,8 @@ const toggleDrawer = () => {
         <div class="map__container h-[calc(100dvh-80px)]">
             <MapGL :options />
         </div>
-        <TheDrawer :isOpen @update:isOpen="handleDrawerClose">
+        <AppDetailsOverlay v-if="showPath"/>
+        <TheDrawer v-else :isOpen="drawerIsOpen" @update:drawerIsOpen="handleDrawerClose">
             <template #tab>
                 <AppTabSwitch @setActiveTab="filterByTab"/>
             </template>
@@ -102,7 +109,7 @@ const toggleDrawer = () => {
                 <AppElementCard @click="toggleDrawer"
                     thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
                     title="Sentier du Renard"
-                    href="/sentiers/1"
+                    href="/map/1"
                     location="Saint-Étienne"
                     :infos="{ distance: '5km', duration: '2h', elevation: '200m' }">
                 </AppElementCard>
@@ -110,7 +117,7 @@ const toggleDrawer = () => {
                 <AppElementCard @click="toggleDrawer"
                     thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
                     title="Sentier des Lutins"
-                    href="/sentiers/2"
+                    href="/map/2"
                     location="ici"
                     :infos="{ distance: '5km', duration: '2h', elevation: '200m' }">
                 </AppElementCard>

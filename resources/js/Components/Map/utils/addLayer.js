@@ -46,7 +46,7 @@ const handleClusterClick = async (sourceId, clusterId, coordinates) => {
 const handleFeatureClick = (feature) => {
     console.info("CLICKED", feature)
     if (feature.layer.id === PATH_POINT_LAYER) { 
-        router.visit(`/sentiers/${feature.properties.id}`, { preserveState: true });
+        router.visit(`/map/${feature.properties.id}`, { preserveState: true });
         map.value.easeTo({
             center: feature.geometry.coordinates,
             zoom: 16,
