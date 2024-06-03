@@ -5,15 +5,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -26,20 +17,21 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', function () {
     return Inertia::render('Explorer', [
-        'pathPoints' => asset('storage/sentiers/sentiers.geojson'),
+        'pathPoints' => file_get_contents('storage/sentiers/sentiers.geojson'),
     ]);
 })->name('explorer');
 
 Route::get('/sentiers', function () {
     return Inertia::render('Sentiers', [
-        'pathPoints' => asset('storage/sentiers/sentiers.geojson'),
+        'pathPoints' => file_get_contents('storage/sentiers/sentiers.geojson'),
     ]);
 });
 
 Route::get('/sentiers/{id}', function () {
+    $id = request()->route('id');
     return Inertia::render('Sentiers', [
-        'path' => asset('storage/sentiers/{$id}/path.geojson'),
-        'poi' => asset('storage/sentiers/{$id}/poi.geojson'),
+        'path' => file_get_contents("storage/sentiers/$id/path.geojson"),
+        'poi' => file_get_contents("storage/sentiers/$id/poi.geojson"),
     ]);
 });
 

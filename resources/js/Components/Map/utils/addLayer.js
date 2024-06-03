@@ -1,3 +1,6 @@
+import { router } from "@inertiajs/vue3";
+import { mapContainer, map, pathPoints, poi, path } from '../stores/mapStore';
+
 // Constants
 const PATH_SOURCE = "path";
 const PATH_LAYER = "path";
@@ -9,13 +12,14 @@ const POI_LAYER = "POI";
 const POI_LABEL_LAYER = "POI-label";
 
 // load an image into the map
-const loadImage = async (map, id, url) => {
+const loadImage = async (id, url) => {
     const image = await map.value.loadImage(url);
     map.value.addImage(id, image.data);
 };
 
 // add a GeoJSON source to the map
-const addGeoJSONSource = (map, sourceId, data, cluster = false, clusterRadius = 50) => {
+const addGeoJSONSource = (sourceId, data, cluster = false, clusterRadius = 50) => {
+    data = JSON.parse(data);
     map.value.addSource(sourceId, {
         type: "geojson",
         data,
@@ -25,12 +29,12 @@ const addGeoJSONSource = (map, sourceId, data, cluster = false, clusterRadius = 
 };
 
 // add a layer to the map
-const addLayer = (map, layerConfig, beforeId = null) => {
+const addLayer = (layerConfig, beforeId = null) => {
     map.value.addLayer(layerConfig, beforeId);
 };
 
 // handle click events on clusters
-const handleClusterClick = async (map, sourceId, clusterId, coordinates) => {
+const handleClusterClick = async (sourceId, clusterId, coordinates) => {
     const zoom = await map.value.getSource(sourceId).getClusterExpansionZoom(clusterId);
     map.value.easeTo({
         center: coordinates,
@@ -39,23 +43,27 @@ const handleClusterClick = async (map, sourceId, clusterId, coordinates) => {
 };
 
 // handle click events on features
-const handleFeatureClick = (feature, path, poi) => {
-    // console.info("CLICKED", feature)
-    if (path && poi) {
-        path.value = feature.properties.path;
-        poi.value = feature.properties.poi;
+const handleFeatureClick = (feature) => {
+    console.info("CLICKED", feature)
+    if (feature.layer.id === PATH_POINT_LAYER) { 
+        router.visit(`/sentiers/${feature.properties.id}`, { preserveState: true });
+        map.value.easeTo({
+            center: feature.geometry.coordinates,
+            zoom: 16,
+        });
+        // path.value = feature.properties.path;
+        // poi.value = feature.properties.poi;
+        map.value.setLayoutProperty(PATH_POINT_LAYER, "visibility", "none");
+        map.value.setLayoutProperty(PATH_POINT_LABEL_LAYER, "visibility", "none");
     }
-    //add to hash
-    window.location.hash = feature.properties.Name;
-    
 
 };
 
 // add a path layer to the map
-export const addPathLayer = (map, path) => {
+export const addPathLayer = () => {
     if (path.value) {
-        addGeoJSONSource(map, PATH_SOURCE, path.value);
-        addLayer(map, {
+        addGeoJSONSource(PATH_SOURCE, path.value);
+        addLayer({
             id: PATH_LAYER,
             type: "line",
             source: PATH_SOURCE,
@@ -67,85 +75,87 @@ export const addPathLayer = (map, path) => {
                 "line-color": "#693AF5",
                 "line-width": 8,
             },
-        }, PATH_POINT_LABEL_LAYER);
+        });
     }
 };
 
 // add path points layer and handle interactions
-export const addPathPointLayer = async (map, pathPoints, path, poi) => {
-    await loadImage(map, "sentier-cluster", "/assets/icons/sentier-cluster.png");
-    await loadImage(map, "sentier", "/assets/icons/sentier.png");
+export const addPathPointLayer = async () => {
+    if (pathPoints.value) {
+        await loadImage("sentier-cluster", "/assets/icons/sentier-cluster.png");
+        await loadImage("sentier", "/assets/icons/sentier.png");
 
-    addGeoJSONSource(map, PATH_POINTS_SOURCE, pathPoints.value, true, 50);
+        addGeoJSONSource(PATH_POINTS_SOURCE, pathPoints.value, true, 50);
 
-    addLayer(map, {
-        id: PATH_POINT_LABEL_LAYER,
-        type: "symbol",
-        source: PATH_POINTS_SOURCE,
-        filter: ["!", ["has", "point_count"]],
-        layout: {
-            "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
-            "icon-padding": 0,
-            "text-padding": 0,
-            "text-overlap": "always",
-            "icon-overlap": "always",
-            "text-size": 12,
-            "text-font": ["Roboto Bold", "Noto Bold"],
-            "text-offset": [0, 1.8],
-            "text-anchor": "top",
-        },
-        paint: {
-            "text-color": "#5C5C5C",
-            "text-halo-color": "#FFFFFF",
-            "text-halo-width": 1,
-        },
-    });
+        addLayer({
+            id: PATH_POINT_LABEL_LAYER,
+            type: "symbol",
+            source: PATH_POINTS_SOURCE,
+            filter: ["!", ["has", "point_count"]],
+            layout: {
+                "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
+                "icon-padding": 0,
+                "text-padding": 0,
+                "text-overlap": "always",
+                "icon-overlap": "always",
+                "text-size": 12,
+                "text-font": ["Roboto Bold", "Noto Bold"],
+                "text-offset": [0, 1.8],
+                "text-anchor": "top",
+            },
+            paint: {
+                "text-color": "#5C5C5C",
+                "text-halo-color": "#FFFFFF",
+                "text-halo-width": 1,
+            },
+        });
 
-    addLayer(map, {
-        id: PATH_POINT_LAYER,
-        type: "symbol",
-        source: PATH_POINTS_SOURCE,
-        layout: {
-            "icon-image": ["case", ["has", "point_count"], "sentier-cluster", "sentier"],
-            "text-field": [
-                "step",
-                ["get", "point_count"],
-                "",
-                2,
-                ["step", ["get", "point_count"], ["get", "point_count"], 99, "99+"],
-            ],
-            "text-size": 12,
-            "text-font": ["Roboto Bold", "Noto Bold"],
-            "text-anchor": "center",
-        },
-        paint: {
-            "text-color": "#5C5C5C",
-            "text-translate": [14, 13],
-            "text-translate-anchor": "viewport",
-        },
-    });
+        addLayer( {
+            id: PATH_POINT_LAYER,
+            type: "symbol",
+            source: PATH_POINTS_SOURCE,
+            layout: {
+                "icon-image": ["case", ["has", "point_count"], "sentier-cluster", "sentier"],
+                "text-field": [
+                    "step",
+                    ["get", "point_count"],
+                    "",
+                    2,
+                    ["step", ["get", "point_count"], ["get", "point_count"], 99, "99+"],
+                ],
+                "text-size": 12,
+                "text-font": ["Roboto Bold", "Noto Bold"],
+                "text-anchor": "center",
+            },
+            paint: {
+                "text-color": "#5C5C5C",
+                "text-translate": [14, 13],
+                "text-translate-anchor": "viewport",
+            },
+        });
 
-    map.value.on("click", PATH_POINT_LAYER, async (e) => {
-        const feature = e.features[0];
-        const clusterId = feature.properties.cluster_id;
+        map.value.on("click", PATH_POINT_LAYER, async (e) => {
+            const feature = e.features[0];
+            const clusterId = feature.properties.cluster_id;
 
-        if (clusterId) {
-            await handleClusterClick(map, PATH_POINTS_SOURCE, clusterId, feature.geometry.coordinates);
-        } else {
-            handleFeatureClick(feature, path, poi);
-        }
-    });
+            if (clusterId) {
+                await handleClusterClick( PATH_POINTS_SOURCE, clusterId, feature.geometry.coordinates);
+            } else {
+                handleFeatureClick(feature, path, poi);
+            }
+        });
+}
 };
 
 // add POI layer and handle interactions
-export const addPOILayer = async (map, poi, path) => {
+export const addPOILayer = async () => {
     if (poi.value) {
-        await loadImage(map, "poi-cluster", "/assets/icons/sentier-cluster.png");
-        await loadImage(map, "poi", "/assets/icons/sentier.png");
+        await loadImage("poi-cluster", "/assets/icons/sentier-cluster.png");
+        await loadImage("poi", "/assets/icons/sentier.png");
 
-        addGeoJSONSource(map, POI_SOURCE, poi.value, true, 50);
+        addGeoJSONSource(POI_SOURCE, poi.value, true, 50);
 
-        addLayer(map, {
+        addLayer( {
             id: POI_LABEL_LAYER,
             type: "symbol",
             source: POI_SOURCE,
@@ -168,7 +178,7 @@ export const addPOILayer = async (map, poi, path) => {
             },
         });
 
-        addLayer(map, {
+        addLayer( {
             id: POI_LAYER,
             type: "symbol",
             source: POI_SOURCE,
@@ -197,7 +207,7 @@ export const addPOILayer = async (map, poi, path) => {
             const clusterId = feature.properties.cluster_id;
     
             if (clusterId) {
-                await handleClusterClick(map, POI_SOURCE, clusterId, feature.geometry.coordinates);
+                await handleClusterClick( POI_SOURCE, clusterId, feature.geometry.coordinates);
             } else {
                 handleFeatureClick(feature);
             }

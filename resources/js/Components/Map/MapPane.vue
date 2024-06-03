@@ -3,6 +3,7 @@ import { onMounted, watch, onUnmounted, ref, shallowRef, markRaw } from 'vue';
 import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { addPathLayer, addPathPointLayer, addPOILayer } from './utils/addLayer';
+import { mapContainer, map, pathPoints, poi, path } from './stores/mapStore';
 import { addControls } from './utils/controlManagment';
 
 const SWITZERLAND_BOUNDS = [
@@ -11,53 +12,38 @@ const SWITZERLAND_BOUNDS = [
 ];
 
 const props = defineProps({
-    pathPoints: {
-        type: String,
-        required: true,
-    },
-    poi: {
-        type: String,
-        required: null,
-    },
-    path: {
-        type: String,
-        default: null
-    },
     options: {
         type: Object,
         default: () => ({
             controls: false,
             flyToUserLocation: false,
             flyTo: null,
+            hash: false,
+            attributionControl: true,
         })
     }
 });
 
-const mapContainer = ref(null);
-const map = ref(null);
-
-const pathPoints = ref(props.pathPoints);
-const poi = ref(props.poi);
-const path = ref(props.path);
-
 const initializeMap = () => {
-    map.value = new Map({
+    map.value = markRaw(new Map({
         container: mapContainer.value,
         style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
         center: [6.6, 46.6], // centered on Vaud
         minZoom: 8,
         zoom: 10,
         maxBounds: SWITZERLAND_BOUNDS,
-    });
+        hash: props.options.hash,
+        attributionControl: props.options.attributionControl,
+    }));
 };
 
 const setupMap = async () => {
     initializeMap();
 
     map.value.on('load', async () => {
-        addPathLayer(map, path);
-        await addPathPointLayer(map, pathPoints, path, poi);
-        await addPOILayer(map, poi);
+        addPathLayer();
+        await addPathPointLayer();
+        await addPOILayer();
     });
 
     if (props.options.flyTo) {
@@ -71,33 +57,37 @@ const setupMap = async () => {
 };
 
 onMounted(() => {
+    console.info('Map mounted');
     setupMap();
-
+    
     watch(() => path.value, (newPath) => {
-        console.log(newPath);
         if (map.value && map.value.getSource('path')) {
+            newPath = JSON.parse(newPath);
             map.value.getSource('path').setData(newPath);
         } else if (!map.value.getSource('path')) {
-            addPathLayer(map, path);
+            addPathLayer();
         }
     });
 
     watch(() => pathPoints.value, (newPathPoint) => {
         if (map.value && map.value.getSource('pathPoints')) {
+            newPathPoint = JSON.parse(newPathPoint);
             map.value.getSource('pathPoints').setData(newPathPoint);
         }
     });
 
     watch(() => poi.value, (newPOI) => {
         if (map.value && map.value.getSource('POI')) {
+            newPOI = JSON.parse(newPOI);
             map.value.getSource('POI').setData(newPOI);
         } else if (!map.value.getSource('POI')) {
-            addPOILayer(map, poi);
+            addPOILayer();
         }
     });
 });
 
 onUnmounted(() => {
+    console.info('Map unmounted');
     map.value?.remove();
 });
 </script>
