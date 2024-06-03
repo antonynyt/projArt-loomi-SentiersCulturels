@@ -24,6 +24,13 @@ const initObserver = () => {
             if (entry.isIntersecting) {
                 const coordinates = entry.target.dataset.coordinates.split(',');
                 easeTo(coordinates);
+                entry.target.classList.add('active');
+                entry.target.classList.add('outline', 'outline-purple');
+                entry.target.querySelector(".step").classList.add('bg-purple', 'text-white');
+            } else {
+                entry.target.classList.remove('active');
+                entry.target.classList.remove('outline', 'outline-purple');
+                entry.target.querySelector(".step").classList.remove('bg-purple', 'text-white');
             }
         });
     }, options);
