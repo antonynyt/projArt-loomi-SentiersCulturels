@@ -24,12 +24,13 @@ class DatabaseSeeder extends Seeder
         $this->call(AchievementsTableSeeder::class);
         $this->call(AchievementUserTableSeeder::class);
         $this->call(PoisTableSeeder::class);
+        $this->call(PoiFactsTableSeeder::class);
         $this->call(PhotosTableSeeder::class);
         $this->call(LinksTableSeeder::class);
         $this->call(AudioTableSeeder::class);
-        $this->call(AnswersTableSeeder::class);
-        $this->call(QuestionsTableSeeder::class);
         $this->call(QuizzesTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
+        $this->call(AnswersTableSeeder::class);
         $this->call(PoiHistoriesTableSeeder::class);
         $this->call(ThemesTableSeeder::class);
         $this->call(PathsTableSeeder::class);

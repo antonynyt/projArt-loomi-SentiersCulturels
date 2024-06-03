@@ -18,11 +18,10 @@ class AchievementsTableSeeder extends Seeder
         DB::table('achievements')->delete();
 
         $achievements = [
-            ['title' => 'First Blood', 'icon' => 'first_blood.png'],
-            ['title' => 'Double Kill', 'icon' => 'double_kill.png'],
-            ['title' => 'Triple Kill', 'icon' => 'triple_kill.png'],
-            ['title' => 'Quadra Kill', 'icon' => 'quadra_kill.png'],
-            ['title' => 'Penta Kill', 'icon' => 'penta_kill.png'],
+            [
+                'title' => 'Premier sentier',
+                'icon' => asset('storage/img/achievements/first-path.svg')
+            ],
         ];
 
         foreach ($achievements as $achievement) {

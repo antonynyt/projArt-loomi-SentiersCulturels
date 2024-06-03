@@ -14,99 +14,16 @@ class PoisTableSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('poi_facts')->delete();
+        DB::table('photos')->delete();
+        DB::table('audio')->delete();
+        DB::table('answers')->delete();
+        DB::table('questions')->delete();
+        DB::table('quizzes')->delete();
+        DB::table('links')->delete();
         DB::table('pois')->delete();
 
         $pois = [
-            [
-                'title' => 'Terrasses de Lavaux',
-                'short_descr' => 'Site du patrimoine mondial de l\'UNESCO.',
-                'descr' => 'Les terrasses de Lavaux offrent des vues spectaculaires et témoignent de siècles de viticulture.',
-                'adress_label' => 'Lavaux, Vaud, Suisse',
-                'lat' => 46.4900,
-                'long' => 6.7417,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Château de Chillon',
-                'short_descr' => 'Château médiéval sur une île.',
-                'descr' => 'Le château de Chillon, situé sur le lac Léman, est l\'un des bâtiments historiques les plus visités de Suisse.',
-                'adress_label' => 'Avenue de Chillon 21, 1820 Veytaux, Suisse',
-                'lat' => 46.4140,
-                'long' => 6.9276,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Montreux - Rochers-de-Naye',
-                'short_descr' => 'Chemin de fer de montagne pittoresque.',
-                'descr' => 'Ce chemin de fer offre des vues spectaculaires du lac Léman aux Alpes, culminant aux Rochers-de-Naye.',
-                'adress_label' => 'Montreux, Vaud, Suisse',
-                'lat' => 46.4418,
-                'long' => 6.9259,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Musée Olympique',
-                'short_descr' => 'Musée dédié aux Jeux Olympiques.',
-                'descr' => 'Situé à Lausanne, ce musée présente l\'histoire des Jeux Olympiques à travers des expositions interactives.',
-                'adress_label' => 'Quai d\'Ouchy 1, 1006 Lausanne, Suisse',
-                'lat' => 46.5155,
-                'long' => 6.6327,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Chaplin\'s World',
-                'short_descr' => 'Musée dédié à Charlie Chaplin.',
-                'descr' => 'Chaplin\'s World est situé dans l\'ancienne maison de Charlie Chaplin à Corsier-sur-Vevey, offrant une plongée dans sa vie et son œuvre.',
-                'adress_label' => 'Route de Fenil 2, 1804 Corsier-sur-Vevey, Suisse',
-                'lat' => 46.4716,
-                'long' => 6.8422,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Cathédrale de Lausanne',
-                'short_descr' => 'Cathédrale gothique.',
-                'descr' => 'Cette magnifique cathédrale gothique est un point central de Lausanne, connue pour son architecture impressionnante et son importance historique.',
-                'adress_label' => 'Place de la Cathédrale, 1005 Lausanne, Suisse',
-                'lat' => 46.5222,
-                'long' => 6.6358,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Tour de Sauvabelin',
-                'short_descr' => 'Tour d\'observation en bois.',
-                'descr' => 'Offrant des vues panoramiques sur Lausanne et le lac Léman, la Tour de Sauvabelin est un lieu populaire pour les visiteurs.',
-                'adress_label' => 'Chemin des Celtes, 1018 Lausanne, Suisse',
-                'lat' => 46.5301,
-                'long' => 6.6458,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Lavaux Vinorama',
-                'short_descr' => 'Musée du vin et dégustation.',
-                'descr' => 'Situé au cœur des vignobles de Lavaux, ce lieu offre une expérience immersive dans la culture viticole locale.',
-                'adress_label' => 'Route du Lac 2, 1096 Bourg-en-Lavaux, Suisse',
-                'lat' => 46.4886,
-                'long' => 6.7262,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Grottes de Vallorbe',
-                'short_descr' => 'Spectaculaires grottes calcaires.',
-                'descr' => 'Ces grottes impressionnantes comptent parmi les plus belles de Suisse, avec des stalactites et des stalagmites stupéfiantes.',
-                'adress_label' => 'Chemin des Grottes 30, 1337 Vallorbe, Suisse',
-                'lat' => 46.7102,
-                'long' => 6.3816,
-                'accessibility' => true,
-            ],
-            [
-                'title' => 'Espace Horloger',
-                'short_descr' => 'Musée de l\'horlogerie.',
-                'descr' => 'Situé dans la Vallée de Joux, ce musée présente l\'histoire et l\'art de l\'horlogerie suisse.',
-                'adress_label' => 'Rue de l\'Industrie 2, 1347 Le Sentier, Suisse',
-                'lat' => 46.6082,
-                'long' => 6.2307,
-                'accessibility' => true,
-            ],
             [
                 'title' => 'Terrasses de Lavaux',
                 'short_descr' => 'Site du patrimoine mondial de l\'UNESCO.',
@@ -432,15 +349,6 @@ class PoisTableSeeder extends Seeder
                 'accessibility' => true,
             ],
             [
-                'title' => 'Musée de la Grenette',
-                'short_descr' => 'Musée d\'histoire locale.',
-                'descr' => 'Le musée de la Grenette à Vevey offre des expositions sur l\'histoire locale et des événements culturels.',
-                'adress_label' => 'Rue de Lausanne 1, 1800 Vevey, Suisse',
-                'lat' => 46.4582,
-                'long' => 6.8459,
-                'accessibility' => true,
-            ],
-            [
                 'title' => 'Les Pléiades',
                 'short_descr' => 'Site naturel et station de ski.',
                 'descr' => 'Les Pléiades offrent des activités toute l\'année, y compris la randonnée, le ski et des vues panoramiques sur les Alpes et le lac Léman.',
@@ -458,17 +366,7 @@ class PoisTableSeeder extends Seeder
                 'long' => 6.5153,
                 'accessibility' => true,
             ],
-            [
-                'title' => 'Fondation Claude Verdan',
-                'short_descr' => 'Musée de la main.',
-                'descr' => 'Située à Lausanne, cette fondation est dédiée à la recherche et à l\'éducation sur la main humaine, avec des expositions interactives.',
-                'adress_label' => 'Chemin de Mont-Paisible 16, 1010 Lausanne, Suisse',
-                'lat' => 46.5268,
-                'long' => 6.6472,
-                'accessibility' => true,
-            ]
         ];
-
 
         foreach ($pois as $poi) {
             Poi::create($poi);
