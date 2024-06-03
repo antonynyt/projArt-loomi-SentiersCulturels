@@ -21,7 +21,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -30,7 +30,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -39,7 +39,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -48,7 +48,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -57,7 +57,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -66,7 +66,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -75,7 +75,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -84,7 +84,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -93,7 +93,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -102,7 +102,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -111,7 +111,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -120,7 +120,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -129,7 +129,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -138,7 +138,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -147,7 +147,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -156,7 +156,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -165,7 +165,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -174,7 +174,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -183,7 +183,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -192,7 +192,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -201,7 +201,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -210,7 +210,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -219,7 +219,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -228,7 +228,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -237,7 +237,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -246,7 +246,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -255,7 +255,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -264,7 +264,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -273,7 +273,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -282,7 +282,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -291,7 +291,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -300,7 +300,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -309,7 +309,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -318,7 +318,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -327,7 +327,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -336,7 +336,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -345,7 +345,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',
@@ -354,7 +354,7 @@ class AudioTableSeeder extends Seeder
             [
                 'title' => 'Default audio',
                 'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
-                'src_link' => asset('storage/audio/poi/poi-default-audio.mp3'),
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
                 'author' => 'Lidérc',
                 'date' => '2023-05-16',
                 'lang' => 'fr',

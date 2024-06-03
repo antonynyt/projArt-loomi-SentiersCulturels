@@ -53,23 +53,91 @@ class UsersTableSeeder extends Seeder
             'user_id' => $heig->id,
         ]);
 
-        // Create editor
-	    $editors = User::factory()->organization()->count(20)->create();
-        foreach ($editors as $editor) {
+        // Create users
+        $users = [
+            [
+                'pseudo' => 'jeremymartin',
+                'organization' => null,
+                'firstname' => 'Jérémy',
+                'lastname' => 'Martin',
+                'phone' => null,
+                'email' => 'jeremy.martin@heig-vd.ch',
+                'email_verified_at' => now(),
+                'password' => Hash::make('jeremymartin'),
+                'remember_token' => Str::random(10),
+            ],
+            [
+                'pseudo' => 'leilafidalgo',
+                'organization' => null,
+                'firstname' => 'Leïla',
+                'lastname' => 'Fidalgo',
+                'phone' => null,
+                'email' => 'leila.fidalgo@heig-vd.ch',
+                'email_verified_at' => now(),
+                'password' => Hash::make('leilafidalgo'),
+                'remember_token' => Str::random(10),
+            ],
+            [
+                'pseudo' => 'ariadnemelissargos',
+                'organization' => null,
+                'firstname' => 'Ariadne',
+                'lastname' => 'Melissargos',
+                'phone' => null,
+                'email' => 'ariadne.melissargos@heig-vd.ch',
+                'email_verified_at' => now(),
+                'password' => Hash::make('ariadnemelissargos'),
+                'remember_token' => Str::random(10),
+            ],
+            [
+                'pseudo' => 'antonyneyret',
+                'organization' => null,
+                'firstname' => 'Antony',
+                'lastname' => 'Neyret',
+                'phone' => null,
+                'email' => 'antony.neyret@heig-vd.ch',
+                'email_verified_at' => now(),
+                'password' => Hash::make('antonyneyret'),
+                'remember_token' => Str::random(10),
+            ],
+            [
+                'pseudo' => 'francoiscuennet',
+                'organization' => null,
+                'firstname' => 'François',
+                'lastname' => 'Cuennet',
+                'phone' => null,
+                'email' => 'francois.cuennet@heig-vd.ch',
+                'email_verified_at' => now(),
+                'password' => Hash::make('francoiscuennet'),
+                'remember_token' => Str::random(10),
+            ]
+        ];
+
+        $IdRoleUser = DB::table('roles')->where('role', 'user')->value('id');
+        foreach ($users as $user) {
+            $newUser = User::create($user);
             DB::table('role_user')->insert([
-                'role_id' => $IdRoleEditor,
-                'user_id' => $editor->id,
+                'role_id' => $IdRoleUser,
+                'user_id' => $newUser->id,
             ]);
         }
 
+        // Create editor
+	    // $editors = User::factory()->organization()->count(20)->create();
+        // foreach ($editors as $editor) {
+        //     DB::table('role_user')->insert([
+        //         'role_id' => $IdRoleEditor,
+        //         'user_id' => $editor->id,
+        //     ]);
+        // }
+
         // Create user
-	    $users = User::factory()->count(20)->create();
-        $IdRoleUser = DB::table('roles')->where('role', 'user')->value('id');
-        foreach ($users as $user) {
-            DB::table('role_user')->insert([
-                'role_id' => $IdRoleUser,
-                'user_id' => $user->id,
-            ]);
-        }
+	    // $users = User::factory()->count(20)->create();
+        // $IdRoleUser = DB::table('roles')->where('role', 'user')->value('id');
+        // foreach ($users as $user) {
+        //     DB::table('role_user')->insert([
+        //         'role_id' => $IdRoleUser,
+        //         'user_id' => $user->id,
+        //     ]);
+        // }
     }
 }

@@ -14,6 +14,8 @@ class PoisTableSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('poi_histories')->delete();
+        DB::table('path_poi')->delete();
         DB::table('poi_facts')->delete();
         DB::table('photos')->delete();
         DB::table('audio')->delete();

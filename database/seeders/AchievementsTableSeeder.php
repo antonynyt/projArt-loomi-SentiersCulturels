@@ -20,7 +20,7 @@ class AchievementsTableSeeder extends Seeder
         $achievements = [
             [
                 'title' => 'Premier sentier',
-                'icon' => asset('storage/img/achievements/first-path.svg')
+                'icon' => asset('storage/images/achievements/first-path.svg')
             ],
         ];
 

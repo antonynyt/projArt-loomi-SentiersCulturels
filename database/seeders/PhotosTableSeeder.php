@@ -55,7 +55,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Entrée du Chaplin\'s World à Corsier-sur-Vevey.',
                 'author' => 'Arpingstone',
                 'year' => 2017,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Chaplin\'s World')->value('id'),
             ],
             [
@@ -79,7 +79,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Exposition à l\'Espace Horloger dans la Vallée de Joux.',
                 'author' => 'Pierre Rosselle',
                 'year' => 2014,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Espace Horloger')->value('id'),
             ],
             [
@@ -119,7 +119,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'La façade de la Maison d’Ailleurs à Yverdon-les-Bains.',
                 'author' => 'Rama',
                 'year' => 2010,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Maison d’Ailleurs')->value('id'),
             ],
             [
@@ -127,7 +127,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Musée Jenisch à Vevey.',
                 'author' => 'Claude Jaccard',
                 'year' => 2010,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée Jenisch')->value('id'),
             ],
             [
@@ -135,7 +135,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Vue extérieure de la Fondation de l’Hermitage à Lausanne.',
                 'author' => 'Zaymbee',
                 'year' => 2011,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Fondation de l’Hermitage')->value('id'),
             ],
             [
@@ -143,7 +143,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Vue panoramique depuis le Signal de Bougy.',
                 'author' => 'Christian M. Küng',
                 'year' => 2007,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Signal de Bougy')->value('id'),
             ],
             [
@@ -151,7 +151,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Entrée du Musée de Pully.',
                 'author' => 'Ricardo André Frantz',
                 'year' => 2009,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée de Pully')->value('id'),
             ],
             [
@@ -159,7 +159,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le château médiéval de Grandson.',
                 'author' => 'Patrick Giraud',
                 'year' => 2013,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Château de Grandson')->value('id'),
             ],
             [
@@ -167,7 +167,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Musée de la Confrérie des Vignerons à Vevey.',
                 'author' => 'Patrick Giraud',
                 'year' => 2013,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée de la Confrérie des Vignerons')->value('id'),
             ],
             [
@@ -175,7 +175,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le Château d\'Aigle et ses vignobles.',
                 'author' => 'Adrian Michael',
                 'year' => 2013,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Château d\'Aigle')->value('id'),
             ],
             [
@@ -183,7 +183,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le Musée Bolo à Lausanne.',
                 'author' => 'Museebolo',
                 'year' => 2015,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée Bolo')->value('id'),
             ],
             [
@@ -191,7 +191,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Paysage du Parc Naturel Jura Vaudois.',
                 'author' => 'Ludo29',
                 'year' => 2008,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Parc Naturel Jura Vaudois')->value('id'),
             ],
             [
@@ -199,7 +199,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Entrée de l\'Aquatis Aquarium-Vivarium à Lausanne.',
                 'author' => 'Sandrine Ziegler-Musi',
                 'year' => 2018,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Aquatis Aquarium-Vivarium')->value('id'),
             ],
             [
@@ -207,7 +207,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Extérieur du Musée romain de Lausanne-Vidy.',
                 'author' => 'Roland Zumbuehl',
                 'year' => 2014,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée romain de Lausanne-Vidy')->value('id'),
             ],
             [
@@ -215,7 +215,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'La Maison du Blé et du Pain à Echallens.',
                 'author' => 'Pierre Jeanneret',
                 'year' => 2009,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Maison du Blé et du Pain')->value('id'),
             ],
             [
@@ -223,7 +223,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Entrée du Musée du Vieux Montreux.',
                 'author' => 'Sandro Senn',
                 'year' => 2014,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée du Vieux Montreux')->value('id'),
             ],
             [
@@ -231,7 +231,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Entrée du Musée Suisse du Jeu à La Tour-de-Peilz.',
                 'author' => 'Patrick Nouhailler',
                 'year' => 2014,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée Suisse du Jeu')->value('id'),
             ],
             [
@@ -239,7 +239,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le Château de Morges.',
                 'author' => 'Christoph Röser',
                 'year' => 2013,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Château de Morges')->value('id'),
             ],
             [
@@ -247,7 +247,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le Jardin Botanique de Lausanne.',
                 'author' => 'Christophe Bovet',
                 'year' => 2014,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Le Jardin Botanique de Lausanne')->value('id'),
             ],
             [
@@ -255,7 +255,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Musée Historique de Lausanne.',
                 'author' => 'Javiersanp',
                 'year' => 2017,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée Historique de Lausanne')->value('id'),
             ],
             [
@@ -263,7 +263,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le parc de Mon Repos à Lausanne.',
                 'author' => 'Aconcagua',
                 'year' => 2009,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Parc de Mon Repos')->value('id'),
             ],
             [
@@ -271,7 +271,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'L\'Église Saint-François à Lausanne.',
                 'author' => 'Sandrine Ziegler-Musi',
                 'year' => 2018,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Église Saint-François')->value('id'),
             ],
             [
@@ -279,7 +279,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Musée de la Main UNIL-CHUV.',
                 'author' => 'Sandrine Ziegler-Musi',
                 'year' => 2018,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée de la Main UNIL-CHUV')->value('id'),
             ],
             [
@@ -287,7 +287,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'La Place de la Palud à Lausanne.',
                 'author' => 'Lapo Luchini',
                 'year' => 2008,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Place de la Palud')->value('id'),
             ],
             [
@@ -295,7 +295,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Musée Alexis Forel à Morges.',
                 'author' => 'Ramessos',
                 'year' => 2010,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Musée Alexis Forel')->value('id'),
             ],
             [
@@ -303,7 +303,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'La Maison de la Rivière à Tolochenaz.',
                 'author' => 'Pymouss',
                 'year' => 2018,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'La Maison de la Rivière')->value('id'),
             ],
             [
@@ -311,7 +311,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Vue panoramique depuis les Pléiades.',
                 'author' => 'Christian M. Küng',
                 'year' => 2007,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Les Pléiades')->value('id'),
             ],
             [
@@ -319,7 +319,7 @@ class PhotosTableSeeder extends Seeder
                 'descr' => 'Le Château de La Sarraz.',
                 'author' => 'Adrian Michael',
                 'year' => 2013,
-                'link' => asset('storage/img/poi/poi-default-photo.jpg'),
+                'link' => asset('storage/images/pois/poi-default-photo.jpg'),
                 'poi_id' => Poi::where('title', 'Château de La Sarraz')->value('id'),
             ],
         ];
