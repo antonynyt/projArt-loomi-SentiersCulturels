@@ -17,8 +17,10 @@ class Achievement extends Model
      */
     protected $fillable = [
         'title',
-        'slug',
-        'icon',
+        'descr',
+        'image',
+        'criteria',
+        'next_achievement',
     ];
 
     /**
@@ -28,5 +30,14 @@ class Achievement extends Model
      */
     public function users() {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get the next achievement
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function next() {
+        return $this->belongsTo(Achievement::class, 'next_achievement');
     }
 }

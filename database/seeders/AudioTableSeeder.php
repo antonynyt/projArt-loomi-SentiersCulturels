@@ -360,7 +360,33 @@ class AudioTableSeeder extends Seeder
                 'lang' => 'fr',
                 'poi_id' => Poi::where('title', 'Château de La Sarraz')->value('id')
             ],
-
+            [
+                'title' => 'Default audio',
+                'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
+                'author' => 'Lidérc',
+                'date' => '2024-06-04',
+                'lang' => 'fr',
+                'poi_id' => Poi::where('title', 'Espace des Inventions')->value('id'),
+            ],
+            [
+                'title' => 'Default audio',
+                'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
+                'author' => 'Lidérc',
+                'date' => '2024-06-04',
+                'lang' => 'fr',
+                'poi_id' => Poi::where('title', 'Vignoble en terrasses (chemin de randonnée)')->value('id'),
+            ],
+            [
+                'title' => 'Default audio',
+                'descr' => 'Aesthetic Boomopera - Podcast LoFi Lounge intro Music (15s) Seconds',
+                'src_link' => asset('storage/audio/pois/poi-default-audio.mp3'),
+                'author' => 'Lidérc',
+                'date' => '2024-06-04',
+                'lang' => 'fr',
+                'poi_id' => Poi::where('title', 'Palais de Rumine')->value('id'),
+            ],
         ];
 
 
