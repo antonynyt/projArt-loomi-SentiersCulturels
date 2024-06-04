@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(AchievementsTableSeeder::class);
-        $this->call(AchievementUserTableSeeder::class);
         $this->call(PoisTableSeeder::class);
         $this->call(PoiFactsTableSeeder::class);
         $this->call(PhotosTableSeeder::class);
@@ -37,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PathPoiTableSeeder::class);
         $this->call(PathHistoriesTableSeeder::class);
         $this->call(ReviewsTableSeeder::class);
+        $this->call(AchievementUserTableSeeder::class);
     }
 }
