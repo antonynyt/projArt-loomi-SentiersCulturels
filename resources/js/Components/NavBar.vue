@@ -1,5 +1,17 @@
 <script setup>
+import { ref, watch, onMounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import NavBarElement from '@/Components/NavBarElement.vue';
+
+const page = usePage();
+
+const isUrl = (...urls) => {
+    let currentUrl = page.url.substring(1);
+    if (urls[0] === '') {
+        return currentUrl === '';
+    }
+    return urls.filter(url => currentUrl.startsWith(url)).length;
+}
 
 </script>
 
@@ -7,7 +19,7 @@ import NavBarElement from '@/Components/NavBarElement.vue';
     <div class="fixed border-t border-gray-200 bottom-0 left-0 z-50 w-full h-20 bg-white">
         <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
 
-            <NavBarElement label="Accueil" href="/">
+            <NavBarElement label="Accueil" href="/" :class="{'active': isUrl('')}">
                 <svg data-outlined class="w-6 h-6 group-hover:text-blue-600" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="19" height="21" viewBox="0 0 19 21" fill="CurrentColor">
                     <path
@@ -20,7 +32,7 @@ import NavBarElement from '@/Components/NavBarElement.vue';
                 </svg>
             </NavBarElement>
 
-            <NavBarElement label="Sentiers" href='/sentiers'>
+            <NavBarElement label="Carte" href='/map' :class="{'active': isUrl('map')}">
                 <svg data-outlined class="w-6 h-6 group-hover:text-blue-600" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="23" height="24" viewBox="0 0 23 24" fill="CurrentColor">
                     <path
@@ -36,7 +48,7 @@ import NavBarElement from '@/Components/NavBarElement.vue';
                 </svg>
             </NavBarElement>
 
-            <NavBarElement label="Favoris" href="/favoris">
+            <NavBarElement label="Favoris" href="/favoris" :class="{'active': isUrl('favoris', 'login')}">
                 <svg data-outlined class="w-6 h-6 group-hover:text-blue-600" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="CurrentColor">
                     <path
@@ -54,7 +66,7 @@ import NavBarElement from '@/Components/NavBarElement.vue';
                 </svg>
             </NavBarElement>
 
-            <NavBarElement label="Profil" href="/profile">
+            <NavBarElement label="Profil" href="/profile" :class="{'active': isUrl('profile')}">
                 <svg data-outlined class="w-6 h-6 group-hover:text-blue-600" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="CurrentColor">
                     <path
