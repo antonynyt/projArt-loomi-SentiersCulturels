@@ -124,7 +124,7 @@ class PhotosTableSeeder extends Seeder
             ],
             [
                 'title' => 'Musee Jenisch',
-                'descr' => 'Le musée Jenisch Vevey, inauguré le 10 mars 1897 à Vevey en Suisse, est un musée d’art abritant des collections de peinture, de gravure avec le Cabinet cantonal des estampes qui fédère notamment les fonds Decker, William Cuendet & Atelier de Saint-Prex, et Alexis Forel, et de dessin avec le Centre national du dessin. Le musée abrite également la Fondation Oskar Kokoschka.',
+                'descr' => 'Le musée Jenisch Vevey, inauguré le 10 mars 1897 à Vevey en Suisse, est un musée d’art.',
                 'author' => 'Dirrival',
                 'year' => 2012,
                 'link' => 'https://upload.wikimedia.org/wikipedia/commons/8/88/Musee_Jenisch.jpg',
