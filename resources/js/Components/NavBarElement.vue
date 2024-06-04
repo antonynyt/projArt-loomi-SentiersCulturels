@@ -16,9 +16,9 @@ const props = defineProps({
 
 
 <template>
-    <Link :href class="inline-flex flex-col font-normal items-center justify-center text-midnight-blue px-5 hover:bg-gray-50" :aria-label="props.label" :class="{ 'active': $page.url === props.href }" > 
+    <Link :href class="inline-flex flex-col font-normal items-center justify-center text-midnight-blue px-5 hover:bg-gray-50" :aria-label="props.label" > 
         <slot />
-        <span class="text-sm mt-1">{{ props.label }}</span>
+        <span class="text-xs mt-1">{{ props.label }}</span>
     </Link>
 </template>
 <style>
