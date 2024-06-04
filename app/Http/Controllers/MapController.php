@@ -3,13 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Path;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class MapController extends Controller
 {
+
+    private function formatGeoJson($features)
+    {
+        $geojson = [
+            'type' => 'FeatureCollection',
+            'features' => $features->map(function ($feature) {
+                return [
+                    'type' => 'Feature',
+                    'geometry' => [
+                        'type' => 'Point',
+                        'coordinates' => [$feature->long, $feature->lat],
+                    ],
+                    'properties' => [
+                        'id' => $feature->id,
+                        'name' => $feature->title,
+                        'description' => $feature->descr,
+                        'type' => $feature->type,
+                    ],
+                ];
+            }),
+        ];
+
+        return json_encode($geojson);
+    }
     public function index()
     {
+
         $paths = Path::with('pois')->get();
 
         foreach ($paths as $path) {
@@ -21,31 +45,16 @@ class MapController extends Controller
         }
         //append $pathCoordinates to $paths
         $paths->each(function ($path, $key) use ($pathCoordinates) {
-            $path->coordinates = $pathCoordinates[$key];
+            $path->long = $pathCoordinates[$key][0];
+            $path->lat = $pathCoordinates[$key][1];
+            $path->type = 'path';
         });
 
-        $geojson = [
-            'type' => 'FeatureCollection',
-            'features' => $paths->map(function ($path) {
-                return [
-                    'type' => 'Feature',
-                    'geometry' => [
-                        'type' => 'Point',
-                        'coordinates' => $path->coordinates,
-                    ],
-                    'properties' => [
-                        'id' => $path->id,
-                        'name' => $path->title,
-                        'description' => $path->descr,
-                    ],
-                ];
-            }),
-        ];
-
-        $geojson = json_encode($geojson);
+        $PathPoints = $this->formatGeoJson($paths);
+        // dd($PathPoints);
 
         return Inertia::render('Map', [
-            'pathPoints' => $geojson,
+            'poi' => $PathPoints,
         ]);
     }
 
