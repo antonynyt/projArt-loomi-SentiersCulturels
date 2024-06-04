@@ -1,5 +1,6 @@
 import { router } from "@inertiajs/vue3";
 import { mapContainer, map, pathPoints, poi, path } from '../stores/mapStore';
+import { Popup } from 'maplibre-gl';
 
 // Constants
 const PATH_SOURCE = "path";
@@ -47,15 +48,17 @@ const handleFeatureClick = (feature) => {
     console.info("CLICKED", feature)
     if (feature.layer.id === PATH_POINT_LAYER) { 
         router.visit(`/map/${feature.properties.id}`, { preserveState: true });
-        map.value.easeTo({
-            center: feature.geometry.coordinates,
-            zoom: 16,
-        });
-        // path.value = feature.properties.path;
-        // poi.value = feature.properties.poi;
         map.value.setLayoutProperty(PATH_POINT_LAYER, "visibility", "none");
         map.value.setLayoutProperty(PATH_POINT_LABEL_LAYER, "visibility", "none");
+    } else {
+        const popup = new Popup()
+            .setLngLat(feature.geometry.coordinates)
+            .setHTML(`<h3 class='leading-tight bg-purple text-white'>${feature.properties.position}. ${feature.properties.name}</h3><p><button>Détails</button></p>`)
+            .addTo(map.value);
     }
+    map.value.easeTo({
+        center: feature.geometry.coordinates,
+    });
 
 };
 
@@ -93,7 +96,7 @@ export const addPathPointLayer = async () => {
             source: PATH_POINTS_SOURCE,
             filter: ["!", ["has", "point_count"]],
             layout: {
-                "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
+                "text-field": ["get", "name"], // TODO: Update field name as in DB GEOJSON
                 "icon-padding": 0,
                 "text-padding": 0,
                 "text-overlap": "always",
@@ -161,7 +164,7 @@ export const addPOILayer = async () => {
             source: POI_SOURCE,
             filter: ["!", ["has", "point_count"]],
             layout: {
-                "text-field": ["get", "Name"], // TODO: Update field name as in DB GEOJSON
+                "text-field": ["get", "name"], // TODO: Update field name as in DB GEOJSON
                 "icon-padding": 0,
                 "text-padding": 0,
                 "text-overlap": "always",

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, watch, onUnmounted, ref, shallowRef, markRaw } from 'vue';
-import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
+import { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { addPathLayer, addPathPointLayer, addPOILayer } from './utils/addLayer';
 import { mapContainer, map, pathPoints, poi, path } from './stores/mapStore';
@@ -101,11 +101,48 @@ onUnmounted(() => {
     outline: none;
 }
 
-.maplibregl-popup {
-    max-width: 200px;
-}
-
 .maplibregl-marker {
     cursor: pointer;
+}
+
+/* Marker tweaks */
+.maplibregl-popup {
+  font-family: 'PPAvenir', sans-serif;
+}
+
+.maplibregl-popup-close-button {
+  display: none;
+}
+
+.maplibregl-popup-content {
+  padding: 0;
+  width: 180px;
+  border-radius: 0.5rem;
+}
+
+.maplibregl-popup-content h3 {
+  margin: 0;
+  padding: 10px;
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-weight: 600;
+  margin-top: -15px;
+}
+
+.maplibregl-popup-content p {
+  margin: 0;
+  padding: 10px;
+  font-weight: 400;
+}
+
+.maplibregl-popup-content div {
+  padding: 10px;
+}
+
+.maplibregl-popup-anchor-top > .maplibregl-popup-content {
+  margin-top: 15px;
+}
+
+.maplibregl-popup-anchor-top > .maplibregl-popup-tip {
+  border-bottom-color: #91c949;
 }
 </style>

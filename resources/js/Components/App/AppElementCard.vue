@@ -39,11 +39,11 @@ const props = defineProps({
 </script>
 
 <template>
-    <article class="border border-midnight-blue rounded-2xl p-1">
+    <article class="border border-gray-300 rounded-2xl p-1">
         <Link :href="href" class="flex justify-between" preserve-state>
             <img :src="thumbnail" :alt="title" class="object-cover rounded-lg aspect-square h-24">
             <div class="grow flex flex-col justify-center px-5">
-                <h3 class="text-lg font-medium text-midnight-blue">
+                <h3 class="text-md font-medium text-midnight-blue leading-5">
                     {{ title }}
                 </h3>
                 <p class="text-sm text-gray-500">{{ location }}</p>

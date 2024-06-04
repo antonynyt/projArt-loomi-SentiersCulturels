@@ -2,14 +2,14 @@
 import { ref } from 'vue';
 
 const activeTab = ref('sentiers');
+//emit
+const emit = defineEmits(['setActiveTab']);
 
 const setActiveTab = (tab) => {
     activeTab.value = tab;
     emit('setActiveTab', tab);
 };
 
-//emit
-const emit = defineEmits(['setActiveTab']);
 
 </script>
 

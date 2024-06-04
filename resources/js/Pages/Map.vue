@@ -19,6 +19,9 @@ const props = defineProps({
     poi: {
         type: String,
     },
+    pathInfos: {
+        type: Object,
+    },
     showPath: {
         type: Boolean,
         default: false,
@@ -99,8 +102,10 @@ const toggleDrawer = () => {
         <div class="map__container h-[calc(100dvh-80px)]">
             <MapGL :options />
         </div>
-        <AppDetailsOverlay v-if="showPath"/>
-        <TheDrawer v-else :isOpen="drawerIsOpen" @update:drawerIsOpen="handleDrawerClose">
+        <Transition>
+            <AppDetailsOverlay v-if="showPath" :pathInfos/>
+        </Transition>
+        <TheDrawer v-if="!showPath" :isOpen="drawerIsOpen" @update:drawerIsOpen="handleDrawerClose">
             <template #tab>
                 <AppTabSwitch @setActiveTab="filterByTab"/>
             </template>
@@ -127,3 +132,15 @@ const toggleDrawer = () => {
 
 
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

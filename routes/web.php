@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -21,20 +22,8 @@ Route::get('/', function () {
     ]);
 })->name('explorer');
 
-Route::get('/map', function () {
-    return Inertia::render('Map', [
-        'pathPoints' => file_get_contents('storage/sentiers/sentiers.geojson'),
-    ]);
-});
-
-Route::get('/map/{id}', function () {
-    $id = request()->route('id');
-    return Inertia::render('Map', [
-        'path' => file_get_contents("storage/sentiers/$id/path.geojson"),
-        'poi' => file_get_contents("storage/sentiers/$id/poi.geojson"),
-        'showPath' => true,
-    ]);
-});
+Route::get('/map', [MapController::class, 'index'])->name('map.index');
+Route::get('/map/{id}', [MapController::class, 'show'])->name('map.show');
 
 Route::get('/favoris', function () {
     return Inertia::render("Favorites");
