@@ -16,6 +16,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('path_histories')->delete();
+        DB::table('poi_histories')->delete();
+        DB::table('achievement_user')->delete();
+        DB::table('reviews')->delete();
         DB::table('users')->delete();
 
         // Create admin user

@@ -56,6 +56,19 @@ class User extends Authenticatable
         ];
     }
 
+    public function hasRole($role){
+        return $this->roles->where('role',$role)->count() > 0;
+    }
+
+    public function hasAnyRole($roles){
+        foreach($roles as $role){
+            if($this->hasRole($role)){
+                return true;
+             }
+         }
+         return false;
+    }
+
     /**
      * Get the roles associated with the user.
      */

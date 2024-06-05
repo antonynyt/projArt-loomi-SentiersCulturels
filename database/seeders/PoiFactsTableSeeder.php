@@ -398,6 +398,61 @@ class PoiFactsTableSeeder extends Seeder
                 'content' => 'Le château accueille régulièrement des événements culturels et des expositions temporaires.',
                 'poi_id' => Poi::where('title', 'Château de La Sarraz')->value('id'),
             ],
+            [
+                'title' => 'Expositions interactives',
+                'content' => 'L\'Espace des Inventions propose des expositions interactives sur divers thèmes scientifiques pour les jeunes et les familles.',
+                'poi_id' => Poi::where('title', 'Espace des Inventions')->value('id'),
+            ],
+            [
+                'title' => 'Accessibilité',
+                'content' => 'L\'Espace des Inventions est accessible à tous et offre une découverte enrichissante des avancées scientifiques et technologiques à Lausanne.',
+                'poi_id' => Poi::where('title', 'Espace des Inventions')->value('id'),
+            ],
+            [
+                'title' => 'Construction',
+                'content' => 'Le Château Saint-Maire a été construit au 14ème siècle et a été le siège des évêques de Lausanne jusqu\'en 1536.',
+                'poi_id' => Poi::where('title', 'Château Saint-Maire')->value('id'),
+            ],
+            [
+                'title' => 'Vins',
+                'content' => 'Le Domaine Croix Duplex est réputé pour ses vins blancs, notamment le Chasselas et le Chardonnay.',
+                'poi_id' => Poi::where('title', 'Domaine Croix Duplex')->value('id'),
+            ],
+            [
+                'title' => 'Vins',
+                'content' => 'Le Caveau de Dézaley est réputé pour ses vins blancs, notamment le Dézaley Grand Cru AOC.',
+                'poi_id' => Poi::where('title', 'Caveau de Dézaley')->value('id'),
+            ],
+            [
+                'title' => 'Longueur',
+                'content' => 'La Lakeside Promenade s\'étend sur environ 4 kilomètres le long du lac Léman.',
+                'poi_id' => Poi::where('title', 'Lakeside Promenade')->value('id'),
+            ],
+            [
+                'title' => 'Inauguration',
+                'content' => 'La statue de Freddie Mercury a été inaugurée le 25 novembre 1996, soit cinq ans après sa mort.',
+                'poi_id' => Poi::where('title', 'Statue de Freddie Mercury')->value('id'),
+            ],
+            [
+                'title' => 'Histoire',
+                'content' => 'Le Casino de Montreux a été construit en 1891 et a été reconstruit en 1974 après un incendie qui a détruit l\'édifice d\'origine.',
+                'poi_id' => Poi::where('title', 'Casino de Montreux')->value('id'),
+            ],
+            [
+                'title' => 'Patrimoine mondial de l\'UNESCO',
+                'content' => 'Les vignobles en terrasses de Lavaux sont inscrits au patrimoine mondial de l\'UNESCO depuis 2007 en raison de leur importance culturelle, historique et esthétique.',
+                'poi_id' => Poi::where('title', 'Vignoble en terrasses (chemin de randonnée)')->value('id'),
+            ],
+            [
+                'title' => 'Fondation en 1962',
+                'content' => 'Läderach a été fondé en 1962 par Rudolf Läderach dans le canton de Glaris, en Suisse. Depuis lors, l\'entreprise familiale est devenue l\'un des principaux chocolatiers suisses.',
+                'poi_id' => Poi::where('title', 'Läderach - Chocolatier Suisse')->value('id'),
+            ],
+            [
+                'title' => 'Construction du Palais de Rumine',
+                'content' => 'Le Palais de Rumine a été construit entre 1892 et 1902 par l\'architecte suisse Gaspard André. Il a été nommé en l\'honneur de Gabriel de Rumine, un bienfaiteur russe qui a financé sa construction.',
+                'poi_id' => Poi::where('title', 'Palais de Rumine')->value('id'),
+            ],
         ];
 
         foreach ($poiFacts as $poiFact) {

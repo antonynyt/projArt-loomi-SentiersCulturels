@@ -208,6 +208,46 @@ class LinksTableSeeder extends Seeder
                 'url' => 'https://www.chateau-lasarraz.ch/',
                 'poi_id' => Poi::where('title', 'Château de La Sarraz')->value('id')
             ],
+            [
+                'title' => 'Espace des Inventions',
+                'url' => 'https://www.espace-des-inventions.ch/',
+                'poi_id' => Poi::where('title', 'Espace des Inventions')->value('id')
+            ],
+            [
+                'title' => 'Château Saint-Maire',
+                'url' => 'https://www.vd.ch/territoire-et-construction/monuments-et-sites/monuments-cantonaux/le-chateau-saint-maire',
+                'poi_id' => Poi::where('title', 'Château Saint-Maire')->value('id')
+            ],
+            [
+                'title' => 'Domaine Croix Duplex',
+                'url' => 'https://www.croix-duplex.ch/',
+                'poi_id' => Poi::where('title', 'Domaine Croix Duplex')->value('id')
+            ],
+            [
+                'title' => 'Caveau de Dézaley',
+                'url' => 'https://www.dezaley.ch/fr/caveaux/',
+                'poi_id' => Poi::where('title', 'Caveau de Dézaley')->value('id')
+            ],
+            [
+                'title' => 'Casino de Montreux',
+                'url' => 'https://www.casinosbarriere.com/fr/montreux.html',
+                'poi_id' => Poi::where('title', 'Casino de Montreux')->value('id')
+            ],
+            [
+                'title' => 'Lavaux, Patrimoine mondial',
+                'url' => 'https://www.lavaux-unesco.ch/',
+                'poi_id' => Poi::where('title', 'Vignoble en terrasses (chemin de randonnée)')->value('id'),
+            ],
+            [
+                'title' => 'Site officiel de Läderach',
+                'url' => 'https://laderach.com/ch-fr/',
+                'poi_id' => Poi::where('title', 'Läderach - Chocolatier Suisse')->value('id'),
+            ],
+            [
+                'title' => 'Site officiel du Palais de Rumine',
+                'url' => 'https://www.palaisderumine.ch/',
+                'poi_id' => Poi::where('title', 'Palais de Rumine')->value('id'),
+            ],
         ];
 
         foreach ($links as $link) {

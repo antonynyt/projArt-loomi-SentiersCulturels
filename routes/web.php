@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -30,3 +31,19 @@ Route::get('/favoris', function () {
 })->middleware(['auth'])->name('favorites');
 
 require __DIR__.'/auth.php';
+
+/**
+ * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.
+ * One or multiple roles can be passed to the role middleware.
+ */
+Route::group(['middleware'=>'role:user'],function(){
+
+});
+
+Route::group(['middleware'=>'role:editor'],function(){
+
+});
+
+Route::group(['middleware'=>'role:admin'],function(){
+
+});
