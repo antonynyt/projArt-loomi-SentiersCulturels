@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,9 +14,28 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(AchievementsTableSeeder::class);
+        $this->call(PoisTableSeeder::class);
+        $this->call(PoiFactsTableSeeder::class);
+        $this->call(PhotosTableSeeder::class);
+        $this->call(LinksTableSeeder::class);
+        $this->call(AudioTableSeeder::class);
+        $this->call(QuizzesTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
+        $this->call(AnswersTableSeeder::class);
+        $this->call(PoiHistoriesTableSeeder::class);
+        $this->call(ThemesTableSeeder::class);
+        $this->call(PathsTableSeeder::class);
+        $this->call(PathPoiTableSeeder::class);
+        $this->call(PathHistoriesTableSeeder::class);
+        $this->call(ReviewsTableSeeder::class);
+        $this->call(AchievementUserTableSeeder::class);
     }
 }
