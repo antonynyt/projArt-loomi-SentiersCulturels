@@ -14,7 +14,7 @@ copy-env:
 
 generate-key:
 	@echo "Generating application key..."
-	php artisan migrate:fresh --seed
+	php artisan key:generate
 
 start-mysql:
 	@echo "Starting MySQL database server with Docker..."
