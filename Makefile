@@ -12,6 +12,10 @@ copy-env:
 	@echo "Copying .env.example to .env..."
 	cp .env.example .env
 
+generate-key:
+	@echo "Generating application key..."
+	php artisan key:generate
+
 start-mysql:
 	@echo "Starting MySQL database server with Docker..."
 	docker run --name sentiersCulturels-mysql \
