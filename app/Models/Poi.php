@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Path;
 use App\Models\PoiHistory;
+use App\Models\PoiFact;
+use App\Models\Photo;
 
 class Poi extends Model
 {
@@ -57,5 +59,14 @@ class Poi extends Model
      */
     public function poiFact() {
         return $this->hasMany(PoiFact::class);
+    }
+
+    /**
+     * Get the photo for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photos() {
+        return $this->hasMany(Photo::class);
     }
 }
