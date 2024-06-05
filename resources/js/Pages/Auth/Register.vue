@@ -36,10 +36,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="pseudo"
-                    >Nom d'utilisateur
-                    <abbr class="text-red" title="required">*</abbr></InputLabel
-                >
+                <InputLabel for="pseudo" value="Nom d'utilisateur" />
 
                 <TextInput
                     id="pseudo"
@@ -61,6 +58,7 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.firstname"
+                    required
                     autofocus
                     autocomplete="firstname"
                 />
@@ -75,6 +73,7 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.lastname"
+                    required
                     autofocus
                     autocomplete="lastname"
                 />
@@ -83,10 +82,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email"
-                    >Email
-                    <abbr class="text-red" title="required">*</abbr></InputLabel
-                >
+                <InputLabel for="email" value="Email" />
 
                 <TextInput
                     id="email"
@@ -101,10 +97,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password"
-                    >Mot de passe
-                    <abbr class="text-red" title="required">*</abbr></InputLabel
-                >
+                <InputLabel for="password" value="Mot de passe" />
 
                 <TextInput
                     id="password"

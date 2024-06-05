@@ -11,9 +11,9 @@ const user = usePage().props.auth.user;
 <template>
     <Head title="Dashboard" />
     <DefaultLayout>
-        <ContentLayout
-            ><TheHeader title="Dashboard" class="mb-8" />
+        <ContentLayout>
             <AuthenticatedLayout>
+                <TheHeader title="Dashboard" class="mb-8" />
                 <div class="py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="overflow-hidden sm:rounded-lg">
