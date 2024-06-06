@@ -15,9 +15,8 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
     <Head title="Dashboard"></Head>
     <ContentLayout>
             <Headline class="mb-4" rank="h2" type="m">Créer un nouveau sentier</Headline>
-            <Text class="mb-4" type="m">Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois.</Text>
-            <Text class="mb-4" type="m">Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore.</Text>
-            <TheHeader title="Dashboard" class="mb-8"></TheHeader>
+            <InformationText class="mb-4" type="m">Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois.</InformationText>
+            <InformationText class="mb-4" type="m">Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore.</InformationText>
     </ContentLayout>
 </template>
 

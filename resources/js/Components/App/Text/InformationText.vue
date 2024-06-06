@@ -13,7 +13,6 @@
 
 <style scoped>
 .information{
-    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 18px;
     font-style: normal;
     font-weight: 469;

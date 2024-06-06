@@ -25,7 +25,6 @@
 <style scoped>
 .title{
     width: 100%;
-    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     text-transform: uppercase;
     word-wrap: break-word;
 

@@ -17,7 +17,6 @@
 
 <style scoped>
 .link{
-    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-style: normal;
     font-weight: 336;
     line-height: normal;

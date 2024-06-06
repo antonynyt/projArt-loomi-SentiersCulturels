@@ -75,7 +75,7 @@ const options = ref({
     </Head>
 
     <DefaultLayout>
-        <div class="absolute top-0 left-0 h-dvh w-full bg-red z-20">
+        <div class="absolute top-0 left-0 h-dvh w-full bg-off-white z-20">
             <Instructions></Instructions>
         </div>
         <!-- <SearchBar/> -->
