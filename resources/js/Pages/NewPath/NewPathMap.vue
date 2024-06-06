@@ -1,19 +1,24 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
-
-import { mapContainer, map, pathPoints, poi, path } from '../Components/Map/stores/mapStore';
-import AppElementCard from '@/Components/App/AppElementCard.vue';
+import TheDrawer from '@/Components/App/TheDrawer.vue';
+import { map, poi, path } from '../../Components/Map/stores/mapStore';
 import AppDetailsOverlay from '@/Components/App/AppDetailsOverlay.vue';
+import NewPathInstructions from '@/Pages/NewPath/NewPathInstructions.vue';
 
-import Instructions from '@/Components/NewPath/Instructions.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import InputError from '@/Components/InputError.vue';
+import Modal from '@/Components/Modal.vue';
+import SearchBar from '@/Components/SearchBar.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import SearchInput from '@/Components/Search/SearchInput.vue';
+import Text from '@/Components/App/Text/Text.vue';
+import NewPathDrawer from '@/Components/NewPath/NewPathDrawer.vue';
 
 const props = defineProps({
-    pathPoints: {
-        type: String,
-    },
     path: {
         type: String,
     },
@@ -29,24 +34,25 @@ const props = defineProps({
     }
 });
 
-const showPath = ref(props.showPath);
+const searchInput = ref('');
 
-pathPoints.value = props.pathPoints;
-poi.value = props.poi;
-path.value = props.path;
-
-watch(() => props.pathPoints, (newVal) => {
-    if (newVal) {
-        pathPoints.value = newVal;
-    }
+const options = ref({
+    controls: true,
+    hash: true,
 });
 
+poi.value = props.poi;
+path.value = props.path;
+const showPath = ref(props.showPath);
+
+//pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
     if (newVal) {
         poi.value = newVal;
     }
 });
 
+//pour que le path soit visible sur la carte quand la props du back est changée
 watch(() => props.path, (newVal) => {
     if (newVal) {
         showPath.value = true;
@@ -56,15 +62,7 @@ watch(() => props.path, (newVal) => {
             center: json.features[0].geometry.coordinates[0],
             zoom: 16
         });
-        map.value.setLayoutProperty('pathPoint', "visibility", "none");
-        map.value.setLayoutProperty('point-label', "visibility", "none");
     }
-});
-
-
-const options = ref({
-    controls: true,
-    hash: true,
 });
 
 </script>
@@ -75,17 +73,19 @@ const options = ref({
     </Head>
 
     <DefaultLayout>
-        <div class="absolute top-0 left-0 h-dvh w-full bg-off-white z-20">
-            <Instructions></Instructions>
-        </div>
-        <!-- <SearchBar/> -->
         <div class="map__container h-[calc(100dvh-80px)]">
             <MapGL :options />
         </div>
         <Transition>
             <AppDetailsOverlay v-if="showPath" :pathInfos/>
         </Transition>
+        <NewPathDrawer>
+            <template #tab>
 
+            </template>
+            <SearchInput v-model="searchInput" label="Search input" placeholder="Rechercher un point d’intérêt"/>
+            <Text v-for="n in 20" type="l" class="ms-6 mt-4">{{ searchInput }}</Text>
+        </NewPathDrawer>
     </DefaultLayout>
 </template>
 
@@ -99,4 +99,5 @@ const options = ref({
 .v-leave-to {
     opacity: 0;
 }
+
 </style>
