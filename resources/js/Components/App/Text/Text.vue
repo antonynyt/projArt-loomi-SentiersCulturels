@@ -1,13 +1,9 @@
 <template>
-    <p class="text" :class="['text-' + type.toLowerCase()]">{{ content }}</p>
+    <p class="text" :class="['text-' + type.toLowerCase()]"><slot></slot></p>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         type: {
             type: String,
             default: 'm',

@@ -1,13 +1,9 @@
 <template>
-    <a class="link" :class="['link-' + type.toLowerCase(), { 'underline': underline }]">{{ content }}</a>
+    <a class="link" :class="['link-' + type.toLowerCase(), { 'underline': underline }]"><slot></slot></a>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         underline: {
             type: Boolean,
             default: true,

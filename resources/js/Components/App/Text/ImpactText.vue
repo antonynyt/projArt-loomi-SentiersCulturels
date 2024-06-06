@@ -1,13 +1,9 @@
 <template>
-    <p class="impact" :class="['impact-' + type.toLowerCase(), { 'heavy': heavy }]">{{ content }}</p>
+    <p class="impact" :class="['impact-' + type.toLowerCase(), { 'heavy': heavy }]"><slot></slot></p>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         heavy: {
             type: Boolean,
             default: false,

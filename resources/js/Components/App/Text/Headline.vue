@@ -1,20 +1,16 @@
 <template>
     <div>
-        <h1 v-if="rank.toLowerCase()==='h1'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h1>
-        <h2 v-if="rank.toLowerCase()==='h2'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h2>
-        <h3 v-if="rank.toLowerCase()==='h3'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h3>
-        <h4 v-if="rank.toLowerCase()==='h4'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h4>
-        <h5 v-if="rank.toLowerCase()==='h5'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h5>
-        <h6 v-if="rank.toLowerCase()==='h6'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h6>
+        <h1 v-if="rank.toLowerCase()==='h1'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h1>
+        <h2 v-if="rank.toLowerCase()==='h2'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h2>
+        <h3 v-if="rank.toLowerCase()==='h3'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h3>
+        <h4 v-if="rank.toLowerCase()==='h4'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h4>
+        <h5 v-if="rank.toLowerCase()==='h5'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h5>
+        <h6 v-if="rank.toLowerCase()==='h6'" class="title" :class="`title-${type.toLowerCase()}`"><slot></slot></h6>
     </div>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         rank: {
             type: String,
             default: 'h1',
