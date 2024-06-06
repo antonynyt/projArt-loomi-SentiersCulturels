@@ -16,16 +16,18 @@
 docker run --name sentiersCulturels-mysql -e MYSQL_USER=laravel -e MYSQL_PASSWORD=laravel -e MYSQL_ALLOW_EMPTY_PASSWORD=true -e MYSQL_DATABASE=laravel -p 3306:3306 -d mysql:latest
 ```
 
-5. `php artisan migrate:fresh --seed`
-6. `php artisan storage:link`
-7. Start Mailpit server (Docker ou pas)
+5. `php artisan migrate`
+6. `php artisan db:seed`
+7. `php artisan key:generate`
+8. `php artisan storage:link`
+9. Start Mailpit server (Docker ou pas)
 
 ```
 docker run --name=sentiersCulturels-mailpit -p 8025:8025 -p 1025:1025 -d axllent/mailpit
 ```
 
-8. `npm run dev` & `php artisan serve`
+10. `npm run dev` & `php artisan serve`
 
-## Installer avec Make
+## Installer avec Make (si make est installé)
 
 1. make all

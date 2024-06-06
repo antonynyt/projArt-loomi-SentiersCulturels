@@ -1,22 +1,29 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
+import TheHeader from "@/Components/App/TheHeader.vue";
+import ContentLayout from "@/Layouts/ContentLayout.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+const user = usePage().props.auth.user;
 </script>
 
 <template>
     <Head title="Dashboard" />
-
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+    <DefaultLayout>
+        <ContentLayout>
+            <AuthenticatedLayout>
+                <TheHeader title="Dashboard" class="mb-8" />
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="overflow-hidden sm:rounded-lg">
+                            <div class="w-[323px] text-[22px]">
+                                Bonjour, {{ user.firstname }} !
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </AuthenticatedLayout>
+            </AuthenticatedLayout>
+        </ContentLayout>
+    </DefaultLayout>
 </template>

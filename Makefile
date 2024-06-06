@@ -30,7 +30,9 @@ start-mailpit:
 
 init-migrations:
 	@echo "Generating application key..."
-	php artisan migrate:fresh --seed
+	php artisan migrate
+	php artisan db:seed
+	php artisan key:generate
 	php artisan storage:link
 
 start:

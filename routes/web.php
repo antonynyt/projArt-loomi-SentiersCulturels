@@ -32,6 +32,18 @@ Route::get('/favoris', function () {
 
 require __DIR__.'/auth.php';
 
+/**
+ * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.
+ * One or multiple roles can be passed to the role middleware.
+ */
+Route::group(['middleware'=>'role:user'],function(){
+
+});
+
 Route::group(['middleware'=>'role:editor'],function(){
+
+});
+
+Route::group(['middleware'=>'role:admin'],function(){
 
 });
