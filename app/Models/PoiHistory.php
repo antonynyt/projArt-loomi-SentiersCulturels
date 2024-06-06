@@ -17,7 +17,6 @@ class PoiHistory extends Model
      * @var string[]
      */
     protected $fillable = [
-        'is_visited',
         'poi_id',
         'user_id',
     ];
