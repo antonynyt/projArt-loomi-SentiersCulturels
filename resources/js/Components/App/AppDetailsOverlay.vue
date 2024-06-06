@@ -66,13 +66,13 @@ const pois = ref(JSON.parse(poi.value).features);
             <div class="px-5">
                 <PrimaryButton @click="back" class="mb-4 absolute top-[-60px]">Retour</PrimaryButton>
                 <AppElementCard class="bg-white shadow-md"
-                    thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
-                    :title="pathInfos.title" href="/sentiers/2" location="ici"
-                    :infos="{ distance: pathInfos.distance, duration: pathInfos.duration, elevation: pathInfos.ascent }">
+                    :thumbnail="pathInfos.thumbnail"
+                    :title="pathInfos.title" :href="'/sentier/' + pathInfos.id" :location="pathInfos.location"
+                    :infos="{ distance: pathInfos.distance, duration: pathInfos.duration, elevation: pathInfos.elevation }">
                 </AppElementCard>
             </div>
             <div class="flex w-full flex-row gap-4 overflow-x-scroll py-4 px-12 scoll-ps-12 no-scrollbar snap-x snap-mandatory">
-                <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" href="/sentiers/2/1"
+                <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" href="/poi/2"
                     :coordinates="poi.geometry.coordinates" />
             </div>
         </div>

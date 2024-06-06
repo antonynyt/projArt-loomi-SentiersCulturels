@@ -1,18 +1,15 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
 import TheDrawer from '@/Components/App/TheDrawer.vue';
 import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
-import { mapContainer, map, pathPoints, poi, path } from '../Components/Map/stores/mapStore';
+import { map, poi, path } from '../Components/Map/stores/mapStore';
 import AppElementCard from '@/Components/App/AppElementCard.vue';
 import AppDetailsOverlay from '@/Components/App/AppDetailsOverlay.vue';
 
 const props = defineProps({
-    pathPoints: {
-        type: String,
-    },
     path: {
         type: String,
     },
@@ -28,24 +25,36 @@ const props = defineProps({
     }
 });
 
-const showPath = ref(props.showPath);
-
-pathPoints.value = props.pathPoints;
-poi.value = props.poi;
-path.value = props.path;
-
-watch(() => props.pathPoints, (newVal) => {
-    if (newVal) {
-        pathPoints.value = newVal;
-    }
+const options = ref({
+    controls: true,
+    hash: true,
 });
 
+poi.value = props.poi;
+path.value = props.path;
+const showPath = ref(props.showPath);
+const tab = ref('path');
+
+const filterByTab = (tab) => {
+    return (item) => {
+        return item.properties.type === tab;
+    }
+};
+
+// Computed property to filter items based on the selected tab
+const listItems = computed(() => {
+    const filteredItems = JSON.parse(poi.value).features.filter(filterByTab(tab.value));
+    return filteredItems;
+});
+
+//pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
     if (newVal) {
         poi.value = newVal;
     }
 });
 
+//pour que le path soit visible sur la carte quand la props du back est changée
 watch(() => props.path, (newVal) => {
     if (newVal) {
         showPath.value = true;
@@ -55,40 +64,10 @@ watch(() => props.path, (newVal) => {
             center: json.features[0].geometry.coordinates[0],
             zoom: 16
         });
-        map.value.setLayoutProperty('pathPoint', "visibility", "none");
-        map.value.setLayoutProperty('point-label', "visibility", "none");
     }
 });
 
-
-const options = ref({
-    controls: true,
-    hash: true,
-});
-
-const filterByTab = (tab) => {
-    if (tab === 'sentiers') {
-        console.log('sentiers');
-        //SELECT * FROM POI WHERE POI.ordre = 0 inner join sentiers
-    } else {
-        console.log('lieux');
-        //SELECT * FROM POI
-    }
-}
-
-//close drawer onclick
-const drawerIsOpen = ref(false);
-
-// Handle drawer close event from child
-const handleDrawerClose = (value) => {
-    drawerIsOpen.value = value;
-}
-
-const toggleDrawer = () => {
-    drawerIsOpen.value = !drawerIsOpen.value;
-}
-
-//GUIDE: use drawerIsOpen.value = false; to close drawer
+console.log(listItems.value);
 
 </script>
 
@@ -105,32 +84,22 @@ const toggleDrawer = () => {
         <Transition>
             <AppDetailsOverlay v-if="showPath" :pathInfos/>
         </Transition>
-        <TheDrawer v-if="!showPath" :isOpen="drawerIsOpen" @update:drawerIsOpen="handleDrawerClose">
+        <TheDrawer v-if="!showPath">
             <template #tab>
-                <AppTabSwitch @setActiveTab="filterByTab"/>
+                <AppTabSwitch @setActiveTab="tab = $event"/>
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard @click="toggleDrawer"
-                    thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
-                    title="Sentier du Renard"
-                    href="/map/1"
-                    location="Saint-Étienne"
-                    :infos="{ distance: '5km', duration: '2h', elevation: '200m' }">
-                </AppElementCard>
-
-                <AppElementCard @click="toggleDrawer"
-                    thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
-                    title="Sentier des Lutins"
-                    href="/map/2"
-                    location="ici"
-                    :infos="{ distance: '5km', duration: '2h', elevation: '200m' }">
+                <AppElementCard v-for="item in listItems"
+                    :thumbnail="item.properties.thumbnail"
+                    :title="item.properties.name"
+                    :href="'map/' + item.properties.id"
+                    :location=item.properties.location
+                    :options="item.properties.infos">
                 </AppElementCard>
             </section>
         </TheDrawer>
     </DefaultLayout>
-
-
 </template>
 
 <style scoped>
