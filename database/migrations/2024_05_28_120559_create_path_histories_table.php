@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('path_histories', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_favorite')->default(false);
-            $table->boolean('is_finished')->default(false);
             $table->foreignId('path_id')
                 ->references('id')
                 ->on('paths')

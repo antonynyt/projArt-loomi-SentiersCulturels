@@ -17,8 +17,6 @@ class PathHistory extends Model
      * @var string[]
      */
     protected $fillable = [
-        'is_favorite',
-        'is_finished',
         'path_id',
         'user_id',
     ];
