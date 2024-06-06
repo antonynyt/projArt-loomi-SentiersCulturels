@@ -4,7 +4,7 @@ import AppDisclamer from '@/Components/App/AppDisclamer.vue';
 </script>
 
 <template>
-    <AppDisclamer/>
+    <!-- <AppDisclamer/> -->
     <div class="flex flex-col w-full">
         <slot />
         <NavBar/>

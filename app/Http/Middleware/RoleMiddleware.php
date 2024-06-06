@@ -15,11 +15,14 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if(!auth()->check() || !auth()->user()->hasAnyRole($roles)){
-            if($roles === ["admin"])
-                abort(403);
-            else
+        if(!auth()->check()){
+            if(in_array("user", $roles))
                 return redirect()->route('login');
+            else
+                abort(403);
+        }
+        if(!auth()->user()->hasAnyRole($roles)){
+            abort(403);
         }
         return $next($request);
     }

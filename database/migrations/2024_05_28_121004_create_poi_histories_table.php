@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('poi_histories', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_visited')->default(false);
             $table->foreignId('poi_id')
                 ->references('id')
                 ->on('pois')
