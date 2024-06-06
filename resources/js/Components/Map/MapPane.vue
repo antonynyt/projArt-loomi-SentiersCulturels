@@ -2,7 +2,7 @@
 import { onMounted, watch, onUnmounted, ref, shallowRef, markRaw } from 'vue';
 import { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { addPathLayer, addPathPointLayer, addPOILayer } from './utils/addLayer';
+import { addPathLayer, addPOILayer } from './utils/addLayer';
 import { mapContainer, map, pathPoints, poi, path } from './stores/mapStore';
 import { addControls } from './utils/controlManagment';
 
@@ -42,7 +42,6 @@ const setupMap = async () => {
 
     map.value.on('load', async () => {
         addPathLayer();
-        await addPathPointLayer();
         await addPOILayer();
     });
 
