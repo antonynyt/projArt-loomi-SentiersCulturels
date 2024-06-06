@@ -1,5 +1,5 @@
 <template>
-    <p class="information" :class="['information-' + type.toLowerCase()]"><slot></slot></p>
+    <p class="text-midnight-blue information" :class="['information-' + type.toLowerCase()]"><slot></slot></p>
 </template>
 
 <script setup>
@@ -13,21 +13,21 @@
 
 <style scoped>
 .information{
-    font-size: 18px;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 469;
     line-height: normal;
 }
 .information-xs {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 .information-s {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .information-m {
-    font-size: 16px;
+    font-size: 1rem;
 }
 .information-l {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 </style>

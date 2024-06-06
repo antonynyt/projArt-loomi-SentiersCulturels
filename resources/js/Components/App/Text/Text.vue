@@ -1,5 +1,5 @@
 <template>
-    <p class="text" :class="['text-' + type.toLowerCase()]"><slot></slot></p>
+    <p class="text-midnight-blue text" :class="['text-' + type.toLowerCase()]"><slot></slot></p>
 </template>
 
 <script setup>
@@ -18,15 +18,15 @@
     line-height: normal;
 }
 .text-xs {
-    font-size: 10px;
+    font-size: 0.625rem;
 }
 .text-s {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 .text-m {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .text-l {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 </style>

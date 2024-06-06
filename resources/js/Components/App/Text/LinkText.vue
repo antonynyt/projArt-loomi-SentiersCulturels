@@ -1,5 +1,5 @@
 <template>
-    <a class="link" :class="['link-' + type.toLowerCase(), { 'underline': underline }]"><slot></slot></a>
+    <a class="text-midnight-blue link" :class="['link-' + type.toLowerCase(), { 'underline': underline }]"><slot></slot></a>
 </template>
 
 <script setup>
@@ -25,9 +25,9 @@
     text-decoration-line: underline;
 }
 .link-s {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .link-m {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 </style>
