@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
 import TheDrawer from '@/Components/App/TheDrawer.vue';
@@ -33,8 +33,19 @@ const options = ref({
 poi.value = props.poi;
 path.value = props.path;
 const showPath = ref(props.showPath);
+const tab = ref('path');
 
-const listItems = ref(JSON.parse(poi.value).features);
+const filterByTab = (tab) => {
+    return (item) => {
+        return item.properties.type === tab;
+    }
+};
+
+// Computed property to filter items based on the selected tab
+const listItems = computed(() => {
+    const filteredItems = JSON.parse(poi.value).features.filter(filterByTab(tab.value));
+    return filteredItems;
+});
 
 //pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
@@ -56,15 +67,7 @@ watch(() => props.path, (newVal) => {
     }
 });
 
-const filterByTab = (tab) => {
-    if (tab === 'paths') {
-        console.log('sentiers');
-        //SELECT * FROM POI WHERE POI.ordre = 0 inner join sentiers
-    } else {
-        console.log('lieux');
-        //SELECT * FROM POI
-    }
-}
+console.log(listItems.value);
 
 </script>
 
@@ -83,22 +86,20 @@ const filterByTab = (tab) => {
         </Transition>
         <TheDrawer v-if="!showPath">
             <template #tab>
-                <AppTabSwitch @setActiveTab="filterByTab"/>
+                <AppTabSwitch @setActiveTab="tab = $event"/>
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems" @click="toggleDrawer"
-                    thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEfcic7qPkE6RB0WoiQE7Ks4e6TkXa3XethQ&s"
+                <AppElementCard v-for="item in listItems"
+                    :thumbnail="item.properties.thumbnail"
                     :title="item.properties.name"
-                    href="/map/1"
-                    location="Saint-Étienne"
-                    :infos="{ distance: '5km', duration: '2h', elevation: '200m' }">
+                    :href="'map/' + item.properties.id"
+                    :location=item.properties.location
+                    :options="item.properties.infos">
                 </AppElementCard>
             </section>
         </TheDrawer>
     </DefaultLayout>
-
-
 </template>
 
 <style scoped>

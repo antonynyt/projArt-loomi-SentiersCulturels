@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Path;
+use App\Models\Poi;
 use Inertia\Inertia;
 
 class MapController extends Controller
@@ -24,6 +25,15 @@ class MapController extends Controller
                         'name' => $feature->title,
                         'description' => $feature->descr,
                         'type' => $feature->type,
+                        'thumbnail' => $feature->thumbnail,
+                        'location' => $feature->location,
+                        'infos' => [
+                            'distance' => $feature->distance,
+                            'duration' => $feature->duration,
+                            'difficulty' => $feature->difficulty,
+                            'elevation' => $feature->elevation,
+                            'type' => $feature->type,
+                        ]
                     ],
                 ];
             }),
@@ -31,70 +41,91 @@ class MapController extends Controller
 
         return json_encode($geojson);
     }
-    public function index()
-    {
+    // public function index()
+    // {
 
-        $paths = Path::with('pois')->get();
+    //     $paths = Path::with('pois')->get();
 
-        foreach ($paths as $path) {
-            $firstPoi = $path->pois->first();
-            $pathCoordinates[] = [
-                $firstPoi->long,
-                $firstPoi->lat,
-            ];
-        }
-        //append $pathCoordinates to $paths
-        $paths->each(function ($path, $key) use ($pathCoordinates) {
-            $path->long = $pathCoordinates[$key][0];
-            $path->lat = $pathCoordinates[$key][1];
-            $path->type = 'path';
+    //     foreach ($paths as $path) {
+    //         $firstPoi = $path->pois->first();
+    //         $pathCoordinates[] = [
+    //             $firstPoi->long,
+    //             $firstPoi->lat,
+    //         ];
+    //     }
+    //     //append $pathCoordinates to $paths
+    //     $paths->each(function ($path, $key) use ($pathCoordinates) {
+    //         $path->long = $pathCoordinates[$key][0];
+    //         $path->lat = $pathCoordinates[$key][1];
+    //         $path->type = 'path';
+    //     });
+
+    //     $PathPoints = $this->formatGeoJson($paths);
+    //     // dd($PathPoints);
+
+    //     return Inertia::render('Map', [
+    //         'poi' => $PathPoints,
+    //     ]);
+    // }
+
+    public function index() {
+        //return all pois and append path with type poi or path
+
+        //get pois with photos in the photos table one to many relationship
+        $pois = Poi::all();
+
+        $pois->each(function ($poi) {
+            $poi->type = 'poi';
+            $poi->thumbnail = Poi::with('photos')->find($poi->id)->photos->first()->link;
         });
 
-        $PathPoints = $this->formatGeoJson($paths);
-        // dd($PathPoints);
+        $paths = Path::all();
+        $paths->each(function ($path) {
+            $path->type = 'path';
+            $path->long = $path->pois->first()->long;
+            $path->lat = $path->pois->first()->lat;
+            $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+            $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
+        });
+
+        $features = $pois->merge($paths);
+        $geojson = $this->formatGeoJson($features);
 
         return Inertia::render('Map', [
-            'poi' => $PathPoints,
+            'poi' => $geojson,
         ]);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
-        $infos = Path::find($id);
         $path = Path::with('pois')->find($id);
-        $geojson = $path->geojson;
-
+        $pathGeojson = $path->geojson;
+        
+        $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+        $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
         $pois = $path->pois;
-
-        //get original attribute from pivot table
         $pois->each(function ($poi) {
             $poi->pivot_position = $poi->pivot->position;
         });
 
-        $POIgeojson = [
-            'type' => 'FeatureCollection',
-            'features' => $pois->map(function ($poi) {
-                return [
-                    'type' => 'Feature',
-                    'geometry' => [
-                        'type' => 'Point',
-                        'coordinates' => [$poi->long, $poi->lat],
-                    ],
-                    'properties' => [
-                        'id' => $poi->id,
-                        'position' => $poi->pivot_position,
-                        'name' => $poi->title,
-                        'description' => $poi->descr,
-                    ],
-                ];
-            }),
+        $infos = [
+            'id' => $path->id,
+            'thumbnail' => $path->thumbnail,
+            'title' => $path->title,
+            'description' => $path->descr,
+            'location' => explode(',', $path->location,)[1],
+            'distance' => $path->distance / 1000,
+            'duration' => $path->duration,
+            'elevation' => $path->ascent / 1000,
         ];
 
-        $POIgeojson = json_encode($POIgeojson);
+        // dd($infos, $pathGeojson, $pois);
+
+        $POIgeojson = $this->formatGeoJson($pois);
 
         return Inertia::render('Map', [
             'pathInfos' => $infos,
-            'path' => $geojson,
+            'path' => $pathGeojson,
             'poi' => $POIgeojson,
             'showPath' => true,
         ]);
