@@ -76,7 +76,7 @@ const options = ref({
 
     <DefaultLayout>
         <div class="absolute top-0 left-0 h-dvh w-full bg-red z-20">
-            <Instructions/>
+            <Instructions></Instructions>
         </div>
         <!-- <SearchBar/> -->
         <div class="map__container h-[calc(100dvh-80px)]">
