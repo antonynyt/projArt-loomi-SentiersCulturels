@@ -71,7 +71,7 @@ const pois = ref(JSON.parse(poi.value).features);
                     :infos="{ distance: pathInfos.distance, duration: pathInfos.duration, elevation: pathInfos.elevation }">
                 </AppElementCard>
             </div>
-            <div class="flex w-full flex-row gap-4 overflow-x-scroll py-4 px-12 scoll-ps-12 no-scrollbar snap-x snap-mandatory">
+            <div class="flex w-full flex-row gap-4 overflow-x-scroll py-4 px-6 scoll-ps-6 no-scrollbar snap-x snap-mandatory">
                 <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" href="/poi/2"
                     :coordinates="poi.geometry.coordinates" />
             </div>

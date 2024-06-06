@@ -57,7 +57,7 @@ onUnmounted(() => {
     <div ref="drawer"
         class="fixed bottom-20 left-0 w-full h-[60dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
         :class="isOpen ? 'translate-y-0' : 'translate-y-full'">
-        <div ref="drawerContent" class="p-5 overflow-auto h-full max-w-lg mx-auto">
+        <div ref="drawerContent" class="p-5 pb-8 overflow-auto h-full max-w-lg mx-auto">
             <slot />
         </div>
         <div class="fixed top-[-120px] w-full h-[120px] bg-white flex flex-col rounded-t-3xl">
