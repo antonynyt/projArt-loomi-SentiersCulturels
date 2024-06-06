@@ -1,10 +1,12 @@
 <template>
-    <h1 v-if="rank.toLowerCase()==='h1'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h1>
-    <h2 v-if="rank.toLowerCase()==='h2'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h2>
-    <h3 v-if="rank.toLowerCase()==='h3'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h3>
-    <h4 v-if="rank.toLowerCase()==='h4'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h4>
-    <h5 v-if="rank.toLowerCase()==='h5'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h5>
-    <h6 v-if="rank.toLowerCase()==='h6'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h6>
+    <div>
+        <h1 v-if="rank.toLowerCase()==='h1'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h1>
+        <h2 v-if="rank.toLowerCase()==='h2'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h2>
+        <h3 v-if="rank.toLowerCase()==='h3'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h3>
+        <h4 v-if="rank.toLowerCase()==='h4'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h4>
+        <h5 v-if="rank.toLowerCase()==='h5'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h5>
+        <h6 v-if="rank.toLowerCase()==='h6'" class="title" :class="`title-${type.toLowerCase()}`">{{ content }}</h6>
+    </div>
 </template>
 
 <script setup>
@@ -27,7 +29,7 @@
 <style scoped>
 .title{
     width: 100%;
-    font-family: PP Agrandir Variable;
+    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     text-transform: uppercase;
     word-wrap: break-word;
 

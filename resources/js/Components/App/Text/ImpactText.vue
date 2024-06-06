@@ -21,7 +21,7 @@
 
 <style scoped>
 .impact{
-    font-family: "PP Agrandir Variable";
+    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 16px;
     font-style: normal;
     font-weight: 617;

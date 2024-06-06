@@ -14,18 +14,9 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 <template>
     <Head title="Dashboard"></Head>
     <ContentLayout>
-            <headline content="Créer un nouveau sentier" rank="h2" type="m"></headline>
-            <ImpactText class="font-extrabold" :heavy="true" type="l" content="Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois."></ImpactText>
-            <p>.</p>
-            <p>.</p>
-            <p>.</p>
-            <InformationText type="xs" content="Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore."></InformationText>
-            <LinkText content="Dashboard" type="s" :underline="false"></LinkText>
-            <Text type="l" content="Bonjour,  !"></Text>
-
-            <p>Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois.</p>
-            <p>Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore.</p>
-
+            <Headline class="mb-2" content="Créer un nouveau sentier" rank="h2" type="m"></Headline>
+            <Text class="mb-4" type="m" content="Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois."></Text>
+            <Text class="mb-4" type="m" content="Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore."></Text>
             <TheHeader title="Dashboard" class="mb-8"></TheHeader>
 
     </ContentLayout>
