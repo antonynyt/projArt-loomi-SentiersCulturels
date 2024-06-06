@@ -9,6 +9,7 @@ use App\Models\Path;
 use App\Models\PoiHistory;
 use App\Models\PoiFact;
 use App\Models\Photo;
+use App\Models\PoiFavorite;
 
 class Poi extends Model
 {
@@ -68,5 +69,14 @@ class Poi extends Model
      */
     public function photos() {
         return $this->hasMany(Photo::class);
+    }
+
+    /**
+     * Get the poi_favorite for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function poiFavorites() {
+        return $this->hasMany(PoiFavorite::class);
     }
 }
