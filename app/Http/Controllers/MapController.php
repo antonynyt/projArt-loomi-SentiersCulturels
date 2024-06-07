@@ -68,7 +68,8 @@ class MapController extends Controller
     //     ]);
     // }
 
-    public function index() {
+    public function index()
+    {
         //return all pois and append path with type poi or path
 
         //get pois with photos in the photos table one to many relationship
@@ -100,7 +101,7 @@ class MapController extends Controller
     {
         $path = Path::with('pois')->find($id);
         $pathGeojson = $path->geojson;
-        
+
         $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
         $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
         $pois = $path->pois;
@@ -113,7 +114,7 @@ class MapController extends Controller
             'thumbnail' => $path->thumbnail,
             'title' => $path->title,
             'description' => $path->descr,
-            'location' => explode(',', $path->location,)[1],
+            'location' => explode(',', $path->location, )[1],
             'distance' => $path->distance / 1000,
             'duration' => $path->duration,
             'elevation' => $path->ascent / 1000,
