@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -32,13 +33,10 @@ Route::get('/favoris', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/dashboard', function () {
-    if(auth()->user()->hasRole('user')){
-        return Inertia::render('Dashboard');
-    } else {
-        return Inertia::render('DashboardEditor');
-    }
-})->middleware(['role:user,editor'])->name('dashboard');
+//Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['role:user,editor'])->name('dashboard');
 
 /**
  * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.
