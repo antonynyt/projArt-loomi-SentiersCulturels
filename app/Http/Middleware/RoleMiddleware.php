@@ -16,7 +16,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if(!auth()->check()){
-            if(in_array("user", $roles))
+            if(in_array("user", $roles) || in_array("editor", $roles))
                 return redirect()->route('login');
             else
                 abort(403);

@@ -49,8 +49,17 @@ Route::group(['middleware' => 'role:user'], function () {
 
 Route::group(['middleware' => 'role:editor'], function () {
     Route::get('/new-path', function () {
-        return Inertia::render('NewPath');
-    })->name('new-path');
+        return redirect('new-path/instructions'); });
+    Route::get('/new-path/instructions', function () {
+        return Inertia::render('NewPath/NewPathInstructions'); });
+    Route::get('/new-path/map', function () {
+        return Inertia::render('NewPath/NewPathMap'); });
+    Route::get('/new-path/search', function () {
+        return Inertia::render('NewPath/NewPathSearch'); });
+    Route::get('/new-path/search', function () {
+        return Inertia::render('NewPath/NewPathForm'); });
+    Route::get('/new-path/search', function () {
+        return Inertia::render('NewPath/NewPathSuccess'); });
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

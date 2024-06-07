@@ -10,7 +10,6 @@ const user = usePage().props.auth.user;
 
 <template>
     <Head title="Dashboard"></Head>
-    <DefaultLayout>
         <ContentLayout>
                 <TheHeader title="Dashboard" class="mb-8"></TheHeader>
 
@@ -24,5 +23,4 @@ const user = usePage().props.auth.user;
                     </div>
                 </div>
         </ContentLayout>
-    </DefaultLayout>
 </template>

@@ -36,7 +36,7 @@ const options = ref({
                 <!-- <section class="mt-8">
                     <h2 class="text-xl font-medium uppercase text-midnight-blue">Quel Sentier es-tu ?</h2>
                     <a href="#" class="block mt-3 h-48 border border-midnight-blue rounded-lg overflow-hidden">
-                        
+
                     </a>
                 </section> -->
                 <section class="mt-8">
@@ -47,7 +47,7 @@ const options = ref({
                     </div>
                 </section>
             </main>
-        
+
     </ContentLayout>
 
 
