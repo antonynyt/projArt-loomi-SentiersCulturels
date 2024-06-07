@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch, onUnmounted, ref, shallowRef, markRaw } from 'vue';
+import { onMounted, watch, onUnmounted, markRaw } from 'vue';
 import { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { addPathLayer, addPOILayer } from './utils/addLayer';
@@ -41,8 +41,8 @@ const setupMap = async () => {
     initializeMap();
 
     map.value.on('load', async () => {
-        addPathLayer();
         await addPOILayer();
+        addPathLayer();
     });
 
     if (props.options.flyTo) {

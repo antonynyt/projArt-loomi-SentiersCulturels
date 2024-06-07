@@ -1,6 +1,6 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-import { ref, watch, computed } from 'vue';
+import { Head } from '@inertiajs/vue3';
+import { ref, watch, computed, onMounted } from 'vue';
 import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import MapGL from '@/Components/Map/MapPane.vue';
 import TheDrawer from '@/Components/App/TheDrawer.vue';
@@ -15,6 +15,7 @@ const props = defineProps({
     },
     poi: {
         type: String,
+        required: true,
     },
     pathInfos: {
         type: Object,
@@ -47,6 +48,26 @@ const listItems = computed(() => {
     return filteredItems;
 });
 
+// Définir une ref pour stocker les points filtrés.
+const filteredPoi = ref(listItems);
+
+// Mettre à jour filteredPoi chaque fois que listItems change.
+watch(listItems, (newVal) => {
+    filteredPoi.value = newVal;
+});
+
+// Mettre à jour la carte chaque fois que filteredPoi change.
+watch(filteredPoi, (newVal) => {
+    if (newVal) {
+        map.value.getSource('POI').setData(
+            JSON.parse(JSON.stringify({
+                type: 'FeatureCollection',
+                features: newVal
+            }))
+        );
+    }
+});
+
 //pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
     if (newVal) {
@@ -67,35 +88,37 @@ watch(() => props.path, (newVal) => {
     }
 });
 
-console.log(listItems.value);
+//close drawer onclick
+const isOpen = ref(false);
+// Handle drawer close event from child
+const handleDrawerClose = (value) => {
+    isOpen.value = value;
+}
 
 </script>
 
 <template>
+
     <Head>
         <title>Home</title>
     </Head>
 
     <DefaultLayout>
-        <!-- <SearchBar/> -->
         <div class="map__container h-[calc(100dvh-80px)]">
             <MapGL :options />
         </div>
         <Transition>
-            <AppDetailsOverlay v-if="showPath" :pathInfos/>
+            <AppDetailsOverlay v-if="showPath" :pathInfos />
         </Transition>
-        <TheDrawer v-if="!showPath">
+        <TheDrawer v-if="!showPath" :isOpen @update:isOpen="handleDrawerClose">
             <template #tab>
-                <AppTabSwitch @setActiveTab="tab = $event"/>
+                <AppTabSwitch @setActiveTab="tab = $event" />
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems"
-                    :thumbnail="item.properties.thumbnail"
-                    :title="item.properties.name"
-                    :href="'map/' + item.properties.id"
-                    :location=item.properties.location
-                    :options="item.properties.infos">
+                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)"
+                    :title="item.properties.name" :type="item.properties.type" :href="'/map/'+ item.properties.id" :location=item.properties.location
+                    :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
                 </AppElementCard>
             </section>
         </TheDrawer>

@@ -54,7 +54,6 @@ const back = () => {
     window.history.back();
 }
 
-// console.log(poi.value);
 const pois = ref(JSON.parse(poi.value).features);
 
 
@@ -62,18 +61,18 @@ const pois = ref(JSON.parse(poi.value).features);
 
 <template>
     <div class="fixed bottom-20 left-0 w-full z-20">
-        <div class="flex flex-col overflow-auto h-full max-w-lg w-full mx-auto">
-            <div class="px-5">
-                <PrimaryButton @click="back" class="mb-4 absolute top-[-60px]">Retour</PrimaryButton>
-                <AppElementCard class="bg-white shadow-md"
-                    :thumbnail="pathInfos.thumbnail"
-                    :title="pathInfos.title" :href="'/sentier/' + pathInfos.id" :location="pathInfos.location"
-                    :infos="{ distance: pathInfos.distance, duration: pathInfos.duration, elevation: pathInfos.elevation }">
-                </AppElementCard>
-            </div>
-            <div class="flex w-full flex-row gap-4 overflow-x-scroll py-4 px-6 scoll-ps-6 no-scrollbar snap-x snap-mandatory">
+        <div class="flex flex-col overflow-hidden h-full max-w-lg w-full mx-auto">
+            <div class="flex w-full flex-row gap-4 overflow-x-scroll pt-1 pb-4 px-6 scoll-ps-6 no-scrollbar snap-x snap-mandatory">
                 <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" href="/poi/2"
                     :coordinates="poi.geometry.coordinates" />
+            </div>
+            <div class="px-5 pb-4">
+                <PrimaryButton @click="back" class="absolute top-[-52px] text-xs border-none shadow-md">Retour</PrimaryButton>
+                <AppElementCard class="bg-white shadow-md"
+                    :thumbnail="pathInfos.thumbnail"
+                    :title="pathInfos.title" type="path" :href="'/sentier/' + pathInfos.id" :location="pathInfos.location"
+                    :infos="{ distance: pathInfos.distance, duration: pathInfos.duration, ascent: pathInfos.ascent }">
+                </AppElementCard>
             </div>
         </div>
     </div>

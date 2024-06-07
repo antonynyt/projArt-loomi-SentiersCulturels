@@ -9,7 +9,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:drawerIsOpen']);
+const emit = defineEmits(['update:isOpen']);
 
 const isOpen = ref(props.isOpen);
 const drawer = ref(null);
@@ -18,8 +18,8 @@ let hammer = null;
 
 const toggleDrawer = () => {
     isOpen.value = !isOpen.value;
-    emit('update:drawerIsOpen', isOpen.value);
-};
+    emit('update:isOpen', isOpen.value);
+}
 
 watch(() => props.isOpen, (newVal) => {
     isOpen.value = newVal;
