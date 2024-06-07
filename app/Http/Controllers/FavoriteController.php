@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Path;
+use App\Models\PathFavorite;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use App\Models\Poi;
 
 class FavoriteController extends Controller
 {
@@ -12,7 +16,19 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $paths = Path::with('pois')->where('favorite', true)->get();
+        // Récupérer l'utilisateur connecté
+        $user = Auth::user();
+
+        // Récupérer les path_id en fonction de l'user_id connecté
+        $pathsFav = $user->pathFavorites()->with('path')->get();
+        $pathsFav->each(function ($pathFav) {
+            $pathFav->thumbnail = Poi::with('photos')->find($pathFav->path->pois->first()->id)->photos->first()->link;
+            $pathFav->location = Poi::with('photos')->find($pathFav->path->pois->first()->id)->adress_label;
+        });
+
+        return Inertia::render('Favorites', [
+            'paths' => $pathsFav,
+        ]);
     }
 
     /**
