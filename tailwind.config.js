@@ -20,6 +20,7 @@ export default {
                 'beige': '#FFEED6',
                 'purple': '#9747FF',
                 'red': '#F59F99',
+                'grey': '#C1C9D2',
             },
             fontFamily: {
                 sans: ['PPAvenir', ...defaultTheme.fontFamily.sans],

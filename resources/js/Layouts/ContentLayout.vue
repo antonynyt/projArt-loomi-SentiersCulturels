@@ -5,7 +5,7 @@ import DefaultLayout from './DefaultLayout.vue';
 
 <template>
     <DefaultLayout>
-        <div class="w-full max-w-lg grid-cols-4 px-5 mx-auto mt-14 mb-28">
+        <div v-bind="$attrs" class="w-full max-w-lg grid-cols-4 px-5 mx-auto mt-14 mb-28">
             <slot />
         </div>
     </DefaultLayout>

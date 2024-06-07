@@ -1,13 +1,9 @@
 <template>
-    <p class="text" :class="['text-' + type.toLowerCase()]">{{ content }}</p>
+    <p class="text-midnight-blue text" :class="['text-' + type.toLowerCase()]"><slot></slot></p>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         type: {
             type: String,
             default: 'm',
@@ -17,21 +13,20 @@
 
 <style scoped>
 .text{
-    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-style: normal;
     font-weight: 336;
     line-height: normal;
 }
 .text-xs {
-    font-size: 10px;
+    font-size: 0.625rem;
 }
 .text-s {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 .text-m {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .text-l {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 </style>

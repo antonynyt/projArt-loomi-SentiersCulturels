@@ -1,13 +1,9 @@
 <template>
-    <p class="impact" :class="['impact-' + type.toLowerCase(), { 'heavy': heavy }]">{{ content }}</p>
+    <p class="text-midnight-blue impact" :class="['impact-' + type.toLowerCase(), { 'heavy': heavy }]"><slot></slot></p>
 </template>
 
 <script setup>
     const props = defineProps({
-        content: {
-            type: String,
-            required: true,
-        },
         heavy: {
             type: Boolean,
             default: false,
@@ -21,8 +17,7 @@
 
 <style scoped>
 .impact{
-    font-family: PPAvenir, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 617;
     line-height: normal;
@@ -31,21 +26,21 @@
     font-weight: 767;
 }
 .impact-xxs {
-    font-size: 9px;
+    font-size: 0.5625rem;
 }
 .impact-xs {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 .impact-s {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .impact-m {
-    font-size: 16px;
+    font-size: 1rem;
 }
 .impact-l {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 .impact-xl {
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 </style>
