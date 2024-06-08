@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Poi;
 
 class PoiController extends Controller
 {
@@ -11,7 +12,11 @@ class PoiController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch all POIs with their associated photos
+        $pois = Poi::with('photos')->get();
+
+        // Return the response as JSON
+        return response()->json($pois);
     }
 
     /**

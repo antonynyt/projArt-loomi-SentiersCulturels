@@ -11,13 +11,18 @@ const props = defineProps({
             type: String,
             default: 's',
         },
+        darkmode: {
+            type: Boolean,
+            default: false,
+        },
 });
 let height = 11;
 let padding = 6;
+let circlePadding = 2;
 
 switch (props.size.toLowerCase()) {
     case "xs":
-        height = 7;
+        height = 8;
         padding = 4;
         break;
 }
@@ -27,11 +32,21 @@ console.log(slots.default);
 
 <template>
     <button
-        class="inline-flex shrink-0 gap-3 justify-center items-center bg-midnight-blue border border-transparent rounded-full font-semibold text-sm text-white tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-        :class="[slots.default ? 'px-'+padding+' py-'+padding/2 : 'w-'+ height + ' p-'+padding/2, 'h-' + height]"
+        class="self-center shrink-0 bg-midnight-blue border border-transparent rounded-full font-semibold text-sm text-white tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+        :class="[slots.default ? 'inline-flex gap-3 justify-center items-center px-'+padding+' py-'+padding/2 : 'p-'+circlePadding, darkmode ? 'bg-white text-midnight-blue' : '']"
+        :style="{ width: slots.default ? 'auto' : height/4 + 'rem', height: height/4 + 'rem'}"
         >
-        <span class="fill-white shrink-0" v-if="props.icon" v-html="props.icon"></span>
-        <InformationText v-if="$slots.default" :type="size" class="text-white">
+        <span
+            class="h-full flex justify-center items-center shrink-0"
+            :class="[darkmode ? 'fill-midnight-blue' : 'fill-white']"
+            v-if="props.icon"
+            v-html="props.icon">
+        </span>
+        <InformationText
+            v-if="$slots.default"
+            :type="size"
+            :class="[darkmode ? 'text-midnight-blue' : 'text-white']"
+            >
             <slot></slot>
         </InformationText>
     </button>

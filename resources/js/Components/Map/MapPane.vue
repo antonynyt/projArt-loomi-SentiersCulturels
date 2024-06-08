@@ -52,13 +52,14 @@ const setupMap = async () => {
         });
     }
 
-    addControls(map, props.options);
+    if(props.options.controls)
+        addControls(map, props.options);
 };
 
 onMounted(() => {
     console.info('Map mounted');
     setupMap();
-    
+
     watch(() => path.value, (newPath) => {
         if (map.value && map.value.getSource('path')) {
             newPath = JSON.parse(newPath);
