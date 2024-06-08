@@ -115,7 +115,7 @@ onUnmounted(() => {
 
 .maplibregl-popup-content {
   padding: 0;
-  width: 180px;
+  width: 250px;
   border-radius: 0.5rem;
 }
 

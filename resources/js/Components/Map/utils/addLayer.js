@@ -61,7 +61,7 @@ const handleFeatureClick = (feature) => {
         const popup = new Popup()
             .setLngLat(feature.geometry.coordinates)
             .setHTML(
-                `<h3 class='leading-tight bg-purple text-white'>${feature.properties.name}</h3><p><button>Détails</button></p>`
+                `<h3 class='leading-tight bg-purple text-white'>${feature.properties.name}</h3><p>${feature.properties.description}</p>`
             )
             .addTo(map.value);
     }
