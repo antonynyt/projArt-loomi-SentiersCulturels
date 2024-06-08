@@ -1,7 +1,7 @@
 # Setup environnement de développement
 ## Requirements
 
-- php & Composer
+- php ^8.2 & Composer
 - Node & npm
 - Docker
 
@@ -31,3 +31,15 @@ docker run --name=sentiersCulturels-mailpit -p 8025:8025 -p 1025:1025 -d axllent
 ## Installer avec Make (si make est installé)
 
 1. make all
+
+# Déploiement
+
+1. git clone
+2. copier .env.prod en .env
+3. Adapter les variables pour la DB et Mail
+4. `composer install` & `npm install` (envoyer le build local si pas node sur le serveur)
+5. `php artisan migrate`
+6. `php artisan db:seed`
+7. `php artisan key:generate`
+8. `php artisan storage:link`
+9. Le point d'entrée Apache doit être le dossier public
