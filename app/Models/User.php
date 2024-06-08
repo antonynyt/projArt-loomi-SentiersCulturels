@@ -13,6 +13,8 @@ use App\Models\Review;
 use App\Models\PoiHistory;
 use App\Models\PathHistory;
 use App\Models\Achievement;
+use App\Models\PoiFavorite;
+use App\Models\PathFavorite;
 
 class User extends Authenticatable
 {
@@ -122,6 +124,24 @@ class User extends Authenticatable
      */
     public function getAchievements() {
         return $this->hasMany(Achievement::class);
+    }
+
+    /**
+     * Get the poi_favorite for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function poiFavorites() {
+        return $this->hasMany(PoiFavorite::class);
+    }
+
+    /**
+     * Get the path_favorite for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pathFavorites() {
+        return $this->hasMany(PathFavorite::class);
     }
 
 }

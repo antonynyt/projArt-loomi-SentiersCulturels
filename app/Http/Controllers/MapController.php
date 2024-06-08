@@ -51,8 +51,9 @@ class MapController extends Controller
         return json_encode($geojson);
     }
 
-    public function index() {
-
+    public function index()
+    {
+        //return all pois and append path with type poi or path
         // Get POIs in a path
         $pois = Poi::all();
 
@@ -81,7 +82,6 @@ class MapController extends Controller
 
     public function show(int $id)
     {
-
         $feature = Path::with('pois')->find($id);
         $pathGeojson = $feature->geojson;
         $feature->thumbnail = Poi::with('photos')->find($feature->pois->first()->id)->photos->first()->link;

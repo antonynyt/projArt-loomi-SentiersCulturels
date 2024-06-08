@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Theme;
 use App\Models\Review;
 use App\Models\PathHistory;
+use App\Models\PathFavorite;
 
 class Path extends Model
 {
@@ -70,5 +71,14 @@ class Path extends Model
      */
     public function pathHistories() {
         return $this->hasMany(PathHistory::class);
+    }
+
+    /**
+     * Get the path_favorite for the path
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pathFavorites() {
+        return $this->hasMany(PathFavorite::class);
     }
 }
