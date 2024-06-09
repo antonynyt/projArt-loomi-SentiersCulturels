@@ -58,10 +58,16 @@ const handleFeatureClick = (feature) => {
     if (feature.properties.type === "path") {
         router.visit(`/map/${feature.properties.id}`, { preserveState: true });
     } else {
-        const popup = new Popup()
+        const popup = new Popup({offset: 25})
             .setLngLat(feature.geometry.coordinates)
             .setHTML(
-                `<h3 class='leading-tight bg-purple text-white'>${feature.properties.name}</h3><p>${feature.properties.description}</p>`
+                `<h3 class='leading-tight bg-purple text-white'>
+                    ${feature.properties.name}
+                </h3>
+                <p>
+                    ${feature.properties.description}
+                </p>
+                <div class="mb-3"><a class="px-4 py-2 outline outline-1 outline-gray-200 rounded-full font-medium" href="/poi/${feature.properties.id}">Plus d'infos</a></div>`
             )
             .addTo(map.value);
     }

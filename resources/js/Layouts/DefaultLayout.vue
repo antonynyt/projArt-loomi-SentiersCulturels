@@ -1,12 +1,18 @@
 <script setup>
 import NavBar from '@/Components/NavBar.vue';
-import AppDisclamer from '@/Components/App/AppDisclamer.vue';
+
+const props = defineProps({
+    hasNavBar: {
+        type: Boolean,
+        default: true,
+    },
+});
+
 </script>
 
 <template>
-    <!-- <AppDisclamer/> -->
     <div class="flex flex-col w-full">
         <slot />
-        <NavBar/>
+        <NavBar v-if="hasNavBar"/>
     </div>
 </template>

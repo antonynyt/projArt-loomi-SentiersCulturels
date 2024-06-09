@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Poi;
+use Inertia\Inertia;
 
 class PoiController extends Controller
 {
@@ -40,7 +41,7 @@ class PoiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render('Details');
     }
 
     /**

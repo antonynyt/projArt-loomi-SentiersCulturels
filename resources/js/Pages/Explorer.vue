@@ -14,9 +14,9 @@ const props = defineProps({
     },
 });
 
-const options = ref({
+const options = {
     flyToUserLocation: true
-});
+};
 
 </script>
 

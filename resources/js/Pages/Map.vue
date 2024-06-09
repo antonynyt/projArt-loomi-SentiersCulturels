@@ -80,11 +80,6 @@ watch(() => props.path, (newVal) => {
     if (newVal) {
         showPath.value = true;
         path.value = newVal;
-        const json = JSON.parse(newVal);
-        map.value.easeTo({
-            center: json.features[0].geometry.coordinates[0],
-            zoom: 16
-        });
     }
 });
 
@@ -100,7 +95,7 @@ const handleDrawerClose = (value) => {
 <template>
 
     <Head>
-        <title>Home</title>
+        <title>Découvrez le Canton</title>
     </Head>
 
     <DefaultLayout>
