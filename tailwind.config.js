@@ -19,8 +19,12 @@ export default {
                 'blue': '#B5F5F9',
                 'beige': '#FFEED6',
                 'purple': '#9747FF',
-                'red': '#F59F99',
+                'red': '#E95D5D',
                 'grey': '#C1C9D2',
+            },
+            fontWeight: {
+                light: '400',
+                normal: '460',
             },
             fontFamily: {
                 sans: ['PPAvenir', ...defaultTheme.fontFamily.sans],
