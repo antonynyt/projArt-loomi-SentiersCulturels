@@ -35,6 +35,8 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['role:user,editor'])->name('dashboard');
+//CHANGED
+Route::get('/dashboard/finished-paths', [DashboardController::class, 'finishedPaths'])->middleware(['role:user,editor'])->name('dashboard.finishedPaths');
 
 /**
  * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.

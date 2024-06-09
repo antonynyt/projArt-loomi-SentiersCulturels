@@ -7,16 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\PathHistory;
 use App\Models\Poi;
+use App\Models\Path;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
+    private function retrieveUserPaths(){
         $user = Auth::user();
-
-        if ($user->hasRole('user')) {
-            // Retrieve finished paths for the authenticated user
-            $finishedPaths = $user->pathHistories()
+        $finishedPaths = $user->pathHistories()
                 ->with('path')
                 ->get();
 
@@ -26,6 +23,16 @@ class DashboardController extends Controller
                 $pathHist->location = explode(',', Poi::all()->find($pathHist->path->pois->first()->id)->adress_label)[1];
             });
 
+            return $finishedPaths;
+    }
+    public function index()
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('user')) {
+            // Retrieve finished paths for the authenticated user
+            
+            $finishedPaths= $this->retrieveUserPaths();
 
             // Return the dashboard view with the finished paths data
             return Inertia::render('Dashboard', [
@@ -37,6 +44,14 @@ class DashboardController extends Controller
 
         // Optionally, handle other roles or default case
         return Inertia::render('Dashboard'); // Or another default view
+
+    }
+    public function finishedPaths() {
+        $finishedPaths = $this->retrieveUserPaths();
+
+        $pathCount = count(Path::all());
+        
+        return Inertia::render('Profile/FinishedPaths', ['finishedPaths'=>$finishedPaths, 'pathCount'=>$pathCount]);
 
     }
 }
