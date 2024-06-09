@@ -49,8 +49,10 @@ Route::group(['middleware' => 'role:user'], function () {
 Route::group(['middleware'=>'role:editor'],function(){
     Route::get('/new-path', function () { return redirect('new-path/instructions'); });
     Route::get('/new-path/instructions', function () { return Inertia::render('NewPath/NewPathInstructions');});
-    Route::get('/new-path/map', function () { return Inertia::render('NewPath/NewPathMap'); });
-    Route::get('/new-path/search', [NewPathController::class, 'search']);
+    Route::get('/new-path/map', function () { return redirect('new-path'); });
+    Route::post('/new-path/map', [NewPathController::class, 'map'])->name('new-path.map');
+    Route::get('/new-path/search', function () { return redirect('new-path'); });
+    Route::post('/new-path/search', [NewPathController::class, 'search']);
     Route::get('/new-path/form', function () { return Inertia::render('NewPath/NewPathForm'); });
     Route::get('/new-path/success', function () { return Inertia::render('NewPath/NewPathSuccess'); });
 });

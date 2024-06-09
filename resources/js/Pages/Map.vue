@@ -8,6 +8,7 @@ import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
 import { map, poi, path } from '../Components/Map/stores/mapStore';
 import AppElementCard from '@/Components/App/AppElementCard.vue';
 import AppDetailsOverlay from '@/Components/App/AppDetailsOverlay.vue';
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     path: {
@@ -95,6 +96,16 @@ const handleDrawerClose = (value) => {
     isOpen.value = value;
 }
 
+const handleClick = (props) => {
+    if (props.type === 'path') {
+        router.visit(`${props.href}`, { preserveState: true});
+    } else {
+        map.value.flyTo({
+            center: props.coordinates,
+            zoom: 16
+    });
+    }
+};
 </script>
 
 <template>
@@ -116,7 +127,7 @@ const handleDrawerClose = (value) => {
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)"
+                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick"
                     :title="item.properties.name" :type="item.properties.type" :href="'/map/'+ item.properties.id" :location=item.properties.location
                     :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
                 </AppElementCard>
