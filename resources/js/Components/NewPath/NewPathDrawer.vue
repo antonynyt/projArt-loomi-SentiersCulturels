@@ -57,8 +57,8 @@ onUnmounted(() => {
     </Transition>
     <!-- Drawer -->
     <div ref="drawer"
-        class="fixed bottom-60 left-0 w-full h-[70dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
-        :class="isOpen ? 'translate-y-40' : 'translate-y-full'">
+        class="fixed bottom-60 left-0 w-full h-[85dvh] bg-white transform transition-transform duration-300 ease-in-out z-20 drop-shadow-2xl"
+        :class="isOpen ? 'translate-y-60' : 'translate-y-full'">
         <div ref="drawerContent" class="pb-5 pt-2 px-5 overflow-auto h-full max-w-lg mx-auto">
             <slot />
         </div>
@@ -88,20 +88,5 @@ onUnmounted(() => {
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
-}
-
-/* .overflow-auto::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-
-.overflow-auto::-webkit-scrollbar-thumb {
-  background: #C1C9D2;
-  border-radius: 0.25rem;
-} */
-
-.overflow-auto::-webkit-scrollbar * {
-  background: transparent;
-  color: transparent;
 }
 </style>

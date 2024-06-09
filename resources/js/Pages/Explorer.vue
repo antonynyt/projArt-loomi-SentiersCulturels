@@ -6,6 +6,7 @@ import ContentLayout from '@/Layouts/ContentLayout.vue';
 import TheHeader from '@/Components/App/TheHeader.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import AppDisclamer from '@/Components/App/AppDisclamer.vue';
 
 const props = defineProps({
     pathPoints: {
@@ -24,6 +25,7 @@ const options = ref({
         <title>Explorer</title>
     </Head>
 
+    <AppDisclamer/>
     <ContentLayout>
             <TheHeader title="Explorer" class="mb-8"/>
             <main>
