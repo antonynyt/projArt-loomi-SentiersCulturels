@@ -86,7 +86,7 @@ class PathController extends Controller
             $poi->pivot_position = $poi->pivot->position;
             $poi->photos = Poi::with('photos')->find($poi->id)->photos->first();
         });
-        
+
         //order path by pivot position
         $path->pois = $pois->sortBy('pivot_position')->values();
 
@@ -108,6 +108,8 @@ class PathController extends Controller
                     'description' => $poi->short_descr,
                     'photos' => $poi->photos, // include the photos array
                     'pivot_position' => $poi->pivot_position,
+                    'lat' => $poi->lat,
+                    'long' => $poi->long,
                 ];
             })->toArray(),
             'is_handicap_accessible' => $path->is_handicap_accessible,
