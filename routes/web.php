@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\NewPathController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
