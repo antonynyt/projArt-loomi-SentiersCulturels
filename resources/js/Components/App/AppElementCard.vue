@@ -69,11 +69,14 @@ const props = defineProps({
 <template>
     <article
         @click="$emit('cardClick', props)"
-            class="flex justify-between rounded-3xl cursor-pointer"
-            :class="[navigation ? 'p-3' : 'p-px', {border: border}, active ? 'border-purple' : 'border-grey']"
+            class="flex justify-between cursor-pointer border"
+            :class="[navigation ? 'p-3 rounded-3xl' : 'p-px rounded-xl', {'border-transparent':!border&&!active}, active ? 'border-purple' : 'border-grey']"
         >
             <!-- Thumbnail -->
-            <div class="shrink aspect-square" :class="{'basis-1/6': type === 'poi', 'basis-1/4': type === 'path'}">
+            <div
+                class="shrink aspect-square"
+                :class="[navigation ? 'basis-1/5' : {'basis-1/6': type === 'poi', 'basis-1/4': type === 'path'}]"
+            >
                 <img
                     :src="thumbnail"
                     :alt="title"

@@ -89,26 +89,17 @@ const setupMap = async () => {
     initializeMap();
 
     map.value.on('load', async () => {
-        console.log("Map loaded");
-        console.log("path");
-        console.log(path.value);
-        console.log(!path.value);
-        console.log("poi");
-        console.log(poi.value);
         await addPOILayer();
         addPathLayer();
         map.value.getSource('POI').setData(JSON.parse(poi.value));
     });
 
-    console.log("----- Setup Map -----");
-    console.log(path.value);
     if (props.options.flyTo) {
         map.value.flyTo({
             center: props.options.flyTo,
             zoom: 15
         });
     } else if (path.value) {
-        console.log("Fly to path");
         const json = JSON.parse(path.value);
         let minLng = Infinity;
         let minLat = Infinity;

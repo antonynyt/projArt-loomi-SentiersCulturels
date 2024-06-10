@@ -97,7 +97,7 @@ const addPoi = (poiId) => {
                 :location="extractLocality(item.adress_label)"
                 :coordinates="[item.lat, item.long]"
                 :type="'poi'"
-                @cardClick="router.get('/new-path/poi/' + item.id)"
+                @cardClick="router.get('/poi/' + item.id)"
         >
             <template v-slot:button>
                 <PrimaryButton
