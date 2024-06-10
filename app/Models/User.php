@@ -122,7 +122,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getAchievements() {
+    public function achievements() {
         return $this->hasMany(Achievement::class);
     }
 

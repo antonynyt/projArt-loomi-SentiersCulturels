@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('descent');
             $table->string('difficulty');
             $table->boolean('is_handicap_accessible')->default(false);
+            $table->boolean('is_loop')->default(false);
             $table->json('geojson');
             $table->foreignId('theme_id')
                 ->references('id')
