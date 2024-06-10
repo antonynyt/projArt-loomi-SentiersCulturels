@@ -7,6 +7,7 @@ const PATH_SOURCE = "path";
 const PATH_LAYER = "path";
 const POI_SOURCE = "POI";
 const POI_LAYER = "POI";
+const POI_CLUSTER_LAYER = "POI-cluster";
 const POI_LABEL_LAYER = "POI-label";
 
 // Load an image into the map
@@ -28,6 +29,10 @@ const addGeoJSONSource = (
         data,
         cluster,
         clusterRadius,
+        clusterProperties: {
+            only_path: ["all", ["==", ["get", "type"], "path"], "false"],
+            only_poi: ["all", ["==", ["get", "type"], "poi"], "false"],
+        },
     });
 };
 
@@ -53,10 +58,16 @@ const handleFeatureClick = (feature) => {
     if (feature.properties.type === "path") {
         router.visit(`/map/${feature.properties.id}`, { preserveState: true });
     } else {
-        const popup = new Popup()
+        const popup = new Popup({offset: 25})
             .setLngLat(feature.geometry.coordinates)
             .setHTML(
-                `<h3 class='leading-tight bg-purple text-white'>${feature.properties.name}</h3><p><button>Détails</button></p>`
+                `<h3 class='leading-tight bg-purple text-white'>
+                    ${feature.properties.name}
+                </h3>
+                <p>
+                    ${feature.properties.description}
+                </p>
+                <div class="mb-3"><a class="px-4 py-2 outline outline-1 outline-gray-200 rounded-full font-medium" href="/poi/${feature.properties.id}">Plus d'infos</a></div>`
             )
             .addTo(map.value);
     }
@@ -69,19 +80,22 @@ const handleFeatureClick = (feature) => {
 export const addPathLayer = () => {
     if (path.value) {
         addGeoJSONSource(PATH_SOURCE, path.value);
-        addLayer({
-            id: PATH_LAYER,
-            type: "line",
-            source: PATH_SOURCE,
-            layout: {
-                "line-join": "round",
-                "line-cap": "round",
+        addLayer(
+            {
+                id: PATH_LAYER,
+                type: "line",
+                source: PATH_SOURCE,
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round",
+                },
+                paint: {
+                    "line-color": "#693AF5",
+                    "line-width": 8,
+                },
             },
-            paint: {
-                "line-color": "#693AF5",
-                "line-width": 8,
-            },
-        }, POI_LABEL_LAYER);
+            POI_LABEL_LAYER
+        );
     }
 };
 
@@ -93,8 +107,24 @@ export const addPOILayer = async () => {
         await loadImage("path", "/assets/icons/sentier.png");
         await loadImage("path-cluster", "/assets/icons/sentier-cluster.png");
 
-        addGeoJSONSource(POI_SOURCE, poi.value, true, 50);
+        //to know if we are in the path page or not
+        //poi are displayed only when the path is not empty
+        if (!path.value) {
+            const paths = JSON.stringify(
+                {
+                    type: "FeatureCollection",
+                    features: JSON.parse(poi.value).features.filter((feature) => feature.properties.type === "path"),
+                }
+            );
+    
+            addGeoJSONSource(POI_SOURCE, paths, true, 50);
+        }else{
+            addGeoJSONSource(POI_SOURCE, poi.value, true, 50);
+        }
 
+        
+
+        // Add POI label layer
         addLayer({
             id: POI_LABEL_LAYER,
             type: "symbol",
@@ -105,7 +135,7 @@ export const addPOILayer = async () => {
                 "icon-padding": 0,
                 "text-padding": 0,
                 "text-overlap": "always",
-                "icon-overlap": "always",
+                "icon-overlap": "cooperative",
                 "text-size": 12,
                 "text-font": ["Roboto Bold", "Noto Bold"],
                 "text-offset": [0, 1.8],
@@ -118,27 +148,30 @@ export const addPOILayer = async () => {
             },
         });
 
+        // Add POI layer unclustered
         addLayer({
             id: POI_LAYER,
             type: "symbol",
             source: POI_SOURCE,
+            filter: ["!", ["has", "point_count"]],
+            layout: {
+                "icon-image": ["get", "type"],
+                "icon-allow-overlap": false,
+            },
+        });
+
+        // Add POI layer clustered
+        addLayer({
+            id: POI_CLUSTER_LAYER,
+            type: "symbol",
+            source: POI_SOURCE,
+            filter: ["has", "point_count"],
             layout: {
                 "icon-image": [
-                    "case", // conditional expression
-                    ["has", "point_count"], // check if the feature has the property "point_count" (indicating it's a cluster)
-                    [
-                        "case", // another conditional expression within the first
-                        ["==", ["get", "type"], "path"], // check if the "cluster_type" property equals "path"
-                        "path-cluster", // if true, use the "path-cluster" icon
-                        "poi-cluster", // if false, use the "poi-cluster" icon
-                    ],
-                    [
-                        "match", // match expression to handle non-cluster features
-                        ["get", "type"], // get the "type" property of the feature
-                        "path", // if the type is "path"
-                        "path", // use the "path" icon
-                        "poi", // for any other type, use the "poi" icon
-                    ],
+                    "case",
+                    ["get", "only_path"],
+                    "path-cluster",
+                    "poi-cluster",
                 ],
                 "text-field": [
                     "step",
@@ -164,59 +197,22 @@ export const addPOILayer = async () => {
             },
         });
 
-        // addLayer({
-        //     id: POI_LAYER,
-        //     type: "symbol",
-        //     source: POI_SOURCE,
-        //     layout: {
-        //         "icon-image": [
-        //             "case", // conditional expression
-        //             ["has", "point_count"], // check if the feature has the property "point_count" (indicating it's a cluster)
-        //             [
-        //                 "case", // another conditional expression within the first
-        //                 ["==", ["get", "type"], "path"], // check if the "cluster_type" property equals "path"
-        //                 "path-cluster", // if true, use the "path-cluster" icon
-        //                 "poi-cluster" // if false, use the "poi-cluster" icon
-        //             ],
-        //             [
-        //                 "match", // match expression to handle non-cluster features
-        //                 ["get", "type"], // get the "type" property of the feature
-        //                 "path", // if the type is "path"
-        //                 "path", // use the "path" icon
-        //                 "poi" // for any other type, use the "poi" icon
-        //             ]
-        //         ],
-        //         "text-field": [
-        //             "step",
-        //             ["get", "point_count"],
-        //             "",
-        //             2,
-        //             ["step", ["get", "point_count"], ["get", "point_count"], 99, "99+"],
-        //         ],
-        //         "text-size": 12,
-        //         "text-font": ["Roboto Bold", "Noto Bold"],
-        //         "text-anchor": "center",
-        //     },
-        //     paint: {
-        //         "text-color": "#5C5C5C",
-        //         "text-translate": [14, 13],
-        //         "text-translate-anchor": "viewport",
-        //     },
-        // });
-
+        // Handle click events on POI layers
         map.value.on("click", POI_LAYER, async (e) => {
             const feature = e.features[0];
-            const clusterId = feature.properties.cluster_id;
-
-            if (clusterId) {
-                await handleClusterClick(
-                    POI_SOURCE,
-                    clusterId,
-                    feature.geometry.coordinates
-                );
-            } else {
-                handleFeatureClick(feature);
-            }
+            handleFeatureClick(feature);
         });
+        
+        // Handle click events on POI clusters
+        map.value.on("click", POI_CLUSTER_LAYER, async (e) => {
+            const feature = e.features[0];
+            const clusterId = feature.properties.cluster_id;
+            await handleClusterClick(
+                POI_SOURCE,
+                clusterId,
+                feature.geometry.coordinates
+            );
+        });
+
     }
 };

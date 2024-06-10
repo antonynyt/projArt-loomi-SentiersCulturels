@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, watch, onUnmounted, ref, shallowRef, markRaw } from 'vue';
+import { onMounted, watch, onUnmounted, markRaw } from 'vue';
 import { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { addPathLayer, addPOILayer } from './utils/addLayer';
-import { mapContainer, map, pathPoints, poi, path } from './stores/mapStore';
+import { mapContainer, map, poi, path } from './stores/mapStore';
 import { addControls } from './utils/controlManagment';
 
 const SWITZERLAND_BOUNDS = [
@@ -41,8 +41,8 @@ const setupMap = async () => {
     initializeMap();
 
     map.value.on('load', async () => {
-        addPathLayer();
         await addPOILayer();
+        addPathLayer();
     });
 
     if (props.options.flyTo) {
@@ -52,26 +52,20 @@ const setupMap = async () => {
         });
     }
 
-    addControls(map, props.options);
+    if(props.options.controls)
+        addControls(map, props.options);
 };
 
 onMounted(() => {
     console.info('Map mounted');
     setupMap();
-    
+
     watch(() => path.value, (newPath) => {
         if (map.value && map.value.getSource('path')) {
             newPath = JSON.parse(newPath);
             map.value.getSource('path').setData(newPath);
         } else if (!map.value.getSource('path')) {
             addPathLayer();
-        }
-    });
-
-    watch(() => pathPoints.value, (newPathPoint) => {
-        if (map.value && map.value.getSource('pathPoints')) {
-            newPathPoint = JSON.parse(newPathPoint);
-            map.value.getSource('pathPoints').setData(newPathPoint);
         }
     });
 
@@ -115,7 +109,7 @@ onUnmounted(() => {
 
 .maplibregl-popup-content {
   padding: 0;
-  width: 180px;
+  width: 250px;
   border-radius: 0.5rem;
 }
 
@@ -127,9 +121,9 @@ onUnmounted(() => {
   margin-top: -15px;
 }
 
-.maplibregl-popup-content p {
+.maplibregl-popup-content p{
   margin: 0;
-  padding: 10px;
+  padding: 10px 10px 5px;
   font-weight: 400;
 }
 

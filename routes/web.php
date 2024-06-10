@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\PathController;
+use App\Http\Controllers\PoiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +14,7 @@ use App\Http\Controllers\EtapesController;
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+use App\Http\Controllers\NewPathController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -20,13 +23,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', function () {
-    return Inertia::render('Explorer', [
-        'pathPoints' => file_get_contents('storage/sentiers/sentiers.geojson'),
-    ]);
+    return Inertia::render('Explorer');
 })->name('explorer');
 
 Route::get('/map', [MapController::class, 'index'])->name('map.index');
 Route::get('/map/{id}', [MapController::class, 'show'])->name('map.show');
+
+Route::get('/sentier/{id}', [PathController::class, 'show'])->name('path.show');
+Route::get('/poi/{id}', [PoiController::class, 'show'])->name('poi.show');
 
 Route::get('/favoris', [FavoriteController::class, 'index'])->middleware(['role:user,editor'])->name('favorites');
 
@@ -52,23 +56,19 @@ Route::group(['middleware' => 'role:user'], function () {
 
 Route::group(['middleware' => 'role:editor'], function () {
     Route::get('/new-path', function () {
-        return redirect('new-path/instructions');
-    });
+        return redirect('new-path/instructions'); });
     Route::get('/new-path/instructions', function () {
-        return Inertia::render('NewPath/NewPathInstructions');
-    });
+        return Inertia::render('NewPath/NewPathInstructions'); });
     Route::get('/new-path/map', function () {
-        return Inertia::render('NewPath/NewPathMap');
-    });
+        return redirect('new-path'); });
+    Route::post('/new-path/map', [NewPathController::class, 'map'])->name('new-path.map');
     Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathSearch');
-    });
-    Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathForm');
-    });
-    Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathSuccess');
-    });
+        return redirect('new-path'); });
+    Route::post('/new-path/search', [NewPathController::class, 'search']);
+    Route::get('/new-path/form', function () {
+        return Inertia::render('NewPath/NewPathForm'); });
+    Route::get('/new-path/success', function () {
+        return Inertia::render('NewPath/NewPathSuccess'); });
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

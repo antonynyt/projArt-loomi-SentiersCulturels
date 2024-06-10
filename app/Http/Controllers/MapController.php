@@ -4,10 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Path;
 use App\Models\Poi;
+use Carbon\CarbonInterval;
 use Inertia\Inertia;
 
 class MapController extends Controller
 {
+
+    private function formatTime($seconds)
+    {
+        $interval = CarbonInterval::seconds($seconds)->cascade();
+        if ($interval->h == 0) {
+            return $interval->format('%imin');
+        }
+        return $interval->format('%hh%I');
+    }
 
     private function formatGeoJson($features)
     {
@@ -28,10 +38,9 @@ class MapController extends Controller
                         'thumbnail' => $feature->thumbnail,
                         'location' => $feature->location,
                         'infos' => [
-                            'distance' => $feature->distance,
-                            'duration' => $feature->duration,
-                            'difficulty' => $feature->difficulty,
-                            'elevation' => $feature->elevation,
+                            'distance' => !empty($feature->distance) ? ($feature->distance < 1000 ? $feature->distance . ' m' : round($feature->distance / 1000, 1) . ' km') : '',
+                            'duration' => !empty($feature->duration) ? $this->formatTime($feature->duration) : '',
+                            'ascent' => !empty($feature->ascent) ? ($feature->ascent < 1000 ? $feature->ascent . ' m' : round($feature->ascent / 1000, 1) . ' km') : '',
                             'type' => $feature->type,
                         ]
                     ],
@@ -41,43 +50,23 @@ class MapController extends Controller
 
         return json_encode($geojson);
     }
-    // public function index()
-    // {
-
-    //     $paths = Path::with('pois')->get();
-
-    //     foreach ($paths as $path) {
-    //         $firstPoi = $path->pois->first();
-    //         $pathCoordinates[] = [
-    //             $firstPoi->long,
-    //             $firstPoi->lat,
-    //         ];
-    //     }
-    //     //append $pathCoordinates to $paths
-    //     $paths->each(function ($path, $key) use ($pathCoordinates) {
-    //         $path->long = $pathCoordinates[$key][0];
-    //         $path->lat = $pathCoordinates[$key][1];
-    //         $path->type = 'path';
-    //     });
-
-    //     $PathPoints = $this->formatGeoJson($paths);
-    //     // dd($PathPoints);
-
-    //     return Inertia::render('Map', [
-    //         'poi' => $PathPoints,
-    //     ]);
-    // }
 
     public function index()
     {
         //return all pois and append path with type poi or path
-
-        //get pois with photos in the photos table one to many relationship
-        $pois = Poi::all();
+        // Get POIs in a path
+        $pathPois = Path::with('pois')->get();
+        $pois = collect();
+        $pathPois->each(function ($path) use ($pois) {
+            $path->pois->each(function ($poi) use ($pois) {
+            $pois->push($poi);
+            });
+        });
 
         $pois->each(function ($poi) {
             $poi->type = 'poi';
             $poi->thumbnail = Poi::with('photos')->find($poi->id)->photos->first()->link;
+            $poi->location = trim(preg_replace('/\d/', '', explode(',', $poi->adress_label)[1]));
         });
 
         $paths = Path::all();
@@ -86,7 +75,7 @@ class MapController extends Controller
             $path->long = $path->pois->first()->long;
             $path->lat = $path->pois->first()->lat;
             $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
-            $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
+            $path->location = trim(preg_replace('/\d/', '', explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]));
         });
 
         $features = $pois->merge($paths);
@@ -99,30 +88,29 @@ class MapController extends Controller
 
     public function show(int $id)
     {
-        $path = Path::with('pois')->find($id);
-        $pathGeojson = $path->geojson;
-
-        $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
-        $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
-        $pois = $path->pois;
+        $feature = Path::with('pois')->find($id);
+        $pathGeojson = $feature->geojson;
+        $feature->thumbnail = Poi::with('photos')->find($feature->pois->first()->id)->photos->first()->link;
+        $feature->location = Poi::all()->find($feature->pois->first()->id)->adress_label;
+        $feature->type = 'path';
+        $pois = $feature->pois;
         $pois->each(function ($poi) {
             $poi->pivot_position = $poi->pivot->position;
+            $poi->type = 'poi';
         });
+        $pois = $pois->sortBy('pivot_position')->values();
+        $POIgeojson = $this->formatGeoJson($pois);
 
         $infos = [
-            'id' => $path->id,
-            'thumbnail' => $path->thumbnail,
-            'title' => $path->title,
-            'description' => $path->descr,
-            'location' => explode(',', $path->location, )[1],
-            'distance' => $path->distance / 1000,
-            'duration' => $path->duration,
-            'elevation' => $path->ascent / 1000,
+            'id' => $feature->id,
+            'thumbnail' => $feature->thumbnail,
+            'title' => $feature->title,
+            'description' => $feature->descr,
+            'location' => trim(preg_replace('/\d/', '', explode(',', $feature->location)[1])),
+            'distance' => !empty($feature->distance) ? ($feature->distance < 1000 ? $feature->distance . ' m' : round($feature->distance / 1000, 1) . ' km') : '',
+            'duration' => !empty($feature->duration) ? $this->formatTime($feature->duration) : '',
+            'ascent' => !empty($feature->ascent) ? ($feature->ascent < 1000 ? $feature->ascent . ' m' : round($feature->ascent / 1000, 1) . ' km') : '',
         ];
-
-        // dd($infos, $pathGeojson, $pois);
-
-        $POIgeojson = $this->formatGeoJson($pois);
 
         return Inertia::render('Map', [
             'pathInfos' => $infos,
