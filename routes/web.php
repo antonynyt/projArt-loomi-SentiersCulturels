@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\EtapesController;
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -29,6 +30,8 @@ Route::get('/map/{id}', [MapController::class, 'show'])->name('map.show');
 
 Route::get('/favoris', [FavoriteController::class, 'index'])->middleware(['role:user,editor'])->name('favorites');
 
+Route::get('/etapes/{id}', [EtapesController::class, 'show'])->name('etapes.show');
+
 require __DIR__ . '/auth.php';
 
 Route::get('/dashboard', function () {
@@ -49,17 +52,23 @@ Route::group(['middleware' => 'role:user'], function () {
 
 Route::group(['middleware' => 'role:editor'], function () {
     Route::get('/new-path', function () {
-        return redirect('new-path/instructions'); });
+        return redirect('new-path/instructions');
+    });
     Route::get('/new-path/instructions', function () {
-        return Inertia::render('NewPath/NewPathInstructions'); });
+        return Inertia::render('NewPath/NewPathInstructions');
+    });
     Route::get('/new-path/map', function () {
-        return Inertia::render('NewPath/NewPathMap'); });
+        return Inertia::render('NewPath/NewPathMap');
+    });
     Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathSearch'); });
+        return Inertia::render('NewPath/NewPathSearch');
+    });
     Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathForm'); });
+        return Inertia::render('NewPath/NewPathForm');
+    });
     Route::get('/new-path/search', function () {
-        return Inertia::render('NewPath/NewPathSuccess'); });
+        return Inertia::render('NewPath/NewPathSuccess');
+    });
 });
 
 Route::group(['middleware' => 'role:admin'], function () {
