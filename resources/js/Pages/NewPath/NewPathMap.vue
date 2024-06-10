@@ -101,6 +101,14 @@ if(props.path) {
     console.log("----- Path segments ascent -----");
     console.log(props.path.features[0].properties.segments[0].ascent);
 }
+
+const toForm = () => {
+    if(props.selectedPois.length < 2 || !props.path) return;
+    router.post('/new-path/form', {
+        selectedPois: JSON.stringify(props.selectedPois),
+        path: JSON.stringify(props.path),
+    });
+};
 </script>
 
 <template>
@@ -108,8 +116,19 @@ if(props.path) {
         <title>New Path - Map</title>
     </Head>
     <div class="flex flex-col items-center px-5 fixed left-0 top-0 z-30 w-full">
-        <div class="flex flex-wrap max-w-lg w-full mt-6">
+        <div class="flex flex-wrap justify-between max-w-lg w-full mt-6">
             <BackButton size="xs"></BackButton>
+            <PrimaryButton
+                v-if="props.selectedPois && props.selectedPois.length >= 2"
+                class="flex-row-reverse"
+                icon='<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 5 8" fill="none">
+                    <path d="M2.875 3.9999L0 1.1249L0.658594 0.466309L4.19219 3.9999L0.658594 7.5335L0 6.8749L2.875 3.9999Z" fill="#FAF9F6"/>
+                    </svg>'
+                size="xs"
+                @click="toForm"
+            >
+                J'ai fini
+            </PrimaryButton>
         </div>
     </div>
     <div class="w-full h-dvh">

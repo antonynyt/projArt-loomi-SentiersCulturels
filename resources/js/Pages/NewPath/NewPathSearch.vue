@@ -67,29 +67,28 @@ const extractLocality = (address) => {
 const addPoi = (poiId) => {
     const poi = pois.find(poi => poi.id === poiId);
     if (!poi) return;
-    console.log("addPoi");
-    console.log(poi);
     selectedPois.push(poi);
-    console.log(selectedPois);
     const jsonSelectedPois = JSON.stringify(selectedPois);
-    console.log(jsonSelectedPois);
     router.post('/new-path/map', { selectedPois: jsonSelectedPois });
 };
 </script>
 
 <template>
     <Head title="New Path - Search a POI"></Head>
-    <div class="bg-off-white px-5 flex flex-col fixed left-0 top-0 py-4 z-20 w-full">
-        <BackButton class="self-start mb-6"/>
-        <SearchInput
-            class="max-w-lg mx-auto"
+    <div class="bg-off-white flex flex-col fixed top-0 py-4 z-20 w-full">
+        <div class="max-w-lg mx-auto w-full px-5">
+            <BackButton class="self-start mb-6"/>
+        </div>
+        <div class="max-w-lg mx-auto w-full px-5">
+            <SearchInput
             v-model="searchInput"
             label="Search input"
             placeholder="Rechercher un point d’intérêt"
             @keydown="handleEnterKey"
             />
+        </div>
     </div>
-    <section class="flex flex-col w-full max-w-lg gap-4 mx-auto mt-32 mb-6">
+    <section class="flex flex-col w-full max-w-lg gap-4 mx-auto mt-32 mb-6 px-5">
         <AppElementCard v-for="item in filteredPois"
                 :key="item.id"
                 :thumbnail="item.photos[0].link"

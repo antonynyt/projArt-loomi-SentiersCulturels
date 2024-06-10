@@ -82,4 +82,19 @@ class NewPathController extends Controller
             'path' => $path,
         ]);
     }
+
+    public function form(Request $request)
+    {
+        $selectedPois = json_decode($request->input('selectedPois'));
+        $path = json_decode($request->input('path'));
+
+        $themeController = new ThemeController();
+        $themes = $themeController->index();
+
+        return Inertia::render('NewPath/NewPathForm', [
+            'selectedPois' => $selectedPois,
+            'path' => $path,
+            'themes' => $themes->getData(),
+        ]);
+    }
 }
