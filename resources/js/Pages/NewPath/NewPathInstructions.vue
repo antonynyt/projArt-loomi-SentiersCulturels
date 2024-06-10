@@ -19,7 +19,7 @@ import NewPathLayout from '@/Layouts/NewPathLayout.vue'
             <InformationText class="mb-4" type="m">Génial ! Vous êtes sur le point de rajouter une nouvelle aventure sur la carte des sentiers culturels vaudois.</InformationText>
             <InformationText type="m">Pour cela, ajoutez au moins 2 étapes à votre parcours en vous servant de la barre de recherche pour ajouter un point d’intérêt déjà existant. Ou créer le votre s’il n’y est pas encore.</InformationText>
         </div>
-        <PrimaryButton @click="router.post('/new-path/map')" class="mt-auto w-full justify-center">Suivant</PrimaryButton>
+        <PrimaryButton @click="router.post('/new-path/map')" class="mb-8 mt-auto w-full justify-center">Suivant</PrimaryButton>
     </NewPathLayout>
 </template>
 

@@ -91,12 +91,12 @@ const handleDrawerClose = (value) => {
     isOpen.value = value;
 }
 
-const handleClick = (props) => {
-    if (props.type === 'path') {
-        router.visit(`${props.href}`, { preserveState: true});
+const handleClick = (item) => {
+    if (item.properties.type === 'path') {
+        router.visit(`/map/${item.properties.id}`, { preserveState: true});
     } else {
         map.value.flyTo({
-            center: props.coordinates,
+            center: item.geometry.coordinates,
             zoom: 16
     });
     }
@@ -122,7 +122,7 @@ const handleClick = (props) => {
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick"
+                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick(item)"
                     :title="item.properties.name" :type="item.properties.type" :href="'/map/'+ item.properties.id" :location=item.properties.location
                     :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
                 </AppElementCard>
