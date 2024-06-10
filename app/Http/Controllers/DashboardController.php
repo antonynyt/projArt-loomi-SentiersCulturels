@@ -25,18 +25,29 @@ class DashboardController extends Controller
 
             return $finishedPaths;
     }
+
+    private function retrieveUserBadges(){
+        $user = Auth::user();
+        $userBadges = $user->achievements;
+
+        return $userBadges;
+    }
+
     public function index()
     {
         $user = Auth::user();
 
         if ($user->hasRole('user')) {
             // Retrieve finished paths for the authenticated user
-            
             $finishedPaths= $this->retrieveUserPaths();
+            $badges = $this->retrieveUserBadges();
+            $pathCount = count(Path::all());
 
-            // Return the dashboard view with the finished paths data
+            // Return the dashboard view with the data
             return Inertia::render('Dashboard', [
                 'finishedPaths' => $finishedPaths,
+                'badges' => $badges,
+                'pathCount'=>$pathCount
             ]);
         } elseif ($user->hasRole('editor')) {
             return Inertia::render('DashboardEditor');
