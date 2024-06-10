@@ -16,14 +16,15 @@ const props = defineProps({
         required: false,
         default: null,
     },
+    navigation: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
     navigationInfos: {
         type: Object,
         required: false,
-        default: {
-            distance: '',
-            duration: '',
-            ascent: '',
-        },
+        default: null,
     },
     coordinates: {
         type: Array,
@@ -68,7 +69,7 @@ const props = defineProps({
                 :thumbnail="props.thumbnail"
                 :title="props.title"
                 :location="props.location"
-                :navigation="true"
+                :navigation="props.navigation"
                 :navigationInfos="props.navigationInfos"
                 :coordinates="props.coordinates"
                 :border="props.border"
