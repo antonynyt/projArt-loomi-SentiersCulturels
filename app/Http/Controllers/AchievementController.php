@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\PathHistory;
 use App\Models\Poi;
 use App\Models\Path;
+use App\Models\Theme;
 
 class AchievementController extends Controller
 {
@@ -39,15 +40,30 @@ class AchievementController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
+        $allThemes = Theme::all();
+
+        $allThemes->each(function ($theme){
+            $userId = Auth::id();
+            $theme->allPaths = $theme->paths;
+            $theme->finishedPaths = $theme->paths->filter(function ($path) use ($userId) {
+                return $path->pathHistories->where('user_id', $userId)->isNotEmpty();
+            });
+        });
+
+        //dd($allThemes);
+
         $finishedPaths= $this->retrieveUserPaths();
         $badges = $this->retrieveUserBadges();
         $pathCount = count(Path::all());
+
 
         // Return the dashboard view with the data
         return Inertia::render('Profile/Achievements', [
             'finishedPaths' => $finishedPaths,
             'badges' => $badges,
-            'pathCount'=>$pathCount
+            'pathCount'=>$pathCount,
+            'themes'=>$allThemes,
         ]);
 
         

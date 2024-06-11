@@ -22,57 +22,57 @@ class ThemesTableSeeder extends Seeder
             [
                 'title' => 'Nature',
                 'descr' => 'Découvrez la nature',
-                'icon' => asset('storage/images/themes/nature.svg')
+                'icon' => asset('/assets/icons/themes/nature.svg')
             ],
             [
                 'title' => 'Histoire',
                 'descr' => 'Découvrez l\'histoire',
-                'icon' => asset('storage/images/themes/history.svg')
+                'icon' => asset('/assets/icons/themes/history.svg')
             ],
             [
                 'title' => 'Sport',
                 'descr' => 'Découvrez le sport',
-                'icon' => asset('storage/images/themes/sport.svg')
+                'icon' => asset('/assets/icons/themes/sport.svg')
             ],
             [
                 'title' => 'Gastronomie',
                 'descr' => 'Découvrez la gastronomie',
-                'icon' => asset('storage/images/themes/gastronomy.svg')
+                'icon' => asset('/assets/icons/themes/gastronomy.svg')
             ],
             [
                 'title' => 'Art',
                 'descr' => 'Découvrez l\'art',
-                'icon' => asset('storage/images/themes/art.svg')
+                'icon' => asset('/assets/icons/themes/art.svg')
             ],
             [
                 'title' => 'Musique',
                 'descr' => 'Découvrez la musique',
-                'icon' => asset('storage/images/themes/music.svg')
+                'icon' => asset('/assets/icons/themes/music.svg')
             ],
             [
                 'title' => 'Science',
                 'descr' => 'Découvrez la science et la technologie',
-                'icon' => asset('storage/images/themes/science.svg')
+                'icon' => asset('/assets/icons/themes/science.svg')
             ],
             [
                 'title' => 'Architecture',
                 'descr' => 'Découvrez l\'architecture',
-                'icon' => asset('storage/images/themes/architecture.svg')
+                'icon' => asset('/assets/icons/themes/architecture.svg')
             ],
             [
                 'title' => 'Transport',
                 'descr' => 'Découvrez le transport',
-                'icon' => asset('storage/images/themes/transport.svg')
+                'icon' => asset('/assets/icons/themes/transport.svg')
             ],
             [
                 'title' => 'Tradition',
                 'descr' => 'Découvrez la tradition',
-                'icon' => asset('storage/images/themes/tradition.svg')
+                'icon' => asset('/assets/icons/themes/tradition.svg')
             ],
             [
                 'title' => 'Religion',
                 'descr' => 'Découvrez la religion',
-                'icon' => asset('storage/images/themes/religion.svg')
+                'icon' => asset('/assets/icons/themes/religion.svg')
             ],
         ];
 

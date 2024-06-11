@@ -1,5 +1,16 @@
 <script setup>
+import { ref, watchEffect, computed } from "vue";
+import ImpactText from "@/Components/App/Text/ImpactText.vue";
+
 const props = defineProps({
+    themeFinishedPaths: {
+        type: Array,
+        required: true,
+    },
+    themePaths: {
+        type: Array,
+        required: true,
+    },
     image: {
         type: String,
         required: true,
@@ -12,35 +23,43 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    location: {
-        type: String,
-        required: true,
-    },
-    coordinates: {
-        type: Array,
-        required: false,
-    },
-    infos: {
-        type: Object,
-        required: false,
-        distance: {
-            type: String,
-            required: true,
-        },
-        duration: {
-            type: String,
-            required: true,
-        },
-        ascent: {
-            type: String,
-            required: true,
-        },
-    },
     type: {
         type: String,
         required: true,
     },
 });
+
+const progressWidth = ref("0");
+
+const themeColors = {
+    tradition: "#FF8188",
+    transport: "#9EA6F0",
+    science: "#FFD967",
+    musique: "#FFC4E8",
+    gastronomie: "#B4DBCD",
+    religion: "#BB9F85",
+    sport: "#F9B06B",
+    nature: "#C7E1B3",
+    histoire: "#F1CAC9",
+    art: "#E3B9F7",
+    architecture: "#B5E0FF",
+};
+
+const themeColor = computed(
+    () => themeColors[props.title.toLocaleLowerCase().trim()]
+);
+
+watchEffect(() => {
+    if (props.themeFinishedPaths.length > 0) {
+        const progressPercentage =
+            (props.themeFinishedPaths.length * 100) / props.themePaths.length;
+        progressWidth.value = `${progressPercentage}%`;
+    } else {
+        progressWidth.value = "0%";
+    }
+});
+
+const isComplete = computed(() => parseFloat(progressWidth.value) >= 100);
 </script>
 <template>
     <div
@@ -48,7 +67,7 @@ const props = defineProps({
             mt-3
             px-6
             py-4
-            border border-midnight-blue
+            border-[0.5px] border-grey
             rounded-lg
             overflow-hidden
         "
@@ -56,13 +75,16 @@ const props = defineProps({
         <a :href="props.href">
             <div class="flex flex-row gap-2">
                 <img width="18" height="19" :src="props.image" />
-                <ImpactText>Sentier Histoire</ImpactText>
+                <ImpactText>{{ props.title }}</ImpactText>
             </div>
             <div class="flex flex-row">
                 <div class="w-full bg-grey rounded-full h-2 self-center">
                     <div
-                        class="bg-green h-2 rounded-full self-center"
-                        :style="{ width: progressWidth }"
+                        class="h-2 rounded-full self-center"
+                        :style="{
+                            width: progressWidth,
+                            backgroundColor: themeColor,
+                        }"
                     ></div>
                 </div>
                 <svg
@@ -91,13 +113,18 @@ const props = defineProps({
             </div>
             <div class="flex text-sm">
                 <ImpactText type="s" class="self-center pr-1">{{
-                    finishedPaths.length
+                    themeFinishedPaths.length
                 }}</ImpactText>
                 complétés sur
                 <ImpactText type="s" class="self-center pl-1">{{
-                    pathCount
+                    themePaths.length
                 }}</ImpactText>
             </div>
         </a>
     </div>
 </template>
+<style scoped>
+.progress-circle-container {
+    margin-left: -5px;
+}
+</style>
