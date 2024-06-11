@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\EtapesController;
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 use App\Http\Controllers\NewPathController;
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +34,8 @@ Route::get('/poi/{id}', [PoiController::class, 'show'])->name('poi.show');
 
 Route::get('/favoris', [FavoriteController::class, 'index'])->middleware(['role:user,editor'])->name('favorites');
 
+Route::get('/etapes/{id}', [EtapesController::class, 'show'])->name('etapes.show');
+
 require __DIR__ . '/auth.php';
 
 Route::get('/dashboard', function () {
@@ -47,14 +54,18 @@ Route::group(['middleware' => 'role:user'], function () {
 
 });
 
-Route::group(['middleware'=>'role:editor'],function(){
-    Route::get('/new-path', function () { return redirect('new-path/instructions'); });
-    Route::get('/new-path/{otherThanExistant}', function () { return redirect('new-path/instructions'); })->where('otherThanExistant', '^(?!instructions$|success$).*');
-    Route::get('/new-path/instructions', function () { return Inertia::render('NewPath/NewPathInstructions');});
+Route::group(['middleware' => 'role:editor'], function () {
+    Route::get('/new-path', function () {
+        return redirect('new-path/instructions'); });
+    Route::get('/new-path/{otherThanExistant}', function () {
+        return redirect('new-path/instructions'); })->where('otherThanExistant', '^(?!instructions$|success$).*');
+    Route::get('/new-path/instructions', function () {
+        return Inertia::render('NewPath/NewPathInstructions'); });
     Route::post('/new-path/map', [NewPathController::class, 'map'])->name('new-path.map');
     Route::post('/new-path/search', [NewPathController::class, 'search']);
     Route::post('/new-path/form', [NewPathController::class, 'form']);
-    Route::get('/new-path/success', function () { return Inertia::render('NewPath/NewPathSuccess'); });
+    Route::get('/new-path/success', function () {
+        return Inertia::render('NewPath/NewPathSuccess'); });
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

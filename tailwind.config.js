@@ -21,6 +21,7 @@ export default {
                 'purple': '#9747FF',
                 'red': '#E95D5D',
                 'grey': '#C1C9D2',
+                'green_validation': '#41D350'
             },
             fontWeight: {
                 light: '400',
