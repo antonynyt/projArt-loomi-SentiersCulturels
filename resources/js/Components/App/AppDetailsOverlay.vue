@@ -3,7 +3,7 @@ import AppElementCard from '@/Components/App/AppElementCard.vue';
 import AppPoiStepCard from '@/Components/App/AppPoiStepCard.vue';
 import { onMounted, ref } from 'vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import BackButton from '@/Components/App/Button/BackButton.vue';
 import { map, poi } from '@/Components/Map/stores/mapStore';
 import { router } from "@inertiajs/vue3";
 
@@ -18,7 +18,7 @@ const pathInfos = ref(props.pathInfos);
 const easeTo = (coordinates) => {
     map.value.easeTo({
         center: coordinates,
-        zoom: 16
+        zoom: 16,
     });
 }
 
@@ -52,10 +52,6 @@ onMounted(() => {
     initObserver();
 });
 
-const back = () => {
-    window.history.back();
-}
-
 const pois = ref(JSON.parse(poi.value).features);
 
 
@@ -65,11 +61,11 @@ const pois = ref(JSON.parse(poi.value).features);
     <div class="fixed bottom-20 left-0 w-full z-20">
         <div class="flex flex-col overflow-hidden h-full max-w-lg w-full mx-auto">
             <div class="flex flex-row justify-between px-6 mb-3 pt-1 relative">
-                    <SecondaryButton @click="back" class="text-xs border-none shadow-md outline outline-1 outline-gray-300">Retour</SecondaryButton>
+                    <BackButton @click="router.visit(`/map`, {preserveState: true})" class="text-xs border-none shadow-md outline outline-1 outline-gray-300">Retour</BackButton>
                     <PrimaryButton @click="router.visit(`/sentier/${pathInfos.id}`, {preserveState: true})" class="text-xs border-none shadow-md">Détails</PrimaryButton>
             </div>
             <div class="flex w-full flex-row gap-4 overflow-x-scroll pt-1 pb-4 px-6 scoll-ps-6 no-scrollbar snap-x snap-mandatory">
-                <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" href="/poi/2"
+                <AppPoiStepCard v-for="(poi, index) in pois" class="snap-center" :step="index+1" :title="poi.properties.name" :href="'/poi/'+ poi.properties.id"
                     :coordinates="poi.geometry.coordinates" />
             </div>
             <div class="px-5 pb-4">
@@ -82,17 +78,3 @@ const pois = ref(JSON.parse(poi.value).features);
         </div>
     </div>
 </template>
-
-<style scoped>
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-}
-</style>

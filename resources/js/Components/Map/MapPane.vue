@@ -3,7 +3,7 @@ import { onMounted, watch, onUnmounted, markRaw } from 'vue';
 import { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { addPathLayer, addPOILayer } from './utils/addLayer';
-import { mapContainer, map, pathPoints, poi, path } from './stores/mapStore';
+import { mapContainer, map, poi, path } from './stores/mapStore';
 import { addControls } from './utils/controlManagment';
 
 const SWITZERLAND_BOUNDS = [
@@ -69,13 +69,6 @@ onMounted(() => {
         }
     });
 
-    watch(() => pathPoints.value, (newPathPoint) => {
-        if (map.value && map.value.getSource('pathPoints')) {
-            newPathPoint = JSON.parse(newPathPoint);
-            map.value.getSource('pathPoints').setData(newPathPoint);
-        }
-    });
-
     watch(() => poi.value, (newPOI) => {
         if (map.value && map.value.getSource('POI')) {
             newPOI = JSON.parse(newPOI);
@@ -128,9 +121,9 @@ onUnmounted(() => {
   margin-top: -15px;
 }
 
-.maplibregl-popup-content p {
+.maplibregl-popup-content p{
   margin: 0;
-  padding: 10px;
+  padding: 10px 10px 5px;
   font-weight: 400;
 }
 

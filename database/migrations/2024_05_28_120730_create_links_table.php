@@ -15,10 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('url');
-            $table->bigInteger('poi_id')->unsigned();
-            $table->foreign('poi_id')->references('id')->on('pois')
-                    ->onDelete('restrict')
-                    ->onUpdate('restrict');
+            $table->string('type');
+            $table->bigInteger('poi_id')->unsigned()->nullable();
+            $table->bigInteger('path_id')->unsigned()->nullable();
+            $table->foreign('poi_id')
+                ->references('id')
+                ->on('pois')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+            $table->foreign('path_id')
+                ->references('id')
+                ->on('paths')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
     }

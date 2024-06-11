@@ -55,12 +55,18 @@ class MapController extends Controller
     {
         //return all pois and append path with type poi or path
         // Get POIs in a path
-        $pois = Poi::all();
+        $pathPois = Path::with('pois')->get();
+        $pois = collect();
+        $pathPois->each(function ($path) use ($pois) {
+            $path->pois->each(function ($poi) use ($pois) {
+            $pois->push($poi);
+            });
+        });
 
         $pois->each(function ($poi) {
             $poi->type = 'poi';
             $poi->thumbnail = Poi::with('photos')->find($poi->id)->photos->first()->link;
-            $poi->location = trim(explode(',', $poi->adress_label)[1]);
+            $poi->location = trim(preg_replace('/\d/', '', explode(',', $poi->adress_label)[1]));
         });
 
         $paths = Path::all();
@@ -69,7 +75,7 @@ class MapController extends Controller
             $path->long = $path->pois->first()->long;
             $path->lat = $path->pois->first()->lat;
             $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
-            $path->location = trim(explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]);
+            $path->location = trim(preg_replace('/\d/', '', explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]));
         });
 
         $features = $pois->merge($paths);
@@ -92,6 +98,7 @@ class MapController extends Controller
             $poi->pivot_position = $poi->pivot->position;
             $poi->type = 'poi';
         });
+        $pois = $pois->sortBy('pivot_position')->values();
         $POIgeojson = $this->formatGeoJson($pois);
 
         $infos = [
@@ -99,7 +106,7 @@ class MapController extends Controller
             'thumbnail' => $feature->thumbnail,
             'title' => $feature->title,
             'description' => $feature->descr,
-            'location' => trim(explode(',', $feature->location,)[1]),
+            'location' => trim(preg_replace('/\d/', '', explode(',', $feature->location)[1])),
             'distance' => !empty($feature->distance) ? ($feature->distance < 1000 ? $feature->distance . ' m' : round($feature->distance / 1000, 1) . ' km') : '',
             'duration' => !empty($feature->duration) ? $this->formatTime($feature->duration) : '',
             'ascent' => !empty($feature->ascent) ? ($feature->ascent < 1000 ? $feature->ascent . ' m' : round($feature->ascent / 1000, 1) . ' km') : '',

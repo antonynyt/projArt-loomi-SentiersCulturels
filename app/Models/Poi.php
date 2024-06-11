@@ -58,7 +58,7 @@ class Poi extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function poiFact() {
+    public function poiFacts() {
         return $this->hasMany(PoiFact::class);
     }
 

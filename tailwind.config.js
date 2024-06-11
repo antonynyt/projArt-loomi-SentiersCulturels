@@ -32,6 +32,11 @@ export default {
                 histoire: "#F1CAC9",
                 art: "#E3B9F7",
                 architecture: "#B5E0FF",
+                'green_validation': '#41D350'
+            },
+            fontWeight: {
+                light: '400',
+                normal: '460',
             },
             fontFamily: {
                 sans: ["PPAvenir", ...defaultTheme.fontFamily.sans],

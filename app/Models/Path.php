@@ -10,6 +10,7 @@ use App\Models\Theme;
 use App\Models\Review;
 use App\Models\PathHistory;
 use App\Models\PathFavorite;
+use App\Models\Link;
 
 class Path extends Model
 {
@@ -29,6 +30,7 @@ class Path extends Model
         'descent',
         'difficulty',
         'is_handicap_accessible',
+        'is_loop',
         'geojson',
     ];
 
@@ -80,5 +82,14 @@ class Path extends Model
      */
     public function pathFavorites() {
         return $this->hasMany(PathFavorite::class);
+    }
+
+    /**
+     * Get the links for the path
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function links() {
+        return $this->hasMany(Link::class);
     }
 }

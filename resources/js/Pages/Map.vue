@@ -8,6 +8,7 @@ import AppTabSwitch from '@/Components/App/AppTabSwitch.vue';
 import { map, poi, path } from '../Components/Map/stores/mapStore';
 import AppElementCard from '@/Components/App/AppElementCard.vue';
 import AppDetailsOverlay from '@/Components/App/AppDetailsOverlay.vue';
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     path: {
@@ -80,11 +81,6 @@ watch(() => props.path, (newVal) => {
     if (newVal) {
         showPath.value = true;
         path.value = newVal;
-        const json = JSON.parse(newVal);
-        map.value.easeTo({
-            center: json.features[0].geometry.coordinates[0],
-            zoom: 16
-        });
     }
 });
 
@@ -95,12 +91,22 @@ const handleDrawerClose = (value) => {
     isOpen.value = value;
 }
 
+const handleClick = (item) => {
+    if (item.properties.type === 'path') {
+        router.visit(`/map/${item.properties.id}`, { preserveState: true});
+    } else {
+        map.value.flyTo({
+            center: item.geometry.coordinates,
+            zoom: 16
+    });
+    }
+};
 </script>
 
 <template>
 
     <Head>
-        <title>Home</title>
+        <title>Découvrez le Canton</title>
     </Head>
 
     <DefaultLayout>
@@ -116,7 +122,7 @@ const handleDrawerClose = (value) => {
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)"
+                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick(item)"
                     :title="item.properties.name" :type="item.properties.type" :href="'/map/'+ item.properties.id" :location=item.properties.location
                     :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
                 </AppElementCard>

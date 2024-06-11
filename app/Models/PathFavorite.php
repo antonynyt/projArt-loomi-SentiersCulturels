@@ -21,7 +21,7 @@ class PathFavorite extends Model
     /**
      * Get the path that owns the favorite.
      */
-    public function path()
+    public function paths()
     {
         return $this->belongsTo(Path::class);
     }
@@ -29,7 +29,7 @@ class PathFavorite extends Model
     /**
      * Get the user that owns the favorite.
      */
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class);
     }

@@ -1,6 +1,7 @@
 <script setup>
 import InformationText from '@/Components/App/Text/InformationText.vue';
 import { useSlots } from 'vue';
+import ImpactText from './App/Text/ImpactText.vue';
 
 const props = defineProps({
         icon: {
@@ -27,12 +28,12 @@ switch (props.size.toLowerCase()) {
         break;
 }
 const slots = useSlots();
-console.log(slots.default);
+// console.log(slots.default);
 </script>
 
 <template>
     <button
-        class="self-center shrink-0 bg-midnight-blue border border-transparent rounded-full font-semibold text-sm text-white tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+        class="self-center shrink-0 bg-midnight-blue border border-transparent rounded-full font-semibold text-sm text-white tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
         :class="[slots.default ? 'inline-flex gap-3 justify-center items-center px-'+padding+' py-'+padding/2 : 'p-'+circlePadding, darkmode ? 'bg-white text-midnight-blue' : '']"
         :style="{ width: slots.default ? 'auto' : height/4 + 'rem', height: height/4 + 'rem'}"
         >
@@ -42,12 +43,13 @@ console.log(slots.default);
             v-if="props.icon"
             v-html="props.icon">
         </span>
-        <InformationText
+        <ImpactText
             v-if="$slots.default"
             :type="size"
             :class="[darkmode ? 'text-midnight-blue' : 'text-white']"
+            class="impact-m"
             >
             <slot></slot>
-        </InformationText>
+        </ImpactText>
     </button>
 </template>

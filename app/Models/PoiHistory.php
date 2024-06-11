@@ -26,7 +26,7 @@ class PoiHistory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function poi() {
+    public function pois() {
         return $this->belongsTo(Poi::class);
     }
 
@@ -35,7 +35,7 @@ class PoiHistory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function users() {
         return $this->belongsTo(User::class);
     }
 }

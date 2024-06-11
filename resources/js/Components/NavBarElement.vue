@@ -16,7 +16,7 @@ const props = defineProps({
 
 
 <template>
-    <Link :href class="inline-flex flex-col font-normal items-center justify-center text-midnight-blue px-5 hover:bg-gray-50" :aria-label="props.label" > 
+    <Link :href class="inline-flex flex-col font-normal items-center justify-center text-midnight-blue px-5" :aria-label="props.label" > 
         <slot />
         <span class="text-xs mt-1">{{ props.label }}</span>
     </Link>

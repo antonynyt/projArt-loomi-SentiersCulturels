@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Path;
 use App\Models\Poi;
+use App\Models\Theme;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -79,28 +80,45 @@ class PathController extends Controller
     public function show(string $id)
     {
         $path = Path::with('pois')->find($id);
-        
-        $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
-        $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
+
         $pois = $path->pois;
         $pois->each(function ($poi) {
             $poi->pivot_position = $poi->pivot->position;
+            $poi->photos = Poi::with('photos')->find($poi->id)->photos->first();
         });
 
+        //order path by pivot position
+        $path->pois = $pois->sortBy('pivot_position')->values();
+
+        $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
+
         $infos = [
-            'thumbnail' => $path->thumbnail,
             'title' => $path->title,
             'description' => $path->descr,
-            'location' => explode(',', $path->location,)[1],
-            'distance' => $path->distance / 1000,
-            'duration' => $path->duration,
-            'elevation' => $path->ascent / 1000,
+            'theme' => Theme::find($path->theme_id)->title,
+            'location' => trim(preg_replace('/\d/', '', explode(',', $path->location)[1])),
+            'distance' => !empty($path->distance) ? ($path->distance < 1000 ? $path->distance . ' m' : round($path->distance / 1000, 1) . ' km') : '',
+            'duration' => !empty($path->duration) ? $this->formatTime($path->duration) : '',
+            'ascent' => !empty($path->ascent) ? ($path->ascent < 1000 ? $path->ascent . ' m' : round($path->ascent / 1000, 1) . ' km') : '',
+            'difficulty' => $path->difficulty,
+            'pois' => $path->pois->map(function ($poi) {
+                return [
+                    'id' => $poi->id,
+                    'title' => $poi->title,
+                    'description' => $poi->short_descr,
+                    'photos' => $poi->photos, // include the photos array
+                    'pivot_position' => $poi->pivot_position,
+                    'lat' => $poi->lat,
+                    'long' => $poi->long,
+                ];
+            })->toArray(),
+            'is_handicap_accessible' => $path->is_handicap_accessible,
         ];
 
-        // dd($infos, $pathGeojson, $pois);
+        // dd($infos);
 
         return Inertia::render('Details', [
-            'pathInfos' => $infos]);
+            'infos' => $infos]);
     }
 
     /**
