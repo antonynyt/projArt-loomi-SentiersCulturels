@@ -23,7 +23,7 @@ class AchievementUserTableSeeder extends Seeder
             ],
             [
                 'achievement_id' => 1, // Débutant
-                'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
+                'user_id' => User::where('pseudo', 'ariadnemelissargos')->value('id'),
             ],
             [
                 'achievement_id' => 1, // Débutant

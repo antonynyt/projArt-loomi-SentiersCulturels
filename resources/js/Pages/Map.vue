@@ -123,7 +123,7 @@ const handleClick = (item) => {
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
                 <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick(item)"
-                    :title="item.properties.name" :type="item.properties.type" :href="'/map/'+ item.properties.id" :location=item.properties.location
+                    :title="item.properties.name" :type="item.properties.type" :location=item.properties.location
                     :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
                 </AppElementCard>
             </section>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Path;
+use App\Models\PathFavorite;
 use App\Models\Poi;
 use App\Models\Theme;
 use Carbon\CarbonInterval;
@@ -79,7 +80,7 @@ class PathController extends Controller
      */
     public function show(string $id)
     {
-        $path = Path::with('pois')->find($id);
+        $path = Path::with(['pois', 'links'])->find($id);
 
         $pois = $path->pois;
         $pois->each(function ($poi) {
@@ -93,6 +94,7 @@ class PathController extends Controller
         $path->location = Poi::all()->find($path->pois->first()->id)->adress_label;
 
         $infos = [
+            'id' => $path->id,
             'title' => $path->title,
             'description' => $path->descr,
             'theme' => Theme::find($path->theme_id)->title,
@@ -113,12 +115,23 @@ class PathController extends Controller
                 ];
             })->toArray(),
             'is_handicap_accessible' => $path->is_handicap_accessible,
+            'parkings' => empty(!$path->links) ? $path->links->toArray() : null,
         ];
+
+        // detect if liked
+        $liked = false;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $liked = PathFavorite::where('user_id', $user->id)->where('path_id', $path->id)->first() ? true : false;
+        }
 
         // dd($infos);
 
         return Inertia::render('Details', [
-            'infos' => $infos]);
+            'infos' => $infos,
+            'type' => 'path',
+            'liked' => $liked,
+        ]);
     }
 
     /**

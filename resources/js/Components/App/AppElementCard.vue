@@ -83,9 +83,9 @@ const props = defineProps({
             <!-- Infos -->
             <div class="flex-1 flex flex-col justify-center px-5 py-2">
                 <!-- Title -->
-                <h3 class="text-base font-[469] text-midnight-blue">{{ title }}</h3>
+                <h3 class="text-base font-[469] text-midnight-blue leading-5 mb-1">{{ title }}</h3>
                 <!-- Location -->
-                <Text v-if="location && !navigation" type="s" class="">{{ location }}</Text>
+                <Text v-if="location && !navigation"  class="text-xs">{{ location }}</Text>
                 <!-- Navigation infos -->
                 <Text v-if="navigationInfos" type="s" class="">Durée du trajet : <ImpactText class="inline" type="xs">{{ navigationInfos.duration }}</ImpactText></Text>
                 <div v-if="navigationInfos" class="flex gap-6 flex-row mt-2">
