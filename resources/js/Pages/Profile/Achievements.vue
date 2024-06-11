@@ -1,7 +1,6 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
-import { ref, watchEffect, computed } from "vue";
 
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";

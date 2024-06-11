@@ -46,9 +46,9 @@ class AchievementController extends Controller
         $allThemes->each(function ($theme){
             $userId = Auth::id();
             $theme->allPaths = $theme->paths;
-            $theme->finishedPaths = $theme->paths->filter(function ($path) use ($userId) {
+            $theme->finishedPaths = count($theme->paths->filter(function ($path) use ($userId) {
                 return $path->pathHistories->where('user_id', $userId)->isNotEmpty();
-            });
+            }));
         });
 
         //dd($allThemes);
@@ -57,6 +57,8 @@ class AchievementController extends Controller
         $badges = $this->retrieveUserBadges();
         $pathCount = count(Path::all());
 
+
+        
 
         // Return the dashboard view with the data
         return Inertia::render('Profile/Achievements', [

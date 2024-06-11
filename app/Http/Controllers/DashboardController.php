@@ -43,6 +43,8 @@ class DashboardController extends Controller
             $badges = $this->retrieveUserBadges();
             $pathCount = count(Path::all());
 
+            //dd($badges);
+
             // Return the dashboard view with the data
             return Inertia::render('Dashboard', [
                 'finishedPaths' => $finishedPaths,
