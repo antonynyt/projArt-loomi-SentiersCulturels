@@ -13,8 +13,8 @@ const props = defineProps({
         default: ''
     },
     size: {
-        type: String,
-        default: '8'
+        type: Number,
+        default: 8
     }
 });
 

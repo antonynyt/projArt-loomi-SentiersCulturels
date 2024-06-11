@@ -87,20 +87,20 @@ const extractLocality = (address) => {
     locality = locality.replace(/^\d{4}\s*/, ''); // Remove the 4-digit NPA if present
     return locality;
 };
-console.log("----- Path -----");
-console.log(props.path);
-if(props.path) {
-    console.log("----- Path features -----");
-    console.log(props.path.features);
-    console.log("----- Path segments -----");
-    console.log(props.path.features[0].properties.segments);
-    console.log("----- Path segments distance -----");
-    console.log(props.path.features[0].properties.segments[0].distance);
-    console.log("----- Path segments duration -----");
-    console.log(props.path.features[0].properties.segments[0].duration);
-    console.log("----- Path segments ascent -----");
-    console.log(props.path.features[0].properties.segments[0].ascent);
-}
+// console.log("----- Path -----");
+// console.log(props.path);
+// if(props.path) {
+//     console.log("----- Path features -----");
+//     console.log(props.path.features);
+//     console.log("----- Path segments -----");
+//     console.log(props.path.features[0].properties.segments);
+//     console.log("----- Path segments distance -----");
+//     console.log(props.path.features[0].properties.segments[0].distance);
+//     console.log("----- Path segments duration -----");
+//     console.log(props.path.features[0].properties.segments[0].duration);
+//     console.log("----- Path segments ascent -----");
+//     console.log(props.path.features[0].properties.segments[0].ascent);
+// }
 
 const toForm = () => {
     if(props.selectedPois.length < 2 || !props.path) return;
@@ -153,9 +153,9 @@ const toForm = () => {
                         :location="extractLocality(poi.adress_label)"
                         :border="true"
                         :navigationInfos="n > 0 ? {
-                            distance: props.path.features[0].properties.segments[n-1].distance,
-                            duration: props.path.features[0].properties.segments[n-1].duration,
-                            ascent: props.path.features[0].properties.segments[n-1].ascent
+                            distance: Math.round(props.path.features[0].properties.segments[n-1].distance),
+                            duration: Math.round(props.path.features[0].properties.segments[n-1].duration),
+                            ascent: Math.round(props.path.features[0].properties.segments[n-1].ascent)
                         } : null"
                         :coordinates="[poi.lat, poi.long]"
                         @cardClick="console.log('card click')"
