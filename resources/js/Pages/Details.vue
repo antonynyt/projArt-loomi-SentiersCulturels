@@ -10,18 +10,45 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { router } from "@inertiajs/vue3";
 import ExternalLink from '@/Components/App/Text/ExternalLink.vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     infos: {
         type: Object,
+    },
+    type: {
+        type: String,
+    },
+    auth: {
+        type: Object,
+    },
+    liked: {
+        type: Boolean,
     }
 });
 
-const images = props.infos.pois.map(poi => {
-    return {
-        title: poi.photos.title,
-        src: poi.photos.link,
-    }
+let images = [];
+const isLiked = ref(props.liked);
+
+if (props.infos.pois) {
+    images = props.infos.pois.map(poi => {
+        return {
+            title: poi.photos.title,
+            src: poi.photos.link,
+        }
+    });
+}
+
+const toggleLike = (id, type) => {
+    const t = type === 'path' ? 'sentier' : 'poi';
+    router.post(`/${t}/${id}/like`, {}, {
+        preserveScroll: true,
+    });
+    isLiked.value = !isLiked.value;
+}
+
+watch(() => props.liked, (newVal) => {
+    isLiked.value = newVal;
 });
 
 </script>
@@ -33,19 +60,22 @@ const images = props.infos.pois.map(poi => {
     </Head>
     <ContentLayout :hasNavBar=false class="mb-8">
         <template #header-w-full>
-            <nav class="fixed bg-off-white flex flex-row justify-between items-center w-full px-5 py-5">
+            <nav class="fixed bg-off-white flex flex-row justify-between items-center w-full h-16 px-5 py-5">
                 <BackLink />
-                <LikeButton />
+                <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" v-if="auth.user" />
             </nav>
-            <Gallery :images class="mt-16" />
+
+            <Gallery v-if="infos.pois" :images class="mt-16" />
+            <img v-else :src="infos.photos[0].link" :alt="infos.photos[0].title"
+                class="w-full h-[30vh] object-cover object-center" />
         </template>
         <TheHeader :title="infos.title" class="mb-3 mt-6" />
         <section class="flex mb-6 gap-4">
             <p class="text-midnight-blue">{{ infos.location }}</p>
-            <p class="text-midnight-blue">Sentier {{ infos.theme }}</p>
+            <p class="text-midnight-blue">{{ infos.theme }}</p>
         </section>
         <main class="flex flex-col gap-12">
-            <section>
+            <section v-if="infos.distance">
                 <div class="grid grid-cols-2 gap-4 mt-3">
                     <div v-if="infos.distance">
                         <p class="font-medium text-midnight-blue">Distance</p>
@@ -90,6 +120,19 @@ const images = props.infos.pois.map(poi => {
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Description</h2>
                 <p>{{ infos.description }}</p>
             </section>
+            <section v-if="infos.facts">
+                <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Fun Facts</h2>
+                <div class="flex flex-col gap-3">
+                    <p v-for="fact in infos.facts">{{ fact.content }}</p>
+                </div>
+            </section>
+            <section v-if="infos.audios">
+                <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Audio</h2>
+                <audio class="w-full" v-for="(audio, index) in infos.audios" controls>
+                    <source :src="audio.src_link" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </section>
             <section v-if="infos.pois">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Étapes ({{ infos.pois.length }})</h2>
                 <div class="flex w-full flex-row gap-6 overflow-x-scroll pt-1 pb-4 no-scrollbar">
@@ -97,17 +140,19 @@ const images = props.infos.pois.map(poi => {
                         :title="poi.title" :href="'/poi/' + poi.id" :thumbnail="poi.photos.link" />
                 </div>
             </section>
-            <section class="flex flex-col">
+            <section v-if="infos.parkings || infos.is_handicap_accessible || infos.pois" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Infos Pratiques</h2>
-                <div v-if="infos.parking" class="mb-8">
+                <div v-if="infos.parkings" class="mb-8">
                     <h3 class="font-bold text-midnight-blue mb-3">Parkings à proximité</h3>
-                    <p>{{ infos.parking }}</p>
+                    <div class="flex flex-col gap-2">
+                        <ExternalLink v-for="link in infos.parkings" :key="link.id" :href="link.url">{{ link.title }}</ExternalLink>
+                    </div>
                 </div>
                 <div v-if="infos.is_handicap_accessible" class="mb-8">
                     <h3 class="font-bold text-midnight-blue mb-3">Accessibilité</h3>
                     <p>Ce sentier est accessible pour les personnes à mobilité réduite.</p>
                 </div>
-                <div class="mb-6">
+                <div v-if="infos.pois" class="mb-6">
                     <h3 class="font-bold text-midnight-blue mb-3">Accès au point de départ</h3>
                     <div class="flex flex-col gap-2">
                         <ExternalLink
@@ -116,9 +161,17 @@ const images = props.infos.pois.map(poi => {
                     </div>
                 </div>
             </section>
+            <section v-if="infos.links" class="flex flex-col">
+                <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Liens</h2>
+                <div class="flex flex-col gap-2">
+                    <ExternalLink v-for="link in infos.links" :key="link.id" :href="link.url">
+                        {{ link.title }}</ExternalLink>
+                </div>
+            </section>
             <div class="flex flex-row w-full gap-4">
-                <!-- <SecondaryButton @click="router.visit(`/sentiers`, {preserveState: true})" class="text-xs grow">Retour</SecondaryButton> -->
-                <PrimaryButton @click="router.visit(`/nav/${infos.id}`, { preserveState: true })" class="grow">Initier le parcours</PrimaryButton>
+                <PrimaryButton v-if="type === 'path'" @click="router.visit(`/nav/${infos.id}`, { preserveState: true })"
+                    class="grow">Initier le parcours</PrimaryButton>
+                <PrimaryButton v-else @click="router.visit(`/nav/${infos.id}`, { preserveState: true })" class="grow">Voir les sentiers associés</PrimaryButton>
             </div>
         </main>
     </ContentLayout>

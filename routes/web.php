@@ -25,7 +25,9 @@ Route::get('/map', [MapController::class, 'index'])->name('map.index');
 Route::get('/map/{id}', [MapController::class, 'show'])->name('map.show');
 
 Route::get('/sentier/{id}', [PathController::class, 'show'])->name('path.show');
+Route::post('/sentier/{path}/like', [FavoriteController::class, 'togglePath']);
 Route::get('/poi/{id}', [PoiController::class, 'show'])->name('poi.show');
+Route::post('/poi/{poi}/like', [FavoriteController::class, 'togglePoi']);
 
 Route::get('/favoris', [FavoriteController::class, 'index'])->middleware(['role:user,editor'])->name('favorites');
 
