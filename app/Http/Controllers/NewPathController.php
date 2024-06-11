@@ -137,6 +137,8 @@ class NewPathController extends Controller
             }
         }
 
-        return Inertia::render('NewPath/NewPathSuccess');
+        return Inertia::render('NewPath/NewPathSuccess', [
+            'pathId' => $path->id,
+        ]);
     }
 }

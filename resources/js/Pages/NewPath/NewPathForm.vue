@@ -19,6 +19,7 @@ import AppPoiSqareCard from '@/Components/App/AppPoiSquareCard.vue'
 import ToggleButton from "@/Components/App/Button/ToggleButton.vue";
 import { ref, defineProps } from 'vue';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Toggle from "@/Components/App/Button/Toggle.vue";
 
 const props = defineProps({
     selectedPois: {
@@ -195,7 +196,7 @@ function submitForm() {
             <div class="flex items-center gap-2 mt-3">
                 <Checkbox v-show="false" id="is-handicap-accessible" :checked="isHandicapAccessible" v-model="isHandicapAccessible"></Checkbox>
                 <InputLabel for="is-handicap-accessible">Ce sentier est-il totalement accessible aux personnes à mobilité réduite ?</InputLabel>
-                <ToggleButton :active="isHandicapAccessible" @toggle="isHandicapAccessible = !isHandicapAccessible" />
+                <Toggle :active="isHandicapAccessible" @toggle="isHandicapAccessible = !isHandicapAccessible" />
             </div>
             <!-- duration -->
             <InputError :message="form.errors.duration" />

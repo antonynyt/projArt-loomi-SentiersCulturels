@@ -102,6 +102,28 @@ const extractLocality = (address) => {
 //     console.log(props.path.features[0].properties.segments[0].ascent);
 // }
 
+// distance: Math.round(props.path.features[0].properties.segments[n-1].distance),
+function distance(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.distance, 0));
+    }
+    return 0;
+}
+// duration: Math.round(props.path.features[0].properties.segments[n-1].duration),
+function duration(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.duration, 0));
+    }
+    return 0;
+}
+// ascent: Math.round(props.path.features[0].properties.segments[n-1].ascent)
+function ascent(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.ascent, 0));
+    }
+    return 0;
+}
+
 const toForm = () => {
     if(props.selectedPois.length < 2 || !props.path) return;
     router.post('/new-path/form', {
@@ -153,9 +175,9 @@ const toForm = () => {
                         :location="extractLocality(poi.adress_label)"
                         :border="true"
                         :navigationInfos="n > 0 ? {
-                            distance: Math.round(props.path.features[0].properties.segments[n-1].distance),
-                            duration: Math.round(props.path.features[0].properties.segments[n-1].duration),
-                            ascent: Math.round(props.path.features[0].properties.segments[n-1].ascent)
+                            distance: distance(n),
+                            duration: duration(n),
+                            ascent: ascent(n)
                         } : null"
                         :coordinates="[poi.lat, poi.long]"
                         @cardClick="console.log('card click')"

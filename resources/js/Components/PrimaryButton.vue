@@ -1,5 +1,4 @@
 <script setup>
-import InformationText from '@/Components/App/Text/InformationText.vue';
 import { useSlots } from 'vue';
 import ImpactText from './App/Text/ImpactText.vue';
 
@@ -47,7 +46,7 @@ const slots = useSlots();
             v-if="$slots.default"
             :type="size"
             :class="[darkmode ? 'text-midnight-blue' : 'text-white']"
-            class="impact-m"
+            class="m"
             >
             <slot></slot>
         </ImpactText>

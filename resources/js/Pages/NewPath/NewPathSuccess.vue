@@ -3,25 +3,17 @@
 import { Head } from "@inertiajs/vue3";
 import Headline from "@/Components/App/Text/Headline.vue";
 import InformationText from "@/Components/App/Text/InformationText.vue";
-import BackLink from "@/Components/App/Button/BackLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { router } from '@inertiajs/vue3'
 import NewPathLayout from '@/Layouts/NewPathLayout.vue'
-import { useForm } from '@inertiajs/vue3'
-
-import TextInput from '@/Components/TextInput.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import InputError from '@/Components/InputError.vue'
-import Checkbox from '@/Components/Checkbox.vue'
-import SelectInput from '@/Components/SelectInput.vue'
-import TextAreaInput from '@/Components/TextAreaInput.vue'
-import AppPoiSqareCard from '@/Components/App/AppPoiSquareCard.vue'
-import ToggleButton from "@/Components/App/Button/ToggleButton.vue";
-import { ref, defineProps } from 'vue';
+import { defineProps } from 'vue';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
-
+    pathId: {
+        type: Number,
+        required: true,
+    },
 });
 
 </script>
@@ -37,8 +29,8 @@ const props = defineProps({
             Merci de votre contribution.
         </InformationText>
         <div class="mt-auto w-full">
-            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.push('/sentier/1')">Voir sur la carte</PrimaryButton>
-            <SecondaryButton class="mt-4 justify-center w-full" @click="router.push('/dashboard')">Retourner sur mon profil</SecondaryButton>
+            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.get(`/map/${props.pathId}`)">Voir sur la carte</PrimaryButton>
+            <SecondaryButton class="mt-4 justify-center w-full" @click="router.get('/dashboard')">Retourner sur mon profil</SecondaryButton>
         </div>
     </NewPathLayout>
 </template>
