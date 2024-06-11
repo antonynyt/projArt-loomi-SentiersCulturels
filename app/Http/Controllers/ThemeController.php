@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Poi;
-use App\Models\Path;
-use Inertia\Inertia;
+use App\Models\Theme;
 
-class EtapesController extends Controller
+class ThemeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // Fetch all Themes
+        $themes = Theme::get();
 
+        // Return the response as JSON
+        return response()->json($themes);
     }
 
     /**
@@ -38,18 +40,7 @@ class EtapesController extends Controller
      */
     public function show(string $id)
     {
-        $path = Path::with('pois')->findOrFail($id);
-
-        $path->pois = $path->pois()->get();
-
-        $path->pois->each(function ($poi) {
-            $poi->thumbnail = Poi::with('photos')->find($poi->first()->id)->photos->first()->link;
-            $poi->location = Poi::with('photos')->find($poi->first()->id)->adress_label;
-        });
-
-        return Inertia::render('Etapes', [
-            'pois' => $path->pois,
-        ]);
+        //
     }
 
     /**

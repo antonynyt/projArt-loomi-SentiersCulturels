@@ -21,7 +21,7 @@ class PoiFavorite extends Model
     /**
      * Get the poi that owns the favorite.
      */
-    public function poi()
+    public function pois()
     {
         return $this->belongsTo(Poi::class);
     }
@@ -29,7 +29,7 @@ class PoiFavorite extends Model
     /**
      * Get the user that owns the favorite.
      */
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class);
     }

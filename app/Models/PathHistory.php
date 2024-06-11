@@ -26,7 +26,7 @@ class PathHistory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function path() {
+    public function paths() {
         return $this->belongsTo(Path::class);
     }
 
@@ -35,7 +35,7 @@ class PathHistory extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function users() {
         return $this->belongsTo(User::class);
     }
 }

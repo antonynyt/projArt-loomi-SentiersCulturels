@@ -1,6 +1,7 @@
 <script setup>
 import InformationText from '@/Components/App/Text/InformationText.vue';
 import { useSlots } from 'vue';
+import ImpactText from './App/Text/ImpactText.vue';
 
 const props = defineProps({
         icon: {
@@ -42,12 +43,13 @@ const slots = useSlots();
             v-if="props.icon"
             v-html="props.icon">
         </span>
-        <InformationText
+        <ImpactText
             v-if="$slots.default"
             :type="size"
             :class="[darkmode ? 'text-midnight-blue' : 'text-white']"
+            class="impact-m"
             >
             <slot></slot>
-        </InformationText>
+        </ImpactText>
     </button>
 </template>
