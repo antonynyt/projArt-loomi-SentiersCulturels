@@ -56,16 +56,16 @@ const pathCount = ref(props.pathCount);
             <div class="flex flex-col gap-4">
                 <AppElementCard
                     v-for="pathHistory in finishedPaths"
-                    :key="pathHistory.path.id"
+                    :key="pathHistory.id"
                     :thumbnail="pathHistory.thumbnail"
-                    :title="pathHistory.path.title"
+                    :title="pathHistory.title"
                     type="path"
-                    :href="'/sentier/' + pathHistory.path_id"
+                    :href="'/sentier/' + pathHistory.id"
                     :location="pathHistory.location"
                     :infos="{
-                        distance: pathHistory.path.distance,
-                        duration: pathHistory.path.duration,
-                        ascent: pathHistory.path.ascent,
+                        distance: pathHistory.distance,
+                        duration: pathHistory.duration,
+                        ascent: pathHistory.ascent,
                     }"
                 />
             </div>

@@ -5,7 +5,7 @@ import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import TheHeader from "@/Components/App/TheHeader.vue";
 import AppElementCard from "@/Components/App/AppElementCard.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { Link, useForm, usePage, router } from "@inertiajs/vue3";
 import { ref, watchEffect, computed } from "vue";
 import Headline from "@/Components/App/Text/Headline.vue";
 import ImpactText from "@/Components/App/Text/ImpactText.vue";
@@ -59,7 +59,7 @@ function exitNav() {
             <div class="flex justify-between">
                 <TheHeader title="Profil" class="mb-2 self-center" />
                 <!-- Hamburger menu icon svg to trigger the slide-in menu when clicked -->
-                <div @click="openNav">
+                <div @click="openNav" class="mt-14">
                     <svg
                         class="h-6 w-6"
                         stroke="currentColor"
@@ -226,19 +226,19 @@ function exitNav() {
                         <div
                             class="inline-block pr-3"
                             v-for="pathHistory in finishedPaths.slice(0, 3)"
-                            :key="pathHistory.path.id"
+                            :key="pathHistory.id"
                         >
                             <div class="w-80">
                                 <AppElementCard
+                                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
                                     :thumbnail="pathHistory.thumbnail"
-                                    :title="pathHistory.path.title"
+                                    :title="pathHistory.title"
                                     :type="'path'"
-                                    :href="'sentier/' + pathHistory.path_id"
                                     :location="pathHistory.location"
                                     :infos="{
-                                        distance: pathHistory.path.distance,
-                                        duration: pathHistory.path.duration,
-                                        ascent: pathHistory.path.ascent,
+                                        distance: pathHistory.distance,
+                                        duration: pathHistory.duration,
+                                        ascent: pathHistory.ascent,
                                     }"
                                 />
                             </div>
@@ -259,19 +259,19 @@ function exitNav() {
                         <div
                             class="inline-block pr-3"
                             v-for="pathHistory in finishedPaths.slice(0, 3)"
-                            :key="pathHistory.path.id"
+                            :key="pathHistory.id"
                         >
                             <div class="w-80">
                                 <AppElementCard
                                     :thumbnail="pathHistory.thumbnail"
-                                    :title="pathHistory.path.title"
+                                    :title="pathHistory.title"
                                     :type="'path'"
-                                    :href="'sentier/' + pathHistory.path_id"
+                                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
                                     :location="pathHistory.location"
                                     :infos="{
-                                        distance: pathHistory.path.distance,
-                                        duration: pathHistory.path.duration,
-                                        ascent: pathHistory.path.ascent,
+                                        distance: pathHistory.distance,
+                                        duration: pathHistory.duration,
+                                        ascent: pathHistory.ascent,
                                     }"
                                 />
                             </div>

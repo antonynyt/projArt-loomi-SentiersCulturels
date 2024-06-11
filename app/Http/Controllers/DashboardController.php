@@ -13,15 +13,16 @@ class DashboardController extends Controller
 {
     private function retrieveUserPaths(){
         $user = Auth::user();
-        $finishedPaths = $user->pathHistories()
-                ->with('path')
-                ->get();
+        // $finishedPaths = pathHistory::where('user_id', $user->id)->path()->get();
+        $finishedPaths = Path::with('pathHistories')->whereIn('id', $user->pathHistories->pluck('path_id'))->get();
 
             $pois = Poi::all();
-            $finishedPaths->each(function ($pathHist) {
-                $pathHist->thumbnail = Poi::with('photos')->find($pathHist->path->pois->first()->id)->photos->first()->link;
-                $pathHist->location = explode(',', Poi::all()->find($pathHist->path->pois->first()->id)->adress_label)[1];
+            $finishedPaths->each(function ($path) {
+                $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+                $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
             });
+
+            //dd($finishedPaths);
 
             return $finishedPaths;
     }
