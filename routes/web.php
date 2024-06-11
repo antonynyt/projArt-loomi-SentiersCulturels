@@ -15,6 +15,8 @@ use App\Http\Controllers\EtapesController;
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 use App\Http\Controllers\NewPathController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AchievementController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,13 +40,13 @@ Route::get('/etapes/{id}', [EtapesController::class, 'show'])->name('etapes.show
 
 require __DIR__ . '/auth.php';
 
-Route::get('/dashboard', function () {
-    if (auth()->user()->hasRole('user')) {
-        return Inertia::render('Dashboard');
-    } else {
-        return Inertia::render('DashboardEditor');
-    }
-})->middleware(['role:user,editor'])->name('dashboard');
+//Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['role:user,editor'])->name('dashboard');
+//CHANGED
+Route::get('/dashboard/finished-paths', [DashboardController::class, 'finishedPaths'])->middleware(['role:user,editor'])->name('dashboard.finishedPaths');
+Route::get('/dashboard/accomplissements', [AchievementController::class, 'index'])->middleware(['role:user,editor'])->name('achievement.index');
 
 /**
  * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.
