@@ -65,7 +65,4 @@ const favPois = computed(() => props.pois)
         </main>
 
     </ContentLayout>
-
-    <!-- :infos.distance="favorite.path.distance" -->
-
 </template>
