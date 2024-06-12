@@ -26,4 +26,11 @@ class Quiz extends Model
     public function pois() {
         return $this->belongsTo(Poi::class);
     }
+
+    /**
+     * Get the questions associated with the quiz.
+     */
+    public function questions() {
+        return $this->hasMany(Question::class);
+    }
 }
