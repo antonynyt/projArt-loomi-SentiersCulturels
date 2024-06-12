@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExplorerController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PathController;
 use App\Http\Controllers\PoiController;
