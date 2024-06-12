@@ -210,7 +210,32 @@ function exitNav() {
                     </div>
                 </div>
                 <div v-else>
-                    <p>Vous n'avez pas encore complété de sentier</p>
+                    <div class="flex flex-row w-full">
+                        <img
+                            :src="'/assets/icons/achievements/nopaths.svg'"
+                            class="mr-4"
+                        />
+                        <div class="flex flex-col w-full">
+                            <ProgressBar
+                                :finishedPathsCount="0"
+                                :themePathsCount="props.pathCount"
+                                :title="'midnight-blue'"
+                            />
+                            <div class="flex flex-row">
+                                <ImpactText class="self-center pr-1">{{
+                                    0
+                                }}</ImpactText>
+                                sentiers complétés sur
+                                <ImpactText class="self-center pl-1">{{
+                                    pathCount
+                                }}</ImpactText>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="">
+                        Complétez des sentiers pour collecter des badges !
+                    </p>
                 </div>
             </div>
 
@@ -230,7 +255,12 @@ function exitNav() {
                         >
                             <div class="w-80">
                                 <AppElementCard
-                                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
+                                    @cardClick="
+                                        router.visit(
+                                            `/sentier/${pathHistory.id}`,
+                                            { preserveState: true }
+                                        )
+                                    "
                                     :thumbnail="pathHistory.thumbnail"
                                     :title="pathHistory.title"
                                     :type="'path'"
@@ -266,7 +296,12 @@ function exitNav() {
                                     :thumbnail="pathHistory.thumbnail"
                                     :title="pathHistory.title"
                                     :type="'path'"
-                                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
+                                    @cardClick="
+                                        router.visit(
+                                            `/sentier/${pathHistory.id}`,
+                                            { preserveState: true }
+                                        )
+                                    "
                                     :location="pathHistory.location"
                                     :infos="{
                                         distance: pathHistory.distance,

@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\EtapesController;
+use App\Http\Controllers\ThemeController;
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -49,6 +50,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['ro
 //CHANGED
 Route::get('/dashboard/finished-paths', [DashboardController::class, 'finishedPaths'])->middleware(['role:user,editor'])->name('dashboard.finishedPaths');
 Route::get('/dashboard/accomplissements', [AchievementController::class, 'index'])->middleware(['role:user,editor'])->name('achievement.index');
+Route::get('/dashboard/accomplissements/theme/{id}', [ThemeController::class, 'show'])->middleware(['role:user,editor']);
 
 /**
  * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.

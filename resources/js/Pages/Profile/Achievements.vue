@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";
@@ -62,16 +63,20 @@ const props = defineProps({
                 ></div>
             </div>
             <div class="flex flex-col mt-10">
-                <Headline type="ms"> par thèmatiques </Headline>
+                <Headline type="ms"> par thématiques </Headline>
 
                 <AppThemeCard
                     v-for="theme in props.themes"
                     :key="theme.id"
+                    @cardClick="
+                        router.visit(`accomplissements/theme/${theme.id}`, {
+                            preserveState: true,
+                        })
+                    "
                     :themeFinishedPaths="theme.finishedPaths"
                     :themePaths="theme.allPaths"
                     :image="theme.icon"
                     :title="theme.title"
-                    :href="'hello'"
                 />
             </div>
         </div>

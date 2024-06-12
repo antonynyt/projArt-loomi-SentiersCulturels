@@ -14,17 +14,21 @@ import TheHeader from "@/Components/App/TheHeader.vue";
 import BackLink from "@/Components/App/Button/BackLink.vue";
 
 const props = defineProps({
+    title: {
+        type: String,
+        required: true,
+    },
     finishedPaths: {
         type: Array,
         required: true,
+    },
+    finishedCount: {
+        type: Number,
     },
     pathCount: {
         type: Number,
     },
 });
-
-const finishedPaths = ref(props.finishedPaths);
-const pathCount = ref(props.pathCount);
 </script>
 <template>
     <Head title="Sentiers terminés" />
@@ -33,18 +37,20 @@ const pathCount = ref(props.pathCount);
         <div class="w-full max-w-lg grid-cols-4 px-5 mx-auto mt-4 mb-28">
             <BackLink />
 
-            <Headline type="m" class="mt-4"> Sentiers Terminés </Headline>
+            <Headline type="m" class="mt-4">
+                Sentiers {{ title }} Terminés
+            </Headline>
             <div class="pb-6 mt-4">
                 <!-- progress bar -->
                 <ProgressBar
-                    :finishedPathsCount="props.finishedPaths.length"
+                    :finishedPathsCount="props.finishedCount"
                     :themePathsCount="props.pathCount"
-                    :title="'midnight-blue'"
+                    :title="props.title"
                 />
 
                 <div class="flex flex-row">
                     <ImpactText class="self-center pr-1">{{
-                        finishedPaths.length
+                        props.finishedCount
                     }}</ImpactText>
                     sentiers complétés sur
                     <ImpactText class="self-center pl-1">{{
@@ -55,21 +61,21 @@ const pathCount = ref(props.pathCount);
 
             <div class="flex flex-col gap-4">
                 <AppElementCard
-                    v-for="pathHistory in finishedPaths"
-                    :key="pathHistory.id"
+                    v-for="path in finishedPaths"
+                    :key="path.id"
                     @cardClick="
-                        router.visit(`/sentier/${pathHistory.id}`, {
+                        router.visit(`/sentier/${path.id}`, {
                             preserveState: true,
                         })
                     "
-                    :thumbnail="pathHistory.thumbnail"
-                    :title="pathHistory.title"
+                    :thumbnail="path.thumbnail"
+                    :title="path.title"
                     type="path"
-                    :location="pathHistory.location"
+                    :location="path.location"
                     :infos="{
-                        distance: pathHistory.distance,
-                        duration: pathHistory.duration,
-                        ascent: pathHistory.ascent,
+                        distance: path.distance,
+                        duration: path.duration,
+                        ascent: path.ascent,
                     }"
                 />
             </div>

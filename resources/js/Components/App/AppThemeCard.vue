@@ -22,7 +22,6 @@ const props = defineProps({
     },
     href: {
         type: String,
-        required: true,
     },
 });
 </script>
@@ -37,7 +36,7 @@ const props = defineProps({
             overflow-hidden
         "
     >
-        <a :href="props.href">
+        <div @click="$emit('cardClick', props)">
             <div class="flex flex-row gap-2">
                 <img width="18" height="19" :src="props.image" />
                 <ImpactText>{{ props.title }}</ImpactText>
@@ -56,7 +55,7 @@ const props = defineProps({
                     props.themePaths.length
                 }}</ImpactText>
             </div>
-        </a>
+        </div>
     </div>
 </template>
 <style scoped>
