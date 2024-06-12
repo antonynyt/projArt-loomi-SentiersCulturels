@@ -15,10 +15,6 @@ const { props } = usePage();
 
 const etapes = ref(props.pois);
 
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-console.log(etapes.value);
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
 </script>
 
 <template>

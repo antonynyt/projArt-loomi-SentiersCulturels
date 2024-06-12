@@ -3,32 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Path;
-use App\Models\PathFavorite;
-use Illuminate\Support\Facades\Auth;
+use App\Models\PathHistory;
 use Inertia\Inertia;
 use App\Models\Poi;
 
-class FavoriteController extends Controller
+class ExplorerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Récupérer l'utilisateur connecté
-        $user = Auth::user();
-
-        // Récupérer les path_id en fonction de l'user_id connecté
-        $pathsFav = PathFavorite::where('user_id', $user->id)->get();
-        dd($pathsFav);
-        $pathsFav->each(function ($pathFav) {
-            $pathFav->thumbnail = Poi::with('photos')->find($pathFav->path->pois->first()->id)->photos->first()->link;
-            $pathFav->location = Poi::with('photos')->find($pathFav->path->pois->first()->id)->adress_label;
+        $popular = PathHistory::popular();
+        /*         $popularPaths = PathHistory::getPopularPaths(); */
+        /*         dd($popular); */
+        $popular->each(function ($pop) {
+            $pop->thumbnail = Poi::with('photos')->find($pop->pois->first()->id)->photos->first()->link;
+            $pop->location = Poi::with('photos')->find($pop->pois->first()->id)->adress_label;
         });
-
-        return Inertia::render('Favorites', [
-            'paths' => $pathsFav,
+        return Inertia::render('Explorer', [
+            'populaires' => $popular,
         ]);
     }
 

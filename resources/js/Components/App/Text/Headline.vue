@@ -1,11 +1,17 @@
+<!-- <template>
+    <div class="text-midnight-blue">
+        <h1 v-if="rank.toLowerCase()==='h1'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h1>
+        <h2 v-if="rank.toLowerCase()==='h2'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h2>
+        <h3 v-if="rank.toLowerCase()==='h3'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h3>
+        <h4 v-if="rank.toLowerCase()==='h4'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h4>
+        <h5 v-if="rank.toLowerCase()==='h5'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h5>
+        <h6 v-if="rank.toLowerCase()==='h6'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h6>
+    </div>
+</template> -->
+
 <template>
-    <div>
-        <h1 v-if="rank.toLowerCase()==='h1'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h1>
-        <h2 v-if="rank.toLowerCase()==='h2'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h2>
-        <h3 v-if="rank.toLowerCase()==='h3'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h3>
-        <h4 v-if="rank.toLowerCase()==='h4'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h4>
-        <h5 v-if="rank.toLowerCase()==='h5'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h5>
-        <h6 v-if="rank.toLowerCase()==='h6'" class="text-midnight-blue title" :class="`title-${type.toLowerCase()}`"><slot></slot></h6>
+    <div :class="['title', `title-${type.toLowerCase()}`, $attrs.class]" :style="$attrs.style">
+        <slot></slot>
     </div>
 </template>
 
@@ -53,7 +59,7 @@
     font-weight: 469;
 }
 .title-post {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 617;
 }
 </style>
