@@ -47,9 +47,11 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['role:user,editor'])->name('dashboard');
-//CHANGED
 Route::get('/dashboard/finished-paths', [DashboardController::class, 'finishedPaths'])->middleware(['role:user,editor'])->name('dashboard.finishedPaths');
+
 Route::get('/dashboard/accomplissements', [AchievementController::class, 'index'])->middleware(['role:user,editor'])->name('achievement.index');
+Route::get('/dashboard/accomplissements/{id}', [AchievementController::class, 'show'])->middleware(['role:user,editor']);
+
 Route::get('/dashboard/accomplissements/theme/{id}', [ThemeController::class, 'show'])->middleware(['role:user,editor']);
 
 /**

@@ -8,6 +8,8 @@ use Inertia\Inertia;
 use App\Models\PathHistory;
 use App\Models\Poi;
 use App\Models\Path;
+use App\Models\Achievement;
+
 
 class DashboardController extends Controller
 {
@@ -28,10 +30,14 @@ class DashboardController extends Controller
     }
 
     private function retrieveUserBadges(){
-        $user = Auth::user();
-        $userBadges = $user->achievements;
+        //$user = Auth::user();
+        //$userBadges = $user->achievements;
 
-        return $userBadges;
+        $badges = Achievement::all();
+
+        
+
+        return $badges;
     }
 
     public function index()

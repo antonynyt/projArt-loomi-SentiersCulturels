@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Theme;
+use App\Models\Achievement;
 
 class AchievementController extends Controller
 {
@@ -25,10 +26,9 @@ class AchievementController extends Controller
     }
 
     private function retrieveUserBadges(){
-        $user = Auth::user();
-        $userBadges = $user->achievements;
+        $badges = Achievement::all();
 
-        return $userBadges;
+        return $badges;
     }
 
     /**
@@ -54,7 +54,7 @@ class AchievementController extends Controller
         $pathCount = count(Path::all());
 
 
-        
+        //dd($badges);
 
         // Return the dashboard view with the data
         return Inertia::render('Profile/Achievements', [
