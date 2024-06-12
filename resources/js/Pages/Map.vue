@@ -71,16 +71,6 @@ watch(filteredPoi, (newVal) => {
     }
 });
 
-if (map.value){
-    map.value.on('sourcedata', (e) => {
-        if (e.sourceId === 'POI' && map.value.isSourceLoaded('POI')) {
-            // La source 'POI' est prête, vous pouvez maintenant l'utiliser.
-            console.log('POI source is ready');
-        }
-    });
-}
-
-
 //pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
     if (newVal) {
