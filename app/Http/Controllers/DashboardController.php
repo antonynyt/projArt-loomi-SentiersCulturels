@@ -22,6 +22,7 @@ class DashboardController extends Controller
             $finishedPaths->each(function ($path) {
                 $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
                 $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
+                $path->type = 'path';
             });
 
             //dd($finishedPaths);
@@ -59,7 +60,8 @@ class DashboardController extends Controller
                 'pathCount'=>$pathCount
             ]);
         } elseif ($user->hasRole('editor')) {
-            return Inertia::render('DashboardEditor');
+            $createdPaths = $this->retrieveUserPaths();
+            return Inertia::render('DashboardEditor', ['createdPaths' => $createdPaths]);
         }
 
         // Optionally, handle other roles or default case
