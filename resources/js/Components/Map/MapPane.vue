@@ -52,8 +52,9 @@ const setupMap = async () => {
         });
     }
 
-    if(props.options.controls)
+    if(props.options.controls) {
         addControls(map, props.options);
+    }
 };
 
 onMounted(() => {
