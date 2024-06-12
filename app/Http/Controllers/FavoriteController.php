@@ -30,9 +30,6 @@ class FavoriteController extends Controller
         $user = Auth::user();
         $pathsFav = Path::with('pois')->whereIn('id', $user->pathFavorites->pluck('path_id'))->get();
 
-        // Récupérer les path_id en fonction de l'user_id connecté
-        $pathsFav = PathFavorite::where('user_id', $user->id)->get();
-        dd($pathsFav);
         $pathsFav->each(function ($pathFav) {
             $pathFav->thumbnail = Poi::with('photos')->find($pathFav->pois->first()->id)->photos->first()->link;
             $pathFav->location = Poi::with('photos')->find($pathFav->pois->first()->id)->adress_label;
@@ -77,7 +74,7 @@ class FavoriteController extends Controller
         }
 
         return redirect()->back();
-
+        
     }
 
     public function togglePoi(Poi $poi)
@@ -100,7 +97,7 @@ class FavoriteController extends Controller
         }
 
         return redirect()->back();
-
+        
     }
 
 }
