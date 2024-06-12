@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <div class="text-midnight-blue">
         <h1 v-if="rank.toLowerCase()==='h1'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h1>
         <h2 v-if="rank.toLowerCase()==='h2'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h2>
@@ -6,12 +6,6 @@
         <h4 v-if="rank.toLowerCase()==='h4'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h4>
         <h5 v-if="rank.toLowerCase()==='h5'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h5>
         <h6 v-if="rank.toLowerCase()==='h6'" class=" title" :class="`title-${type.toLowerCase()}`"><slot></slot></h6>
-    </div>
-</template> -->
-
-<template>
-    <div :class="['title', `title-${type.toLowerCase()}`, $attrs.class]" :style="$attrs.style">
-        <slot></slot>
     </div>
 </template>
 

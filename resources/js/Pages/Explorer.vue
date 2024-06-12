@@ -20,10 +20,6 @@ const options = {
     flyToUserLocation: true
 };
 
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-console.log(populaires.value);
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
 const extractLocality = (address) => {
     const parts = address.split(',');
     if (parts.length < 3) return address; // Return the whole address if it's not in the expected format
@@ -52,7 +48,7 @@ const extractLocality = (address) => {
                 </section>
                 <section class="mt-8">
                     <Headline class="title-m uppercase text-midnight-blue">Quel sentier es-tu?</Headline>
-                    <a href="#" class="block mt-3 border border-grey rounded-xl overflow-hidden">
+                    <a href="/quizz" class="block mt-3 border border-grey rounded-xl overflow-hidden">
                         <svg width="100%" height="100%" viewBox="0 0 322 113" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_279_2545" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="322" height="113">
                             <rect width="322" height="113" rx="12" fill="#D1FFD5"/>
@@ -70,7 +66,7 @@ const extractLocality = (address) => {
                 <section class="mt-8">
                     <Headline class="title-m uppercase text-midnight-blue">Populaire</Headline>
                     <div class="flex w-full flex-row gap-6 overflow-x-scroll pt-1 pb-4 no-scrollbar">
-                        <AppElementCard class="mb-3 h-24 w-80 shrink-0"
+                        <AppElementCard class="mb-3 h-24 w-10/12 shrink-0"
                             v-for="(populaire) in populaires"
                             :title="populaire.title"
                             :thumbnail="populaire.thumbnail"
@@ -84,7 +80,7 @@ const extractLocality = (address) => {
                         <div class="relative w-full h-full">
                             <img src="/assets/fun_facts/gargouille.webp" class="absolute aspect-square object-cover object-right-top transform -scale-x-100 rounded-lg">
                             
-                            <Headline class="title-post absolute top-6 left-6">Fun Fact</Headline>
+                            <Headline rank="h1" type="post" class="absolute top-6 left-6">Fun Fact</Headline>
                             <div class="absolute top-24 left-6 w-1/2">
                                 <Text class="text-m">Il est là, suspendu, l'air serein parmi les (rares) gargouilles dantesques de la cathédrale de Lausanne</Text>
                             </div>
@@ -95,7 +91,7 @@ const extractLocality = (address) => {
                         <div class="relative w-full aspect-square">
                             <img src="/assets/fun_facts/Nyon.jpeg" class="absolute aspect-square object-cover object-right-top transform -scale-x-100 rounded-lg">
                             <div class="absolute aspect-square object-cover -rotate-90 w-full h-full rounded-lg bg-gradient-to-r from-black opacity-40"></div>
-                            <Headline class="title-post absolute bottom-24 left-12 text-off-white">Sais-tu que..</Headline>
+                            <Headline rank="h1" type="post" class="absolute bottom-24 left-12 text-off-white">Sais-tu que..</Headline>
                             <div class="absolute bottom-12 left-12 w-1/2">
                                 <Text class="text-m text-off-white">Nyon était une colonie romaine connue sous le nom de Noviodunum</Text>
                             </div>
@@ -103,7 +99,6 @@ const extractLocality = (address) => {
                     </div>
                 </section>
             </main>
-
     </ContentLayout>
 
 
