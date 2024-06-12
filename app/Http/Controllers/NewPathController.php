@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\PoiController;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\ThemeController;
+use App\Http\Requests\PathRequest;
+use App\Models\Path;
+use App\Models\Link;
 
 class NewPathController extends Controller
 {
@@ -95,6 +99,46 @@ class NewPathController extends Controller
             'selectedPois' => $selectedPois,
             'path' => $path,
             'themes' => $themes->getData(),
+        ]);
+    }
+
+    public function create(PathRequest $request)
+    {
+        $path = new Path();
+        $path->title = $request->input('title');
+        $path->descr = $request->input('description');
+        $path->duration = $request->input('duration');
+        $path->distance = $request->input('distance');
+        $path->ascent = $request->input('ascent');
+        $path->descent = $request->input('descent');
+        $path->difficulty = "Difficile";
+        $path->is_handicap_accessible = $request->input('isHandicapAccessible');
+        $path->is_loop = $request->input('isLoop');
+        $path->geojson = $request->input('path');
+        $path->theme_id = $request->input('themeId');
+        $path->save();
+
+        $pois = $request->input('pois');
+        for($i = 0; $i < count($pois); $i++) {
+            $path->pois()->attach($pois[$i]['id'], ['position' => $i]);
+        }
+
+        $links = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $name = $request->input('parkingName_' . $i);
+            $url = $request->input('parkingUrl_' . $i);
+            if ($name && $url) {
+                Link::create([
+                    'title' => $name,
+                    'url' => $url,
+                    'type' => 'parking',
+                    'path_id' => $path->id,
+                ]);
+            }
+        }
+
+        return Inertia::render('NewPath/NewPathSuccess', [
+            'pathId' => $path->id,
         ]);
     }
 }

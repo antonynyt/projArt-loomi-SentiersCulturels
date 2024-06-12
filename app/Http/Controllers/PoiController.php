@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PoiFavorite;
 use Illuminate\Http\Request;
 use App\Models\Poi;
 use Inertia\Inertia;
@@ -41,7 +42,39 @@ class PoiController extends Controller
      */
     public function show(string $id)
     {
-        return Inertia::render('Details');
+
+        $poi = Poi::with('photos', 'poiFacts', 'audio', 'link')->find($id);
+
+        // dd($poi);
+
+        $infos = [
+            'id' => $poi->id,
+            'photos' => $poi->photos,
+            'title' => $poi->title,
+            'description' => $poi->descr,
+            'location' => trim(preg_replace('/\d/', '', explode(',', $poi->adress_label)[1])),
+            'lat' => $poi->lat,
+            'long' => $poi->long,
+            'is_handicap_accessible' => $poi->is_handicap_accessible,
+            'facts' => $poi->poiFacts->toArray(),
+            'audios' => count($poi->audio) > 0 ? $poi->audio->toArray() : null,
+            'links' => empty(!$poi->link) ? $poi->link->toArray() : null,
+        ];
+
+        // detect if liked
+        $liked = false;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $liked = PoiFavorite::where('user_id', $user->id)->where('poi_id', $poi->id)->first() ? true : false;
+        }
+
+        // dd($infos);
+
+        return Inertia::render('Details', [
+            'infos' => $infos,
+            'type' => 'poi',
+            'liked' => $liked,
+        ]);
     }
 
     /**

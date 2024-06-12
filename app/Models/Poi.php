@@ -56,10 +56,28 @@ class Poi extends Model
     /**
      * Get the poi_fact for the poi
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function poiFacts() {
         return $this->hasMany(PoiFact::class);
+    }
+
+    /**
+     * Get the audio for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function audio() {
+        return $this->hasMany(Audio::class);
+    }
+
+    /**
+     * Get the link for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function link() {
+        return $this->hasMany(Link::class);
     }
 
     /**

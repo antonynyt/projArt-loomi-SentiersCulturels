@@ -8,12 +8,16 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    small: {
+        type: Boolean,
+        default: false,
+    },
 });
 </script>
 
 <template>
-    <label class="block mb-2">
-        <InformationText type="m" v-if="value">{{required?'* ':''}}{{ value }}</InformationText>
-        <InformationText type="m" v-else>{{required?'* ':''}}<slot></slot></InformationText>
+    <label class="block" :class="small ? 'mb-1' : 'mb-2'">
+        <InformationText :type="small ? 'xs' : 's'" v-if="value">{{required?'* ':''}}{{ value }}</InformationText>
+        <InformationText :type="small ? 'xs' : 's'" v-else>{{required?'* ':''}}<slot></slot></InformationText>
     </label>
 </template>
