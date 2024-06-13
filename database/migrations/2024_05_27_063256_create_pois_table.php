@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('short_descr');
-            $table->string('descr');
+            $table->text('descr');
             $table->string('adress_label');
             $table->double('lat');
             $table->double('long');

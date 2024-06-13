@@ -64,6 +64,7 @@ class NewPoiController extends Controller
         $nearestAddress = json_decode($response)->features[0]->properties;
         $poi->adress_label = $nearestAddress->street . $nearestAddress->housenumber . ', ' . $nearestAddress->postalcode . ' ' . $nearestAddress->locality . ', ' . $nearestAddress->country;
         $poi->accessibility = $request->input('isHandicapAccessible');
+        $poi->user_id = auth()->user()->id;
         $poi->save();
 
         if($request->input('funFact')){

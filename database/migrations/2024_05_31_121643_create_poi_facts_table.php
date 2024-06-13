@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('poi_facts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
+            $table->text('content');
             $table->foreignId('poi_id')
                 ->references('id')
                 ->on('pois')

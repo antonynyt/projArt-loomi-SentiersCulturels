@@ -193,6 +193,8 @@ const date = year + "-" + month + "-" + day;
                     </PrimaryButton>
                 </div>
             </TransitionGroup>
+            <InputError :message="form.errors.lat" />
+            <InputError :message="form.errors.long" />
             <!-- Description of the POI -->
             <Headline class="mt-12" rank="h2" type="m">Description</Headline>
             <!-- title -->
@@ -296,13 +298,14 @@ const date = year + "-" + month + "-" + day;
                 <InputLabel for="is-handicap-accessible">Ce point d'intérêt est-il totalement accessible aux personnes à mobilité réduite ?</InputLabel>
                 <Toggle :active="isHandicapAccessible" @toggle="isHandicapAccessible = !isHandicapAccessible" />
             </div>
+            <InputError :message="form.errors.isHandicapAccessible" />
             <!-- HORIZONTAL LINE SEPARATOR -->
             <div class="h-3 mt-6 w-dvw bg-grey max-w-lg ms-[-1.25rem]"></div>
             <!-- Picture -->
             <Headline class="mt-12" rank="h2" type="m">Photo</Headline>
             <!-- Picture file -->
             <InputLabel required for="picture-file" class="mt-6">Fichier photo</InputLabel>
-            <FileInput id="picture-file" accept="image/jpeg,image/webp" capture="environment" v-model="form.pictureFile" />
+            <FileInput id="picture-file" accept="image/jpeg,image/webp" v-model="form.pictureFile" />
             <InputError :message="form.errors.pictureFile" />
             <!-- Picture title -->
             <InputLabel class="mt-6" required for="picture-title">Titre de la photo</InputLabel>
@@ -326,7 +329,7 @@ const date = year + "-" + month + "-" + day;
             <Headline class="mt-12" rank="h2" type="m">Audio</Headline>
             <!-- Audio File -->
             <InputLabel for="audio-file" class="mt-6">Audio</InputLabel>
-            <FileInput id="audio-file" accept="audio/*" capture="user" v-model="form.audioFile" />
+            <FileInput id="audio-file" accept="audio/*" v-model="form.audioFile" />
             <InputError :message="form.errors.audioFile" />
             <!-- audio title -->
             <InputLabel class="mt-6" :required="form.audio == null ? false : true" for="audio-title">Titre de l'audio</InputLabel>
@@ -402,9 +405,7 @@ const date = year + "-" + month + "-" + day;
             <InputError :message="form.errors.correctAnswer" />
 
             <!-- Errors messages of hidden variables -->
-            <InputError :message="form.errors.isHandicapAccessible" />
-            <InputError :message="form.errors.lat" />
-            <InputError :message="form.errors.long" />
+
             <!-- submit -->
             <PrimaryButton @click="console.log('Submit button clicked')" type="submit" :disabled="form.processing" class="mt-16" style="width: 100%;">Créer le point d'intérêt</PrimaryButton>
             <!-- <SecondaryButton @click="console.warn('Save form button clicked')" type="button" :disabled="form.processing" class="mb-8 mt-3 justify-center" style="width: 100%;">Sauvegarder le brouillon</SecondaryButton> -->

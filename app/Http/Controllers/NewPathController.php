@@ -116,6 +116,7 @@ class NewPathController extends Controller
         $path->is_loop = $request->input('isLoop');
         $path->geojson = $request->input('path');
         $path->theme_id = $request->input('themeId');
+        $path->user_id = auth()->user()->id;
         $path->save();
 
         $pois = $request->input('pois');
