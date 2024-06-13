@@ -12,7 +12,6 @@ import ContentLayout from "@/Layouts/ContentLayout.vue";
 import { Link, useForm, usePage, router } from "@inertiajs/vue3";
 import { ref, watchEffect, computed } from "vue";
 import { defineProps } from "vue";
-import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     createdPaths: {
@@ -245,7 +244,7 @@ function handleButtonClick(item) {
                     @cardClick="handleClick(path)"
                 >
                     <template #button>
-                        <button @click="handleButtonClick(path)">
+                        <button @click.stop="handleButtonClick(path)">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

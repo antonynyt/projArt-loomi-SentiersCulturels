@@ -106,22 +106,26 @@ class PoiController extends Controller
      */
     public function destroy(string $id)
     {
-        PoiFact::where('poi_id', $id)->delete();
-        PoiHistory::where('poi_id', $id)->delete();
-        Photo::where('poi_id', $id)->delete();
-        Link::where('poi_id', $id)->delete();
-        Audio::where('poi_id', $id)->delete();
-        PoiFavorite::where('poi_id', $id)->delete();
-        $quizzes = Quiz::where('poi_id', $id)->get();
-        foreach ($quizzes as $quiz) {
-            $questions = Question::where('quiz_id', $quiz->id)->get();
-            foreach ($questions as $question) {
-                Answer::where('question_id', $question->id)->delete();
+        $poi = Poi::find($id);
+        if ($poi->paths->count() > 2) {
+            PoiFact::where('poi_id', $id)->delete();
+            PoiHistory::where('poi_id', $id)->delete();
+            Photo::where('poi_id', $id)->delete();
+            Link::where('poi_id', $id)->delete();
+            Audio::where('poi_id', $id)->delete();
+            PoiFavorite::where('poi_id', $id)->delete();
+            $quizzes = Quiz::where('poi_id', $id)->get();
+            foreach ($quizzes as $quiz) {
+                $questions = Question::where('quiz_id', $quiz->id)->get();
+                foreach ($questions as $question) {
+                    Answer::where('question_id', $question->id)->delete();
+                }
+                Question::where('quiz_id', $quiz->id)->delete();
             }
-            Question::where('quiz_id', $quiz->id)->delete();
+            Quiz::where('poi_id', $id)->delete();
+            $poi->paths()->detach();
+            Poi::destroy($id);
         }
-        Quiz::where('poi_id', $id)->delete();
-        Poi::destroy($id);
         return redirect()->back();
     }
 }
