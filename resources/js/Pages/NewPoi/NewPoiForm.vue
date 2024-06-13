@@ -193,7 +193,6 @@ const date = year + "-" + month + "-" + day;
                     </PrimaryButton>
                 </div>
             </TransitionGroup>
-            <p>lat:{{ form.lat }} long:{{ form.long }}</p>
             <!-- Description of the POI -->
             <Headline class="mt-12" rank="h2" type="m">Description</Headline>
             <!-- title -->
@@ -305,7 +304,6 @@ const date = year + "-" + month + "-" + day;
             <InputLabel required for="picture-file" class="mt-6">Fichier photo</InputLabel>
             <FileInput id="picture-file" accept="image/jpeg,image/webp" capture="environment" v-model="form.pictureFile" />
             <InputError :message="form.errors.pictureFile" />
-            <p>{{ form.pictureFile }}</p>
             <!-- Picture title -->
             <InputLabel class="mt-6" required for="picture-title">Titre de la photo</InputLabel>
             <TextInput v-model="form.pictureTitle" id="picture-title" type="text" class="self-start"/>
