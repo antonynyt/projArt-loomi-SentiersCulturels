@@ -11,6 +11,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { router } from "@inertiajs/vue3";
 import ExternalLink from '@/Components/App/Text/ExternalLink.vue';
 import { ref, watch } from 'vue';
+import Quiz from '@/Pages/Details/Quiz.vue';
 
 const props = defineProps({
     infos: {
@@ -139,6 +140,9 @@ watch(() => props.liked, (newVal) => {
                     <AppPoiStepImage v-for="(poi, index) in infos.pois" class="snap-center" :step="index + 1"
                         :title="poi.title" :href="'/poi/' + poi.id" :thumbnail="poi.photos.link" />
                 </div>
+            </section>
+            <section v-if="infos.quiz">
+                <Quiz :quiz="infos.quiz"/>
             </section>
             <section v-if="infos.parkings || infos.is_handicap_accessible || infos.pois" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Infos Pratiques</h2>

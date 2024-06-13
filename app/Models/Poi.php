@@ -97,4 +97,13 @@ class Poi extends Model
     public function poiFavorites() {
         return $this->hasMany(PoiFavorite::class);
     }
+
+    /**
+     * Get the quiz for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function quiz() {
+        return $this->hasOne(Quiz::class);
+    }
 }
