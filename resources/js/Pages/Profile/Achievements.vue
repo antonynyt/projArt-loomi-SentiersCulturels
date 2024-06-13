@@ -44,10 +44,7 @@ const isOverlayVisible = ref(false);
 const showBadgeOverlay = (badgeImage) => {
     selectedBadge.value = badgeImage;
     isOverlayVisible.value = true;
-    console.log(selectedBadge.value);
 };
-
-console.log(props.badges.value);
 
 // Computes the badge images to display on the grid
 const badgesT = computed(() => {

@@ -18,7 +18,7 @@ class DashboardController extends Controller
         // $finishedPaths = pathHistory::where('user_id', $user->id)->path()->get();
         $finishedPaths = Path::with('pathHistories')->whereIn('id', $user->pathHistories->pluck('path_id'))->get();
 
-            $pois = Poi::all();
+            
             $finishedPaths->each(function ($path) {
                 $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
                 $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
@@ -61,7 +61,17 @@ class DashboardController extends Controller
             ]);
         } elseif ($user->hasRole('editor')) {
             $createdPaths = $this->retrieveUserPaths();
-            return Inertia::render('DashboardEditor', ['createdPaths' => $createdPaths]);
+            $createdPois = Poi::all();
+            $createdPois->each(function ($poi) {
+                $poi->type = 'poi';
+                $poi->thumbnail = Poi::with('photos')->find($poi->id)->photos->first()->link;
+                $poi->location = trim(preg_replace('/\d/', '', explode(',', $poi->adress_label)[1]));
+            
+            });
+            return Inertia::render('DashboardEditor', [
+                'createdPaths' => $createdPaths, 
+                'createdPois' => $createdPois,
+            ]);
         }
 
         // Optionally, handle other roles or default case
