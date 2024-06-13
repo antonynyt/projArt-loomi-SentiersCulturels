@@ -28,6 +28,7 @@ class Poi extends Model
         'lat',
         'long',
         'accessibility',
+        'user_id',
     ];
 
     /**
@@ -99,6 +100,14 @@ class Poi extends Model
     }
 
     /**
+     * Get the user that created the poi.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+     /**
      * Get the quiz for the poi
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

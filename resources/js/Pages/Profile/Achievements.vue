@@ -1,6 +1,8 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+import { ref, watchEffect, computed } from "vue";
 
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";
@@ -11,6 +13,7 @@ import Headline from "@/Components/App/Text/Headline.vue";
 import TheHeader from "@/Components/App/TheHeader.vue";
 import BackLink from "@/Components/App/Button/BackLink.vue";
 import SeeAllLink from "@/Components/App/Button/SeeAllLink.vue";
+import AchievementOverlay from "@/Pages/Profile/Partials/AchievementOverlay.vue";
 
 const props = defineProps({
     finishedPaths: {
@@ -28,6 +31,33 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+});
+
+// Badge thresholds
+const badgeThresholds = [1, 5, 10, 20, 35, 50, 0];
+
+// Reactive state for overlay
+const selectedBadge = ref(null);
+const isOverlayVisible = ref(false);
+
+// Function to handle badge click
+const showBadgeOverlay = (badgeImage) => {
+    selectedBadge.value = badgeImage;
+    isOverlayVisible.value = true;
+};
+
+// Computes the badge images to display on the grid
+const badgesT = computed(() => {
+    return badgeThresholds.map((threshold, index) => {
+        const badge = props.badges[index];
+        if (
+            props.finishedPaths.length >= threshold &&
+            props.finishedPaths.length > 0
+        ) {
+            return badge ? badge : props.badges[6];
+        }
+        return props.badges[6];
+    });
 });
 </script>
 <template>
@@ -54,27 +84,53 @@ const props = defineProps({
                 <div
                     class="
                         mt-3
-                        h-48
-                        border border-midnight-blue
+                        px-2
+                        py-6
+                        border-[0.5px] border-grey
+                        bg-zinc-300
                         rounded-lg
                         overflow-hidden
+                        grid grid-cols-3
+                        gap-5
+                        justify-items-center
                     "
-                ></div>
+                >
+                    <img
+                        v-for="(badge, index) in badgesT.slice(
+                            0,
+                            badgesT.length - 1
+                        )"
+                        :key="index"
+                        :src="badge.image"
+                        @click="showBadgeOverlay(badge)"
+                        class="self-center"
+                    />
+                </div>
             </div>
             <div class="flex flex-col mt-10">
-                <Headline type="ms"> par thèmatiques </Headline>
+                <Headline type="ms"> par thématique </Headline>
 
                 <AppThemeCard
                     v-for="theme in props.themes"
                     :key="theme.id"
+                    @cardClick="
+                        router.visit(`accomplissements/theme/${theme.id}`, {
+                            preserveState: true,
+                        })
+                    "
                     :themeFinishedPaths="theme.finishedPaths"
                     :themePaths="theme.allPaths"
                     :image="theme.icon"
                     :title="theme.title"
-                    :href="'hello'"
                 />
             </div>
         </div>
+        <AchievementOverlay
+            v-if="isOverlayVisible"
+            :badge="selectedBadge"
+            :isVisible="isOverlayVisible"
+            @close="isOverlayVisible = false"
+        />
     </DefaultLayout>
 </template>
 

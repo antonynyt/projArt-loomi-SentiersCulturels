@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\EtapesController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\NewPathController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AchievementController;
@@ -55,7 +56,11 @@ Route::middleware('auth')->group(function () {
 //Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['role:user,editor'])->name('dashboard');
 Route::get('/dashboard/finished-paths', [DashboardController::class, 'finishedPaths'])->middleware(['role:user,editor'])->name('dashboard.finishedPaths');
+
 Route::get('/dashboard/accomplissements', [AchievementController::class, 'index'])->middleware(['role:user,editor'])->name('achievement.index');
+Route::get('/dashboard/accomplissements/{id}', [AchievementController::class, 'show'])->middleware(['role:user,editor']);
+
+Route::get('/dashboard/accomplissements/theme/{id}', [ThemeController::class, 'show'])->middleware(['role:user,editor']);
 
 /**
  * The role middleware in this code is used to restrict access to routes based on the role of the authenticated user.
@@ -78,6 +83,11 @@ Route::group(['middleware' => 'role:editor'], function () {
     Route::post('/new-path/map', [NewPathController::class, 'map'])->name('new-path.map');
     Route::post('/new-path/search', [NewPathController::class, 'search']);
     Route::post('/new-path/form', [NewPathController::class, 'form']);
+    Route::get('/new-path/success', function () {
+        return Inertia::render('NewPath/NewPathSuccess'); });
+
+    Route::delete('/sentier/{id}', [PathController::class, 'destroy'])->where('id', '[0-9]+');
+    Route::delete('/poi/{id}', [PoiController::class, 'destroy'])->where('id', '[0-9]+');
     Route::get('/new-path/form', function () {
         return Inertia::render('NewPath/NewPathForm');
     });

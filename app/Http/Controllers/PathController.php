@@ -11,6 +11,9 @@ use App\Models\Theme;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Review;
+use App\Models\Link;
+use App\Models\PathHistory;
 
 class PathController extends Controller
 {
@@ -193,5 +196,36 @@ class PathController extends Controller
             'liked' => $liked,
             'done' => $done,
         ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        PathFavorite::where('path_id', $id)->delete();
+        PathHistory::where('path_id', $id)->delete();
+        Review::where('path_id', $id)->delete();
+        Link::where('path_id', $id)->delete();
+        $path = Path::find($id);
+        $path->pois()->detach();
+        Path::destroy($id);
+        return redirect()->back();
     }
 }

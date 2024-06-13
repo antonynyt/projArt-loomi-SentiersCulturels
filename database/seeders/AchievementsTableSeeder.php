@@ -19,6 +19,14 @@ class AchievementsTableSeeder extends Seeder
 
         $achievements = [
             [
+                'id' => 7,
+                'title' => 'A débloquer',
+                'descr' => 'Complète plus de sentiers afin de débloquer encore plus de badges !',
+                'criteria' => 'Terminer 0 sentier',
+                'image' => asset('/assets/icons/achievements/nopaths.svg'),
+                'next_achievement' => null,
+            ],
+            [
                 'id' => 6,
                 'title' => 'Légendaire',
                 'descr' => 'Vous êtes une véritable légende avec 50 sentiers complétés ! Votre dévouement est hors du commun !',
@@ -66,6 +74,7 @@ class AchievementsTableSeeder extends Seeder
                 'image' => asset('/assets/icons/achievements/debutant.svg'),
                 'next_achievement' => 2,
             ],
+            
         ];
 
         foreach ($achievements as $achievement) {
