@@ -1,15 +1,10 @@
 <script setup>
 import { onMounted, watch, onUnmounted, ref, markRaw, toRaw } from 'vue';
-import { Map } from 'maplibre-gl';
+import { Map, Padding } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { addPathLayer, addPOILayer } from '@/Components/Map/utils/addLayer';
-import { mapContainer, map, pathPoints, poi, path } from '@/Components/Map/stores/mapStore';
+import { addPathLayer, addPOILayer, addSelectionPOILayer } from '@/Components/Map/utils/addLayer';
+import { mapContainer, map, poi, path, selectedPoi } from '@/Components/Map/stores/mapStore';
 import { addControls } from '@/Components/Map/utils/controlManagment';
-
-const SWITZERLAND_BOUNDS = [
-    [5.9, 45.8], // Southwest coordinates
-    [10.5, 47.8] // Northeast coordinates
-];
 
 const props = defineProps({
     options: {
@@ -22,13 +17,50 @@ const props = defineProps({
             attributionControl: true,
         })
     },
+    selectionLayer: {
+        type: Boolean,
+        default: false,
+    },
     pois: {
         type: [Object, null],
-        required: true,
+        required: false,
+        default: null,
+    },
+    poisColor: {
+        type: String,
+        default: 'purple',
     },
     path: {
         type: [Object, null],
-        required: true,
+        required: false,
+        default: null,
+    },
+    maxBounds: {
+        type: Array,
+        default: () => [
+            [5.9, 45.8], // Southwest coordinates
+            [7.6, 47.8] // Northeast coordinates
+        ],
+    },
+    center: {
+        type: Array,
+        default: () => [6.6, 46.6],
+    },
+    zoom: {
+        type: Number,
+        default: 10,
+    },
+    minZoom: {
+        type: Number,
+        default: 8,
+    },
+    style: {
+        type: String,
+        default: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+    },
+    interactive: {
+        type: Boolean,
+        default: true,
     },
 });
 
@@ -75,13 +107,14 @@ path.value = stringifiedPath;
 const initializeMap = () => {
     map.value = markRaw(new Map({
         container: mapContainer.value,
-        style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-        center: [6.6, 46.6], // centered on Vaud
-        minZoom: 8,
-        zoom: 10,
-        maxBounds: SWITZERLAND_BOUNDS,
+        style: props.style,
+        center: props.center,
+        minZoom: props.minZoom,
+        zoom: props.zoom,
+        maxBounds: props.maxBounds,
         hash: props.options.hash,
         attributionControl: props.options.attributionControl,
+        interactive: props.interactive,
     }));
 };
 
@@ -89,9 +122,23 @@ const setupMap = async () => {
     initializeMap();
 
     map.value.on('load', async () => {
-        await addPOILayer();
+        if(props.selectionLayer){
+            await addPOILayer("green", true);
+        } else {
+            await addPOILayer(props.poisColor);
+        }
         addPathLayer();
         map.value.getSource('POI').setData(JSON.parse(poi.value));
+        if (props.selectionLayer) {
+            addSelectionPOILayer();
+            if(selectedPoi.value){
+                const selectedPoiParsed = JSON.parse(selectedPoi.value);
+                const coordinates = selectedPoiParsed.features[0].geometry.coordinates;
+                if(Array.isArray(coordinates) && coordinates[0] && coordinates[1]) {
+                    map.value.getSource('POI-selection-source').setData(new Array(selectedPoiParsed));
+                }
+            }
+        }
     });
 
     if (props.options.flyTo) {
@@ -115,13 +162,16 @@ const setupMap = async () => {
                 maxLat = Math.max(maxLat, lat);
             });
         });
-        const center = [(minLng + maxLng) / 2, (minLat + maxLat) / 2];
-        const zoom = map.value.getZoom();
-        map.value.flyTo({ center, zoom });
-    } else if (formattedJsonPois.features.length > 0) {
-        console.log("Fly to POI");
+        const bounds = [[minLng, minLat], [maxLng, maxLat]];
+        map.value.fitBounds(bounds, { padding: {top: 100, bottom: 250, left: 40, right: 40} });
+    } else if (formattedJsonPois.features.length > 0 && !props.selectionLayer) {
         const coordinates = formattedJsonPois.features[0].geometry.coordinates;
         map.value.flyTo({ center: coordinates, zoom: 15 });
+    } else if (props.options.flyToUserLocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            map.value.flyTo({ center: [longitude, latitude], zoom: 15 });
+        });
     }
 
     if (props.options.controls)

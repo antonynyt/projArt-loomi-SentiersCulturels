@@ -48,12 +48,6 @@ class ReviewsTableSeeder extends Seeder
                 'path_id' => Path::where('title', 'Art et Nature à Lausanne')->value('id'),
                 'user_id' => User::where('pseudo', 'jeremymartin')->value('id'),
             ],
-            [
-                'content' => 'Le sentier était bien, mais je pense que j\'aurais préféré me concentrer sur un thème spécifique plutôt que d\'avoir un aperçu général de Lausanne.',
-                'rating' => 3,
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
-            ],
         ];
 
         DB::table('reviews')->insert($reviews);

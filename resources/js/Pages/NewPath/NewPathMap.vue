@@ -61,6 +61,7 @@ const isOpen = ref(false);
 // Handle drawer close event from child
 const handleDrawerClose = (value) => {
     isOpen.value = value;
+    console.log(props.selectedPois);
 }
 
 // const handleDrawerClose = (value) => {

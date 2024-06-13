@@ -16,6 +16,7 @@ use App\Http\Controllers\EtapesController;
 use App\Http\Controllers\NewPathController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\NewPoiController;
 
 //ACCUEIL & EXPLORER
 Route::get('/', [ExplorerController::class, 'index'])->name('explorer.index');
@@ -80,6 +81,10 @@ Route::group(['middleware' => 'role:editor'], function () {
         return Inertia::render('NewPath/NewPathForm');
     });
     Route::post('/new-path/create', [NewPathController::class, 'create']);
+
+    Route::get('/new-poi{otherThanExistant}', function () { return redirect('new-poi/form'); })->where('otherThanExistant', '^(?!/form$).*');
+    Route::get('/new-poi/form', [NewPoiController::class, 'form']);
+    Route::post('/new-poi/create', [NewPoiController::class, 'create']);
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

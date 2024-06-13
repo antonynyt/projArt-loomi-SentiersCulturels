@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PoiFavorite;
 use App\Models\PoiHistory;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
 use App\Models\Poi;
 use Inertia\Inertia;
@@ -45,8 +46,8 @@ class PoiController extends Controller
     {
 
         $poi = Poi::with('photos', 'poiFacts', 'audio', 'link')->find($id);
-
-        // dd($poi);
+        $quiz = Quiz::where('poi_id', $id)->with('questions')->first();
+        $quiz = empty(!$quiz) ? $quiz->questions->load('answers')->first() : null;
 
         $infos = [
             'id' => $poi->id,
@@ -60,6 +61,7 @@ class PoiController extends Controller
             'facts' => $poi->poiFacts->toArray(),
             'audios' => count($poi->audio) > 0 ? $poi->audio->toArray() : null,
             'links' => empty(!$poi->link) ? $poi->link->toArray() : null,
+            'quiz' => $quiz,
         ];
 
         // detect if liked

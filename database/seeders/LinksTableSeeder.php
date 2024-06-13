@@ -342,20 +342,6 @@ class LinksTableSeeder extends Seeder
                 'path_id' => null,
             ],
             [
-                'title' => 'Parking de Mon-Repos',
-                'url' => 'https://ch.parkindigo.com/parkings/parking-mon-repos/',
-                'type' => 'parking',
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'poi_id' => null
-            ],
-            [
-                'title' => 'Parking de la Riponne',
-                'url' => 'https://inovil.ch/parking/riponne/',
-                'type' => 'parking',
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'poi_id' => null
-            ],
-            [
                 'title' => 'Parking de Bellefontaine',
                 'url' => 'https://www.pms-parkings.ch/bellefontaine-lausanne/',
                 'type' => 'parking',
