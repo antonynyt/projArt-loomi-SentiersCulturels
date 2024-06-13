@@ -13,7 +13,9 @@ use App\Models\Link;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
-
+use App\Models\Photo;
+use App\Models\Audio;
+use Illuminate\Support\Facades\Storage;
 
 class NewPoiController extends Controller
 {
@@ -33,7 +35,7 @@ class NewPoiController extends Controller
         $poi->title = $request->input('title');
         $shortDescr = $request->input('description');
         if (strlen($shortDescr) > 77) {
-            $tempTitle = substr($tempTitle, 0, 77).'...';
+            $shortDescr = substr($shortDescr, 0, 77).'...';
         }
         $poi->short_descr = $shortDescr;
         $poi->descr = $request->input('description');
@@ -44,21 +46,33 @@ class NewPoiController extends Controller
         curl_setopt($ch, CURLOPT_URL, "https://api.openrouteservice.org/geocode/reverse?api_key=".env("OPENROUTESERVICE_API_KEY")."&point.lon=".$request->input('long')."&point.lat=".$request->input('lat')."&layers=address");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        // Désactiver la vérification SSL
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Accept: application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8"
+            "Accept: application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8"
         ));
         $response = curl_exec($ch);
         curl_close($ch);
-        $nearestAddress = json_decode($response)->features[0]->properties->label;
-        $poi->adress_label = $nearestAddress.street . $nearestAddress.housenumber . ', ' . $nearestAddress.postcode . ' ' . $nearestAddress.locality . ', ' . $nearestAddress.country;
-        $poi->accessibility = $request->input('accessibility');
+        if (!$response) {
+            return Inertia::render('NewPoi/NewPoiError', [
+                'error' => 'Erreur lors de la récupération de l\'adresse'
+            ]);
+        }
+        $nearestAddress = json_decode($response)->features[0]->properties;
+        $poi->adress_label = $nearestAddress->street . $nearestAddress->housenumber . ', ' . $nearestAddress->postalcode . ' ' . $nearestAddress->locality . ', ' . $nearestAddress->country;
+        $poi->accessibility = $request->input('isHandicapAccessible');
         $poi->save();
 
-        $funFact = new PoiFact();
-        $funFact->poi_id = $poi->id;
-        $funFact->title = 'Faits amusants pour les curieux·se·s';
-        $funFact->content = $request->input('funFact');
-        $funFact->save();
+        if($request->input('funFact')){
+            $funFact = new PoiFact();
+            $funFact->poi_id = $poi->id;
+            $funFact->title = 'Faits amusants pour les curieux·se·s';
+            $funFact->content = $request->input('funFact');
+            $funFact->save();
+        }
 
         $links = [
             ['name' => $request->input('linkName_1'), 'url' => $request->input('linkUrl_1')],
@@ -73,6 +87,7 @@ class NewPoiController extends Controller
                 $linkModel->poi_id = $poi->id;
                 $linkModel->title = $link['name'];
                 $linkModel->url = $link['url'];
+                $linkModel->type = 'poi';
                 $linkModel->save();
             }
         }
@@ -85,64 +100,61 @@ class NewPoiController extends Controller
         $photo->year = $request->input('pictureYear');
         $timestamp = time();
         $formattedTitle = preg_replace('/[^a-zA-Z0-9]/', '_', $request->input('pictureTitle'));
-        $photo->link = $this->decodeAndStore($request->input('photo'), $timestamp . '_' . $formattedTitle, 'storage/photos/');
+        $link = $request->input('pictureFile')->store('public/images/pois');
+        $link = str_replace('public/', 'storage/', $link);
+        $photo->link = asset($link);
         $photo->save();
 
-        $audio = new Audio();
-        $audio->poi_id = $poi->id;
-        $audio->title = $request->input('audioTitle');
-        $audio->descr = $request->input('audioDescr');
-        $audio->author = $request->input('audioAuthor');
-        $audio->year = $request->input('audioYear');
-        $formattedTitle = preg_replace('/[^a-zA-Z0-9]/', '_', $request->input('audioTitle'));
-        $audio->link = $this->decodeAndStore($request->input('audio'), $timestamp . '_' . $formattedTitle, 'storage/audios/');
-        $audio->lang = 'fr';
-        $audio->save();
-
-        $quiz = new Quiz();
-        $quiz->poi_id = $poi->id;
-        $tempTitle = 'Quiz - '.$poi->title;
-        if (strlen($tempTitle) > 255) {
-            $tempTitle = substr($tempTitle, 0, 255);
+        if($request->input('audioFile')){
+            $audio = new Audio();
+            $audio->poi_id = $poi->id;
+            $audio->title = $request->input('audioTitle');
+            $audio->descr = $request->input('audioDescr');
+            $audio->author = $request->input('audioAuthor');
+            $audio->year = $request->input('audioYear');
+            $formattedTitle = preg_replace('/[^a-zA-Z0-9]/', '_', $request->input('audioTitle'));
+            $link = $request->input('audioFile')->store('public/audio/pois');
+            $link = str_replace('public/', 'storage/', $link);
+            $audio->link = asset($link);
+            $audio->lang = 'fr';
+            $audio->save();
         }
-        $quiz->title = $tempTitle;
-        $quiz->save();
 
-        $question = new Question();
-        $question->quiz_id = $quiz->id;
-        $question->question = $request->input('question');
-        $question->save();
+        if($request->input('question')){
+            $quiz = new Quiz();
+            $quiz->poi_id = $poi->id;
+            $tempTitle = 'Quiz - '.$poi->title;
+            if (strlen($tempTitle) > 255) {
+                $tempTitle = substr($tempTitle, 0, 255);
+            }
+            $quiz->title = $tempTitle;
+            $quiz->save();
 
-        $answers = [
-            ['content' => $request->input('answer_1'), 'is_correct' => $request->input('correctAnswer') === 1],
-            ['content' => $request->input('answer_2'), 'is_correct' => $request->input('correctAnswer') === 2],
-            ['content' => $request->input('answer_3'), 'is_correct' => $request->input('correctAnswer') === 3],
-            ['content' => $request->input('answer_4'), 'is_correct' => $request->input('correctAnswer') === 4],
-        ];
-        foreach ($answers as $key => $answer) {
-            $answerModel = new Answer();
-            $answerModel->question_id = $question->id;
-            $answerModel->answer = $answer['content'];
-            $answerModel->is_correct = $answer['is_correct'];
-            $answerModel->save();
+            $question = new Question();
+            $question->quiz_id = $quiz->id;
+            $question->question = $request->input('question');
+            $question->save();
+
+            $answers = [
+                ['content' => $request->input('answer_1'), 'is_correct' => $request->input('correctAnswer') === 1],
+                ['content' => $request->input('answer_2'), 'is_correct' => $request->input('correctAnswer') === 2],
+                ['content' => $request->input('answer_3'), 'is_correct' => $request->input('correctAnswer') === 3],
+                ['content' => $request->input('answer_4'), 'is_correct' => $request->input('correctAnswer') === 4],
+            ];
+            foreach ($answers as $key => $answer) {
+                if ($answer['content']) {
+                    $answerModel = new Answer();
+                    $answerModel->question_id = $question->id;
+                    $answerModel->answer = $answer['content'];
+                    $answerModel->is_correct = $answer['is_correct'];
+                    $answerModel->save();
+                }
+            }
         }
 
         return Inertia::render('NewPoi/NewPoiSuccess', [
             'poiId' => $poi->id,
         ]);
-    }
-
-    private function decodeAndStore($encodeData, $fileName, $path){
-        $extension = explode('/', explode(':', substr($encodeData, 0, strpos($encodeData, ';')))[1])[1]; //eg: .png .jpg
-        $replace = substr($encodeData, 0, strpos($encodeData, ',')+1);
-        // find substring fro replace here eg: data:image/png;base64,
-        $encodeData = str_replace($replace, '', $encodeData);
-        $encodeData = str_replace(' ', '+', $encodeData);
-        if(!$fileName){
-            $fileName = Str::random(20).'.'.$extension;
-        }
-        Storage::disk('local')->put($path.$fileName, base64_decode($encodeData));
-        return assets($path.$fileName);
     }
 }
 

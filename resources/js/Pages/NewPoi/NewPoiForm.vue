@@ -44,8 +44,11 @@ if (props.poiSelected) {
 } else if (selectedPoi.value === null) {
     selectedPoi.value = JSON.stringify(createPoiGeoJSON(0,0));
 }
-const lat = ref(JSON.parse(selectedPoi.value).features[0].geometry.coordinates[1]);
-const long = ref(JSON.parse(selectedPoi.value).features[0].geometry.coordinates[0]);
+
+// const lat = ref(JSON.parse(selectedPoi.value).features[0].geometry.coordinates[1]);
+// const long = ref(JSON.parse(selectedPoi.value).features[0].geometry.coordinates[0]);
+const lat = computed(() => JSON.parse(selectedPoi.value).features[0].geometry.coordinates[1]);
+const long = computed(() => JSON.parse(selectedPoi.value).features[0].geometry.coordinates[0]);
 
 const isHandicapAccessible = ref(false);
 
@@ -54,8 +57,8 @@ const form = useForm({
     description: '',
     funFact: '',
 
-    lat: lat.value,
-    long: long.value,
+    lat: lat,
+    long: long,
 
     linkName_1: null,
     linkUrl_1: null,
@@ -190,6 +193,7 @@ const date = year + "-" + month + "-" + day;
                     </PrimaryButton>
                 </div>
             </TransitionGroup>
+            <p>lat:{{ form.lat }} long:{{ form.long }}</p>
             <!-- Description of the POI -->
             <Headline class="mt-12" rank="h2" type="m">Description</Headline>
             <!-- title -->
@@ -301,6 +305,7 @@ const date = year + "-" + month + "-" + day;
             <InputLabel required for="picture-file" class="mt-6">Fichier photo</InputLabel>
             <FileInput id="picture-file" accept="image/jpeg,image/webp" capture="environment" v-model="form.pictureFile" />
             <InputError :message="form.errors.pictureFile" />
+            <p>{{ form.pictureFile }}</p>
             <!-- Picture title -->
             <InputLabel class="mt-6" required for="picture-title">Titre de la photo</InputLabel>
             <TextInput v-model="form.pictureTitle" id="picture-title" type="text" class="self-start"/>
@@ -315,7 +320,7 @@ const date = year + "-" + month + "-" + day;
             <InputError :message="form.errors.pictureAuthor" />
             <!-- Picture year -->
             <InputLabel class="mt-6" required for="picture-year">Année de la photo</InputLabel>
-            <TextInput v-model="form.pictureYear" id="picture-year" class="self-start" type="number" min="1800" :max="year" step="1" :value="year" />
+            <TextInput v-model="form.pictureYear" id="picture-year" class="self-start" type="number" min="1800" :max="year" step="1" />
             <InputError :message="form.errors.pictureYear" />
             <!-- HORIZONTAL LINE SEPARATOR -->
             <div class="h-3 mt-6 w-dvw bg-grey max-w-lg ms-[-1.25rem]"></div>
@@ -339,7 +344,7 @@ const date = year + "-" + month + "-" + day;
             <InputError :message="form.errors.audioAuthor" />
             <!-- audio date -->
             <InputLabel class="mt-6" :required="form.audio == null ? false : true" for="audio-date">Date de l'audio</InputLabel>
-            <TextInput v-model="form.audioDate" id="audio-date" class="self-start" type="date" :max="date" step="1" :value="date" />
+            <TextInput v-model="form.audioDate" id="audio-date" class="self-start" type="date" :max="date" step="1" />
             <InputError :message="form.errors.audioDate" />
             <!-- HORIZONTAL LINE SEPARATOR -->
             <div class="h-3 mt-6 w-dvw bg-grey max-w-lg ms-[-1.25rem]"></div>
@@ -396,9 +401,15 @@ const date = year + "-" + month + "-" + day;
                 id="correct-answer"
                 :options="quizOptions"
             ></SelectInput>
+            <InputError :message="form.errors.correctAnswer" />
+
+            <!-- Errors messages of hidden variables -->
+            <InputError :message="form.errors.isHandicapAccessible" />
+            <InputError :message="form.errors.lat" />
+            <InputError :message="form.errors.long" />
             <!-- submit -->
             <PrimaryButton @click="console.log('Submit button clicked')" type="submit" :disabled="form.processing" class="mt-16" style="width: 100%;">Créer le point d'intérêt</PrimaryButton>
-            <SecondaryButton @click="console.warn('Save form button clicked')" type="button" :disabled="form.processing" class="mb-8 mt-3 justify-center" style="width: 100%;">Sauvegarder le brouillon</SecondaryButton>
+            <!-- <SecondaryButton @click="console.warn('Save form button clicked')" type="button" :disabled="form.processing" class="mb-8 mt-3 justify-center" style="width: 100%;">Sauvegarder le brouillon</SecondaryButton> -->
         </form>
     </NewPathLayout>
 </template>
