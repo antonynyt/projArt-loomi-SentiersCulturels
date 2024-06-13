@@ -5,6 +5,7 @@ import ContentLayout from '@/Layouts/ContentLayout.vue';
 import AppElementCard from '@/Components/App/AppElementCard.vue';
 import TheHeader from '@/Components/App/TheHeader.vue';
 import ImpactText from '@/Components/App/Text/ImpactText.vue';
+import Headline from '@/Components/App/Text/Headline.vue';
 
 const { props } = usePage();
 
@@ -24,7 +25,7 @@ const favPois = computed(() => props.pois)
 
         <main class="flex flex-col gap-8">
             <div v-if="favPaths && favPaths.length > 0">
-                <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Sentiers</h2>
+                <Headline type="ms" rank="h2" class="mb-3">Sentiers</Headline>
                 <AppElementCard class="mb-3" v-for="(favorite) in favPaths" :title="favorite.title"
                     @cardClick="router.visit(`/sentier/${favorite.id}`)"
                     :thumbnail="favorite.thumbnail" :location="favorite.location" :href="'sentier/' + favorite.id"
@@ -36,7 +37,7 @@ const favPois = computed(() => props.pois)
             </div>
 
             <div v-if="favPois && favPois.length > 0">
-                <h2 class="text-xl font-bold uppercase text-midnight-blue mb-3">Points d'intérêts</h2>
+                <Headline type="ms" rank="h2" class="mb-3">Points d'intérêts</Headline>
                 <AppElementCard class="mb-3" v-for="(favorite) in favPois" :title="favorite.title"
                     @cardClick="router.visit(`/poi/${favorite.id}`)"
                     :thumbnail="favorite.thumbnail" :location="favorite.location" :href="'sentier/' + favorite.id"
