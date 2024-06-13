@@ -57,7 +57,7 @@ class PathHistoriesTableSeeder extends Seeder
             [
 
 
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
+                'path_id' => Path::where('title', 'Lausanne historique et culturel')->value('id'),
                 'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
             ],
         ];
