@@ -56,6 +56,25 @@ class PathController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function all()
+    {
+
+        $paths = Path::all();
+        $paths->each(function ($path) {
+            $path->type = 'path';
+            $path->long = $path->pois->first()->long;
+            $path->lat = $path->pois->first()->lat;
+            $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+            $path->location = trim(preg_replace('/\d/', '', explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]));
+        });
+
+        return Inertia::render('Details/PathList', [
+            'title' => "Tous les sentiers",
+            'items' => $paths,
+        ]);
+
+    }
     public function index(string $theme)
     {
         $themeExist = Theme::where('title', $theme)->first();
@@ -76,14 +95,15 @@ class PathController extends Controller
             'title' => "Sentiers $themeExist->title",
             'items' => $paths,
         ]);
-        
+
     }
 
     /**
      * Display related paths to POI
      */
 
-    public function related(int $id) {
+    public function related(int $id)
+    {
         $poi = Poi::find($id);
 
         if ($poi === null) {

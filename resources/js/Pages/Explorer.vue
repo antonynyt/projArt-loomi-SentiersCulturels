@@ -50,8 +50,12 @@ const extractLocality = (address) => {
         <TheHeader title="Explorer" class="mb-8" />
         <main class="flex flex-col gap-4">
             <section>
-                <Headline rank="h2" type="ms" class="mb-3">Thèmes</Headline>
+                <Headline rank="h2" type="ms" class="mb-3">Sentiers</Headline>
                 <div class="flex w-full flex-row gap-3 overflow-x-scroll mt-3 pb-4 no-scrollbar">
+                    <a @click.prevent="router.visit('/sentiers')" href="/sentiers"
+                        class="shrink-0 block py-2 px-5 border border-1 rounded-2xl">
+                        <p>Tous</p>
+                    </a>
                     <a v-for="theme in themes" @click.prevent="router.visit(`/sentiers/${theme.title.toLowerCase()}`)" :href="'/sentiers/' + theme.title.toLowerCase()"
                         class="shrink-0 block py-2 px-3 border border-1 rounded-2xl">
                         <div class="flex flex-row items-center justify-between gap-2">

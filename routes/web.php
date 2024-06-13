@@ -36,6 +36,7 @@ Route::post('/poi/{poi}/done', [HistoryController::class, 'togglePoi']);
 // Route::get('/etapes/{id}', [EtapesController::class, 'show'])->name('etapes.show');
 
 //LISTE DE SENTIERS
+Route::get('/sentiers', [PathController::class, 'all'])->name('path.index');
 Route::get('/sentiers/{theme}', [PathController::class, 'index'])->name('path.index');
 Route::get('/related/{id}', [PathController::class, 'related'])->name('path.related');
 

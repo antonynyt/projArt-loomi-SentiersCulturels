@@ -171,7 +171,7 @@ watch(() => props.done, (newVal) => {
             </section>
             <section v-if="infos.parkings || infos.is_handicap_accessible || infos.pois" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Infos Pratiques</h2>
-                <div v-if="infos.parkings" class="mb-8">
+                <div v-if="infos.parkings && infos.parkings.length > 0" class="mb-8">
                     <h3 class="font-bold text-midnight-blue mb-3">Parkings à proximité</h3>
                     <div class="flex flex-col gap-2">
                         <ExternalLink v-for="link in infos.parkings" :key="link.id" :href="link.url">{{ link.title }}</ExternalLink>
@@ -190,7 +190,7 @@ watch(() => props.done, (newVal) => {
                     </div>
                 </div>
             </section>
-            <section v-if="infos.links" class="flex flex-col">
+            <section v-if="infos.links.length > 0" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Liens</h2>
                 <div class="flex flex-col gap-2">
                     <ExternalLink v-for="link in infos.links" :key="link.id" :href="link.url">
