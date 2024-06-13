@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Review;
 use App\Models\Link;
-use App\Models\PathHistory;
 
 class PathController extends Controller
 {

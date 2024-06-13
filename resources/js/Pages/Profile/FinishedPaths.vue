@@ -64,7 +64,6 @@ const pathCount = ref(props.pathCount);
                     :thumbnail="pathHistory.thumbnail"
                     :title="pathHistory.title"
                     type="path"
-                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
                     :location="pathHistory.location"
                     :infos="{
                         distance: pathHistory.distance,

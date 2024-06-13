@@ -190,7 +190,7 @@ watch(() => props.done, (newVal) => {
                     </div>
                 </div>
             </section>
-            <section v-if="infos.links.length > 0" class="flex flex-col">
+            <section v-if="infos.links && infos.links.length > 0" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Liens</h2>
                 <div class="flex flex-col gap-2">
                     <ExternalLink v-for="link in infos.links" :key="link.id" :href="link.url">

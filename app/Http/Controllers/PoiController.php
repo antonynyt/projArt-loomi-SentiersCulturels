@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\Poi;
 use Inertia\Inertia;
 use App\Models\PoiFact;
-use App\Models\PoiHistory;
 use App\Models\Photo;
 use App\Models\Link;
 use App\Models\Audio;
-use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Answer;
 
