@@ -74,7 +74,7 @@ class FavoriteController extends Controller
         }
 
         return redirect()->back();
-
+        
     }
 
     public function togglePoi(Poi $poi)
@@ -97,7 +97,7 @@ class FavoriteController extends Controller
         }
 
         return redirect()->back();
-
+        
     }
 
 }

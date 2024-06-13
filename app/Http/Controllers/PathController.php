@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Path;
 use App\Models\PathFavorite;
+use App\Models\PathHistory;
 use App\Models\Poi;
+use App\Models\PoiHistory;
 use App\Models\Theme;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -54,33 +56,65 @@ class PathController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $theme)
     {
-        //
+        $themeExist = Theme::where('title', $theme)->first();
+        if ($themeExist === null) {
+            return abort(404);
+        }
+
+        $paths = Path::where('theme_id', Theme::where('title', $theme)->first()->id)->get();
+        $paths->each(function ($path) {
+            $path->type = 'path';
+            $path->long = $path->pois->first()->long;
+            $path->lat = $path->pois->first()->lat;
+            $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+            $path->location = trim(preg_replace('/\d/', '', explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]));
+        });
+
+        return Inertia::render('Details/PathList', [
+            'title' => "Sentiers $themeExist->title",
+            'items' => $paths,
+        ]);
+        
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display related paths to POI
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function related(int $id) {
+        $poi = Poi::find($id);
+
+        if ($poi === null) {
+            return abort(404);
+        }
+
+        $paths = $poi->paths;
+        $paths->each(function ($path) {
+            $path->type = 'path';
+            $path->long = $path->pois->first()->long;
+            $path->lat = $path->pois->first()->lat;
+            $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+            $path->location = trim(preg_replace('/\d/', '', explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1]));
+        });
+
+        return Inertia::render('Details/PathList', [
+            'title' => 'Sentiers liés',
+            'items' => $paths,
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         $path = Path::with(['pois', 'links'])->find($id);
+
+        if ($path === null) {
+            return abort(404);
+        }
 
         $pois = $path->pois;
         $pois->each(function ($poi) {
@@ -98,6 +132,7 @@ class PathController extends Controller
             'title' => $path->title,
             'description' => $path->descr,
             'theme' => Theme::find($path->theme_id)->title,
+            'themeIcon' => Theme::find($path->theme_id)->icon,
             'location' => trim(preg_replace('/\d/', '', explode(',', $path->location)[1])),
             'distance' => !empty($path->distance) ? ($path->distance < 1000 ? $path->distance . ' m' : round($path->distance / 1000, 1) . ' km') : '',
             'duration' => !empty($path->duration) ? $this->formatTime($path->duration) : '',
@@ -125,36 +160,18 @@ class PathController extends Controller
             $liked = PathFavorite::where('user_id', $user->id)->where('path_id', $path->id)->first() ? true : false;
         }
 
-        // dd($infos);
+        // detect if done
+        $done = false;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $done = PathHistory::where('user_id', $user->id)->where('path_id', $path->id)->first() ? true : false;
+        }
 
         return Inertia::render('Details', [
             'infos' => $infos,
             'type' => 'path',
             'liked' => $liked,
+            'done' => $done,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

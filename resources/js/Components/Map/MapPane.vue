@@ -52,8 +52,27 @@ const setupMap = async () => {
         });
     }
 
-    if(props.options.controls)
+    if(props.options.controls) {
         addControls(map, props.options);
+    }
+
+    if(props.options.flyToUserLocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            map.value.flyTo({
+                center: [position.coords.longitude, position.coords.latitude],
+                zoom: 10
+            });
+        });
+    }
+
+    if(props.options.nomove) {
+        map.value.dragPan.disable();
+        map.value.scrollZoom.disable();
+        map.value.boxZoom.disable();
+        map.value.keyboard.disable();
+        map.value.doubleClickZoom.disable();
+        map.value.touchZoomRotate.disable();
+    }
 };
 
 onMounted(() => {

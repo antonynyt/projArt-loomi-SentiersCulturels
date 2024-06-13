@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PoiFavorite;
+use App\Models\PoiHistory;
 use Illuminate\Http\Request;
 use App\Models\Poi;
 use Inertia\Inertia;
@@ -68,12 +69,18 @@ class PoiController extends Controller
             $liked = PoiFavorite::where('user_id', $user->id)->where('poi_id', $poi->id)->first() ? true : false;
         }
 
-        // dd($infos);
+        // detect if done
+        $done = false;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $done = PoiHistory::where('user_id', $user->id)->where('poi_id', $poi->id)->first() ? true : false;
+        }
 
         return Inertia::render('Details', [
             'infos' => $infos,
             'type' => 'poi',
             'liked' => $liked,
+            'done' => $done,
         ]);
     }
 
