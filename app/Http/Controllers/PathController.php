@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Path;
 use App\Models\PathFavorite;
+use App\Models\PathHistory;
 use App\Models\Poi;
+use App\Models\PoiHistory;
 use App\Models\Theme;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -158,10 +160,18 @@ class PathController extends Controller
             $liked = PathFavorite::where('user_id', $user->id)->where('path_id', $path->id)->first() ? true : false;
         }
 
+        // detect if done
+        $done = false;
+        if (auth()->check()) {
+            $user = auth()->user();
+            $done = PathHistory::where('user_id', $user->id)->where('path_id', $path->id)->first() ? true : false;
+        }
+
         return Inertia::render('Details', [
             'infos' => $infos,
             'type' => 'path',
             'liked' => $liked,
+            'done' => $done,
         ]);
     }
 }

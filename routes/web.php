@@ -4,6 +4,7 @@ use App\Http\Controllers\ExplorerController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PathController;
 use App\Http\Controllers\PoiController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +26,10 @@ Route::get('/map/{id}', [MapController::class, 'show'])->name('map.show');
 //DETAILS SENTIERS & POIS
 Route::get('/sentier/{id}', [PathController::class, 'show'])->name('path.show');
 Route::post('/sentier/{path}/like', [FavoriteController::class, 'togglePath']);
+Route::post('/sentier/{path}/done', [HistoryController::class, 'togglePath']);
 Route::get('/poi/{id}', [PoiController::class, 'show'])->name('poi.show');
 Route::post('/poi/{poi}/like', [FavoriteController::class, 'togglePoi']);
+Route::post('/poi/{poi}/done', [HistoryController::class, 'togglePoi']);
 // Route::get('/etapes/{id}', [EtapesController::class, 'show'])->name('etapes.show');
 
 //LISTE DE SENTIERS

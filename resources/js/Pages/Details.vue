@@ -11,6 +11,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { router } from "@inertiajs/vue3";
 import ExternalLink from '@/Components/App/Text/ExternalLink.vue';
 import { ref, watch } from 'vue';
+import DoneButton from '@/Components/App/Button/DoneButton.vue';
 
 const props = defineProps({
     infos: {
@@ -24,11 +25,15 @@ const props = defineProps({
     },
     liked: {
         type: Boolean,
+    },
+    done: {
+        type: Boolean,
     }
 });
 
 let images = [];
 const isLiked = ref(props.liked);
+const isDone = ref(props.done);
 
 if (props.infos.pois) {
     images = props.infos.pois.map(poi => {
@@ -51,6 +56,18 @@ watch(() => props.liked, (newVal) => {
     isLiked.value = newVal;
 });
 
+const toggleDone = (id, type) => {
+    const t = type === 'path' ? 'sentier' : 'poi';
+    router.post(`/${t}/${id}/done`, {}, {
+        preserveScroll: true,
+    });
+    isDone.value = !isDone.value;
+}
+
+watch(() => props.done, (newVal) => {
+    isDone.value = newVal;
+});
+
 </script>
 
 <template>
@@ -63,7 +80,10 @@ watch(() => props.liked, (newVal) => {
             <div class="fixed w-full bg-off-white">
                 <nav class="bg-off-white flex flex-row justify-between items-center w-full max-w-lg mx-auto h-16 px-5 py-5">
                     <BackLink />
-                    <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" v-if="auth.user" />
+                    <div v-if="auth.user" class="inline-flex gap-4">
+                        <DoneButton @click="toggleDone(infos.id, type)" :done="isDone" />
+                        <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" />
+                    </div>
                 </nav>
             </div>
 
