@@ -41,19 +41,11 @@ class PathHistory extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function getPopularPaths()
-    {
-        return self::select('path_id', \DB::raw('COUNT(*) as completions'))
-            ->groupBy('path_id')
-            ->orderBy('completions', 'desc')
-            ->get();
-    }
-
     public static function popular()
     {
         // Récupérer les chemins et les trier par nombre de fois complétés
         return Path::withCount('pathHistories')
-            ->orderByDesc('path_histories_count')
+            ->orderByDesc('path_histories_count')->limit(4)
             ->get();
     }
 }

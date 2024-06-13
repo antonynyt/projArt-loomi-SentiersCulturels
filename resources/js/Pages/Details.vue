@@ -60,10 +60,12 @@ watch(() => props.liked, (newVal) => {
     </Head>
     <ContentLayout :hasNavBar=false class="mb-8">
         <template #header-w-full>
-            <nav class="fixed bg-off-white flex flex-row justify-between items-center w-full h-16 px-5 py-5">
-                <BackLink />
-                <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" v-if="auth.user" />
-            </nav>
+            <div class="fixed w-full bg-off-white">
+                <nav class="bg-off-white flex flex-row justify-between items-center w-full max-w-lg mx-auto h-16 px-5 py-5">
+                    <BackLink />
+                    <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" v-if="auth.user" />
+                </nav>
+            </div>
 
             <Gallery v-if="infos.pois" :images class="mt-16" />
             <img v-else :src="infos.photos[0].link" :alt="infos.photos[0].title"
@@ -72,7 +74,10 @@ watch(() => props.liked, (newVal) => {
         <TheHeader :title="infos.title" class="mb-3 mt-6" />
         <section class="flex mb-6 gap-4">
             <p class="text-midnight-blue">{{ infos.location }}</p>
-            <p class="text-midnight-blue">{{ infos.theme }}</p>
+            <div v-if="infos.theme" class="flex flex-row items-center justify-between gap-2">
+                <img class="w-3 h-3" :src="infos.themeIcon" alt="" />
+                <p>{{ infos.theme }}</p>
+            </div>
         </section>
         <main class="flex flex-col gap-12">
             <section v-if="infos.distance">
@@ -169,9 +174,8 @@ watch(() => props.liked, (newVal) => {
                 </div>
             </section>
             <div class="flex flex-row w-full gap-4">
-                <PrimaryButton v-if="type === 'path'" @click="router.visit(`/nav/${infos.id}`, { preserveState: true })"
-                    class="grow">Initier le parcours</PrimaryButton>
-                <PrimaryButton v-else @click="router.visit(`/nav/${infos.id}`, { preserveState: true })" class="grow">Voir les sentiers associés</PrimaryButton>
+                <PrimaryButton v-if="type === 'path'" @click="router.visit(`/map/${infos.id}`, { preserveState: true })" class="grow">Lancer le parcours</PrimaryButton>
+                <PrimaryButton v-if="type === 'poi'" @click="router.visit(`/related/${infos.id}`, { preserveState: true })" class="grow">Voir les sentiers associés</PrimaryButton>
             </div>
         </main>
     </ContentLayout>
