@@ -18,22 +18,6 @@ class PathPoiTableSeeder extends Seeder
         DB::table('path_poi')->delete();
 
         $pathPois = [
-            //Découverte de Lausanne
-            [
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'poi_id' => Poi::where('title', 'Cathédrale de Lausanne')->value('id'),
-                'position' => 1,
-            ],
-            [
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'poi_id' => Poi::where('title', 'Place de la Palud')->value('id'),
-                'position' => 2,
-            ],
-            [
-                'path_id' => Path::where('title', 'Découverte de Lausanne')->value('id'),
-                'poi_id' => Poi::where('title', 'Musée Historique de Lausanne')->value('id'),
-                'position' => 3,
-            ],
             //Art et Nature à Lausanne
             [
                 'path_id' => Path::where('title', 'Art et Nature à Lausanne')->value('id'),
