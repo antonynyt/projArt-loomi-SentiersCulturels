@@ -28,6 +28,7 @@ class Poi extends Model
         'lat',
         'long',
         'accessibility',
+        'user_id',
     ];
 
     /**
@@ -96,5 +97,14 @@ class Poi extends Model
      */
     public function poiFavorites() {
         return $this->hasMany(PoiFavorite::class);
+    }
+
+    /**
+     * Get the user that created the poi.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

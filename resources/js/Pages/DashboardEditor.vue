@@ -11,6 +11,8 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref, watchEffect, computed } from "vue";
+import { defineProps } from "vue";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     createdPaths: {
@@ -69,6 +71,14 @@ function openNav() {
 function exitNav() {
     sideBarWidth.value = "0";
     sideNavWidth.value = "0";
+}
+
+function handleButtonClick(item) {
+    if(tab.value === "path"){
+        router.delete('/sentier/'+item.id);
+    } else {
+        router.delete('/poi/'+item.id);
+    }
 }
 </script>
 
@@ -232,7 +242,7 @@ function exitNav() {
                     }"
                 >
                     <template #button>
-                        <button @click="handleButtonClick">
+                        <button @click="handleButtonClick(path)">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

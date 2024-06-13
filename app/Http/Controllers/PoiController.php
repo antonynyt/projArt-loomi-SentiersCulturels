@@ -6,6 +6,14 @@ use App\Models\PoiFavorite;
 use Illuminate\Http\Request;
 use App\Models\Poi;
 use Inertia\Inertia;
+use App\Models\PoiFact;
+use App\Models\PoiHistory;
+use App\Models\Photo;
+use App\Models\Link;
+use App\Models\Audio;
+use App\Models\Quiz;
+use App\Models\Question;
+use App\Models\Answer;
 
 class PoiController extends Controller
 {
@@ -98,6 +106,22 @@ class PoiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        PoiFact::where('poi_id', $id)->delete();
+        PoiHistory::where('poi_id', $id)->delete();
+        Photo::where('poi_id', $id)->delete();
+        Link::where('poi_id', $id)->delete();
+        Audio::where('poi_id', $id)->delete();
+        PoiFavorite::where('poi_id', $id)->delete();
+        $quizzes = Quiz::where('poi_id', $id)->get();
+        foreach ($quizzes as $quiz) {
+            $questions = Question::where('quiz_id', $quiz->id)->get();
+            foreach ($questions as $question) {
+                Answer::where('question_id', $question->id)->delete();
+            }
+            Question::where('quiz_id', $quiz->id)->delete();
+        }
+        Quiz::where('poi_id', $id)->delete();
+        Poi::destroy($id);
+        return redirect()->back();
     }
 }

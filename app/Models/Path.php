@@ -32,6 +32,7 @@ class Path extends Model
         'is_handicap_accessible',
         'is_loop',
         'geojson',
+        'user_id',
     ];
 
     /**
@@ -91,5 +92,12 @@ class Path extends Model
      */
     public function links() {
         return $this->hasMany(Link::class);
+    }
+
+    /**
+     * Get the user that created the path
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

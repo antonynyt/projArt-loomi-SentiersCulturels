@@ -23,6 +23,11 @@ return new class extends Migration
             $table->boolean('is_handicap_accessible')->default(false);
             $table->boolean('is_loop')->default(false);
             $table->json('geojson');
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->foreignId('theme_id')
                 ->references('id')
                 ->on('themes')

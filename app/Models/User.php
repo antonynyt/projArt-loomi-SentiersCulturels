@@ -144,4 +144,21 @@ class User extends Authenticatable
         return $this->hasMany(PathFavorite::class);
     }
 
+    /**
+     * Get paths created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdPaths() {
+        return $this->hasMany(Path::class);
+    }
+
+    /**
+     * Get pois created by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdPois() {
+        return $this->hasMany(Poi::class);
+    }
 }

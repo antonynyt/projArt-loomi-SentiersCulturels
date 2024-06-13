@@ -18,7 +18,7 @@ class DashboardController extends Controller
         // $finishedPaths = pathHistory::where('user_id', $user->id)->path()->get();
         $finishedPaths = Path::with('pathHistories')->whereIn('id', $user->pathHistories->pluck('path_id'))->get();
 
-            
+
             $finishedPaths->each(function ($path) {
                 $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
                 $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
@@ -36,7 +36,7 @@ class DashboardController extends Controller
 
         $badges = Achievement::all();
 
-        
+
 
         return $badges;
     }
@@ -60,16 +60,22 @@ class DashboardController extends Controller
                 'pathCount'=>$pathCount
             ]);
         } elseif ($user->hasRole('editor')) {
-            $createdPaths = $this->retrieveUserPaths();
-            $createdPois = Poi::all();
+            $createdPaths = Path::all()->where('user_id', $user->id);
+            $createdPaths->each(function ($path) {
+                $path->thumbnail = Poi::with('photos')->find($path->pois->first()->id)->photos->first()->link;
+                $path->location = explode(',', Poi::all()->find($path->pois->first()->id)->adress_label)[1];
+                $path->type = 'path';
+            });
+
+            $createdPois = Poi::all()->where('user_id', $user->id);
             $createdPois->each(function ($poi) {
                 $poi->type = 'poi';
                 $poi->thumbnail = Poi::with('photos')->find($poi->id)->photos->first()->link;
                 $poi->location = trim(preg_replace('/\d/', '', explode(',', $poi->adress_label)[1]));
-            
+
             });
             return Inertia::render('DashboardEditor', [
-                'createdPaths' => $createdPaths, 
+                'createdPaths' => $createdPaths,
                 'createdPois' => $createdPois,
             ]);
         }
@@ -82,7 +88,7 @@ class DashboardController extends Controller
         $finishedPaths = $this->retrieveUserPaths();
 
         $pathCount = count(Path::all());
-        
+
         return Inertia::render('Profile/FinishedPaths', ['finishedPaths'=>$finishedPaths, 'pathCount'=>$pathCount]);
 
     }

@@ -74,6 +74,9 @@ Route::group(['middleware' => 'role:editor'], function () {
     Route::post('/new-path/form', [NewPathController::class, 'form']);
     Route::get('/new-path/success', function () {
         return Inertia::render('NewPath/NewPathSuccess'); });
+
+    Route::delete('/sentier/{id}', [PathController::class, 'destroy'])->where('id', '[0-9]+');
+    Route::delete('/poi/{id}', [PoiController::class, 'destroy'])->where('id', '[0-9]+');
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

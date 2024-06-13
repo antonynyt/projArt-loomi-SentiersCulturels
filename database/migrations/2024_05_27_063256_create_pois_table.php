@@ -20,6 +20,11 @@ return new class extends Migration
             $table->double('lat');
             $table->double('long');
             $table->boolean('accessibility')->default(false);
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
     }

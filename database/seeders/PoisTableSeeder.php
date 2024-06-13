@@ -34,6 +34,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4900,
                 'long' => 6.7417,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château de Chillon',
@@ -43,6 +44,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4140,
                 'long' => 6.9276,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Montreux - Rochers-de-Naye',
@@ -52,6 +54,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4418,
                 'long' => 6.9259,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Olympique',
@@ -61,6 +64,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5155,
                 'long' => 6.6327,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Chaplin\'s World',
@@ -70,6 +74,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4716,
                 'long' => 6.8422,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Cathédrale de Lausanne',
@@ -79,6 +84,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5222,
                 'long' => 6.6358,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Tour de Sauvabelin',
@@ -88,6 +94,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5301,
                 'long' => 6.6458,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Lavaux Vinorama',
@@ -97,6 +104,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4886,
                 'long' => 6.7262,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Grottes de Vallorbe',
@@ -106,6 +114,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.7102,
                 'long' => 6.3816,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Espace Horloger',
@@ -115,6 +124,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.6082,
                 'long' => 6.2307,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée de l’Élysée',
@@ -124,6 +134,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5086,
                 'long' => 6.6368,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Alimentarium',
@@ -133,6 +144,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4591,
                 'long' => 6.8449,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Maison d’Ailleurs',
@@ -142,6 +154,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.7788,
                 'long' => 6.6416,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Jenisch',
@@ -151,6 +164,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4602,
                 'long' => 6.8427,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Fondation de l’Hermitage',
@@ -160,6 +174,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5252,
                 'long' => 6.6385,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Signal de Bougy',
@@ -169,6 +184,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4823,
                 'long' => 6.3476,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée de Pully',
@@ -178,6 +194,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5094,
                 'long' => 6.6615,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château de Grandson',
@@ -187,6 +204,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.8073,
                 'long' => 6.6449,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée de la Confrérie des Vignerons',
@@ -196,6 +214,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4582,
                 'long' => 6.8461,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château d\'Aigle',
@@ -205,6 +224,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.3183,
                 'long' => 6.9694,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Bolo',
@@ -214,6 +234,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5296,
                 'long' => 6.5800,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Parc Naturel Jura Vaudois',
@@ -223,6 +244,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5700,
                 'long' => 6.2183,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Aquatis Aquarium-Vivarium',
@@ -232,6 +254,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5346,
                 'long' => 6.6618,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée romain de Lausanne-Vidy',
@@ -241,6 +264,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5162,
                 'long' => 6.6091,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Maison du Blé et du Pain',
@@ -250,6 +274,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.6413,
                 'long' => 6.6348,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée du Vieux Montreux',
@@ -259,6 +284,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4337,
                 'long' => 6.9105,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Suisse du Jeu',
@@ -268,6 +294,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4530,
                 'long' => 6.8650,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château de Morges',
@@ -277,6 +304,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5104,
                 'long' => 6.4980,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Le Jardin Botanique de Lausanne',
@@ -286,6 +314,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5155,
                 'long' => 6.6265,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Historique de Lausanne',
@@ -295,6 +324,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5222,
                 'long' => 6.6369,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Parc de Mon Repos',
@@ -304,6 +334,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5191,
                 'long' => 6.6386,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Église Saint-François',
@@ -313,6 +344,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5196,
                 'long' => 6.6326,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée de la Main UNIL-CHUV',
@@ -322,6 +354,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5262,
                 'long' => 6.6513,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Place de la Palud',
@@ -331,6 +364,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5230,
                 'long' => 6.6336,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Musée Alexis Forel',
@@ -340,6 +374,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5080,
                 'long' => 6.4963,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'La Maison de la Rivière',
@@ -349,6 +384,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5011,
                 'long' => 6.4788,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Les Pléiades',
@@ -358,6 +394,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4721,
                 'long' => 6.9368,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château de La Sarraz',
@@ -367,6 +404,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.6561,
                 'long' => 6.5153,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Espace des Inventions',
@@ -376,6 +414,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5193,
                 'long' => 6.6116,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Château Saint-Maire',
@@ -385,6 +424,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5223,
                 'long' => 6.6361,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Domaine Croix Duplex',
@@ -394,6 +434,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4962,
                 'long' => 6.7223,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Caveau de Dézaley',
@@ -403,6 +444,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4770,
                 'long' => 6.7580,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Lakeside Promenade',
@@ -412,6 +454,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4300,
                 'long' => 6.9100,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Statue de Freddie Mercury',
@@ -421,6 +464,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4330,
                 'long' => 6.9130,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Casino de Montreux',
@@ -430,6 +474,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4330,
                 'long' => 6.9160,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Vignoble en terrasses (chemin de randonnée)',
@@ -439,6 +484,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4881,
                 'long' => 6.7303,
                 'accessibility' => false,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Läderach - Chocolatier Suisse',
@@ -448,6 +494,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.4591,
                 'long' => 6.8449,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
             [
                 'title' => 'Palais de Rumine',
@@ -457,6 +504,7 @@ class PoisTableSeeder extends Seeder
                 'lat' => 46.5172,
                 'long' => 6.6363,
                 'accessibility' => true,
+                'user_id' => DB::table('users')->where('pseudo', 'heig')->value('id'),
             ],
         ];
 
