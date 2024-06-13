@@ -9,7 +9,7 @@ import InformationText from "@/Components/App/Text/InformationText.vue";
 
 import DropdownLink from "@/Components/DropdownLink.vue";
 import ContentLayout from "@/Layouts/ContentLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { Link, useForm, usePage, router } from "@inertiajs/vue3";
 import { ref, watchEffect, computed } from "vue";
 
 const props = defineProps({
@@ -25,11 +25,13 @@ const props = defineProps({
 
 const tab = ref("path");
 
-// const filterByTab = (tab) => {
-//     return (item) => {
-//         return item.type === tab;
-//     };
-// };
+const handleClick = (item) => {
+    if (item.type === "path") {
+        router.visit(`/sentier/${item.id}`, { preserveState: true });
+    } else {
+        router.visit(`/poi/${item.id}`, { preserveState: true });
+    }
+};
 
 // Computed property to filter items based on the selected tab
 const listItems = computed(() => {
@@ -230,6 +232,7 @@ function exitNav() {
                         duration: path.duration,
                         ascent: path.ascent,
                     }"
+                    @cardClick="handleClick(path)"
                 >
                     <template #button>
                         <button @click="handleButtonClick">
