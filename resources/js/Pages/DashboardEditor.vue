@@ -353,7 +353,10 @@ function handleButtonClick(item) {
                                 absolute
                             "
                         >
-                            <div class="flex flex-row justify-between">
+                        <a
+                                :href="'/new-poi'"
+                                class="flex flex-row justify-between"
+                            >
                                 Nouveau point d’intérêt
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +372,7 @@ function handleButtonClick(item) {
                                         class="self-center"
                                     />
                                 </svg>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
