@@ -60,14 +60,26 @@ watch(listItems, (newVal) => {
 // Mettre à jour la carte chaque fois que filteredPoi change.
 watch(filteredPoi, (newVal) => {
     if (newVal) {
-        map.value.getSource('POI').setData(
-            JSON.parse(JSON.stringify({
-                type: 'FeatureCollection',
-                features: newVal
-            }))
-        );
+        if (map.value && map.value.getSource('POI')) {
+            map.value.getSource('POI').setData(
+                JSON.parse(JSON.stringify({
+                    type: 'FeatureCollection',
+                    features: newVal
+                }))
+            );
+        }
     }
 });
+
+if (map.value){
+    map.value.on('sourcedata', (e) => {
+        if (e.sourceId === 'POI' && map.value.isSourceLoaded('POI')) {
+            // La source 'POI' est prête, vous pouvez maintenant l'utiliser.
+            console.log('POI source is ready');
+        }
+    });
+}
+
 
 //pour que les poi soit visible sur la carte quand la props du back est changée
 watch(() => props.poi, (newVal) => {
@@ -93,12 +105,12 @@ const handleDrawerClose = (value) => {
 
 const handleClick = (item) => {
     if (item.properties.type === 'path') {
-        router.visit(`/map/${item.properties.id}`, { preserveState: true});
+        router.visit(`/map/${item.properties.id}`, { preserveState: true });
     } else {
         map.value.flyTo({
             center: item.geometry.coordinates,
             zoom: 16
-    });
+        });
     }
 };
 </script>
@@ -122,9 +134,10 @@ const handleClick = (item) => {
             </template>
             <!--Liste des sentiers ou lieux avec le filtre-->
             <section class="flex flex-col gap-4">
-                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail" @click="handleDrawerClose(false)" @cardClick="handleClick(item)"
-                    :title="item.properties.name" :type="item.properties.type" :location=item.properties.location
-                    :infos="item.properties.infos" :coordinates="item.geometry.coordinates">
+                <AppElementCard v-for="item in listItems" :thumbnail="item.properties.thumbnail"
+                    @click="handleDrawerClose(false)" @cardClick="handleClick(item)" :title="item.properties.name"
+                    :type="item.properties.type" :location=item.properties.location :infos="item.properties.infos"
+                    :coordinates="item.geometry.coordinates">
                 </AppElementCard>
             </section>
         </TheDrawer>

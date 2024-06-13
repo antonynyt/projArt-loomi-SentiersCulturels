@@ -1,14 +1,30 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
+import { defineModel, defineExpose } from 'vue';
+import Text from '@/Components/App/Text/Text.vue';
 
 const model = defineModel({
     type: String,
     required: true,
 });
 
-const INITIAL_ROWS = 6;
+const props = defineProps({
+    rows: {
+        type: Number,
+        default: 6,
+    },
+    length: {
+        type: Number,
+        default: 3000,
+    },
+    id: {
+        type: String,
+        required: false,
+    },
+});
+
 const input = ref(null);
-const rows = ref(INITIAL_ROWS);
+const rows = ref(props.rows);
 const myTextArea = ref(null);
 const lastModelValue = ref(0);
 
@@ -22,7 +38,7 @@ defineExpose({ focus: () => input.value.focus() });
 
 watch(model, () => {
     if (!model.value.length){
-        rows.value = INITIAL_ROWS;
+        rows.value = props.rows;
         return;
     }
     // console.log(lastModelValue.value);
@@ -47,11 +63,16 @@ watch(model, () => {
 </script>
 
 <template>
-    <textarea
-        class="textarea border-back focus:border-midnight-blue focus:ring-midnight-blue rounded-2xl shadow-sm"
-        v-model="model"
-        ref="input"
-        :rows="rows"
-        cols="40"
-    ></textarea>
+    <div class="flex flex-col">
+        <textarea
+            :id="props.id"
+            class="textarea border-back focus:border-midnight-blue focus:ring-midnight-blue rounded-2xl shadow-sm"
+            v-model="model"
+            ref="input"
+            :rows="rows"
+            cols="40"
+        ></textarea>
+        <Text class="self-end" :class="{'text-red':model.length>props.length}">{{ model.length }}/{{props.length}}</Text>
+    </div>
+
 </template>

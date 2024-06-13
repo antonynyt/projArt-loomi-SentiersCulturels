@@ -1,6 +1,5 @@
 <script setup>
-import { Head } from "@inertiajs/vue3";
-import { usePage, router } from "@inertiajs/vue3";
+import { Head, router, usePage } from "@inertiajs/vue3";
 import { ref, watchEffect, computed } from "vue";
 
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
@@ -65,6 +64,7 @@ const pathCount = ref(props.pathCount);
                     :thumbnail="pathHistory.thumbnail"
                     :title="pathHistory.title"
                     type="path"
+                    @cardClick="router.visit(`/sentier/${pathHistory.id}`, { preserveState: true })"
                     :location="pathHistory.location"
                     :infos="{
                         distance: pathHistory.distance,

@@ -107,4 +107,12 @@ class Poi extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+     /**
+     * Get the quiz for the poi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function quiz() {
+        return $this->hasOne(Quiz::class);
+    }
 }

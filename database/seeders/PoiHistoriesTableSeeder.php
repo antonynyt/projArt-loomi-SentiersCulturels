@@ -148,22 +148,6 @@ class PoiHistoriesTableSeeder extends Seeder
                 'poi_id' => Poi::where('title', 'Musée de l’Élysée')->value('id'),
                 'user_id' => User::where('pseudo', 'jeremymartin')->value('id'),
             ],
-            // Découverte de Lausanne
-            [
-
-                'poi_id' => Poi::where('title', 'Cathédrale de Lausanne')->value('id'),
-                'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
-            ],
-            [
-
-                'poi_id' => Poi::where('title', 'Place de la Palud')->value('id'),
-                'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
-            ],
-            [
-
-                'poi_id' => Poi::where('title', 'Musée Historique de Lausanne')->value('id'),
-                'user_id' => User::where('pseudo', 'leilafidalgo')->value('id'),
-            ],
             //Points visités individuellement
             [
 

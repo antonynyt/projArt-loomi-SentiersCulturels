@@ -52,7 +52,7 @@ class Path extends Model
     /**
      * Get the themes for the path
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function themes() {
         return $this->belongsTo(Theme::class);

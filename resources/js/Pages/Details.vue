@@ -11,6 +11,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { router } from "@inertiajs/vue3";
 import ExternalLink from '@/Components/App/Text/ExternalLink.vue';
 import { ref, watch } from 'vue';
+import DoneButton from '@/Components/App/Button/DoneButton.vue';
+import Quiz from '@/Pages/Details/Quiz.vue';
 
 const props = defineProps({
     infos: {
@@ -24,11 +26,15 @@ const props = defineProps({
     },
     liked: {
         type: Boolean,
+    },
+    done: {
+        type: Boolean,
     }
 });
 
 let images = [];
 const isLiked = ref(props.liked);
+const isDone = ref(props.done);
 
 if (props.infos.pois) {
     images = props.infos.pois.map(poi => {
@@ -51,6 +57,18 @@ watch(() => props.liked, (newVal) => {
     isLiked.value = newVal;
 });
 
+const toggleDone = (id, type) => {
+    const t = type === 'path' ? 'sentier' : 'poi';
+    router.post(`/${t}/${id}/done`, {}, {
+        preserveScroll: true,
+    });
+    isDone.value = !isDone.value;
+}
+
+watch(() => props.done, (newVal) => {
+    isDone.value = newVal;
+});
+
 </script>
 
 <template>
@@ -60,10 +78,15 @@ watch(() => props.liked, (newVal) => {
     </Head>
     <ContentLayout :hasNavBar=false class="mb-8">
         <template #header-w-full>
-            <nav class="fixed bg-off-white flex flex-row justify-between items-center w-full h-16 px-5 py-5">
-                <BackLink />
-                <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" v-if="auth.user" />
-            </nav>
+            <div class="fixed w-full bg-off-white">
+                <nav class="bg-off-white flex flex-row justify-between items-center w-full max-w-lg mx-auto h-16 px-5 py-5">
+                    <BackLink />
+                    <div v-if="auth.user" class="inline-flex gap-4">
+                        <DoneButton @click="toggleDone(infos.id, type)" :done="isDone" />
+                        <LikeButton @click="toggleLike(infos.id, type)" :liked="isLiked" />
+                    </div>
+                </nav>
+            </div>
 
             <Gallery v-if="infos.pois" :images class="mt-16" />
             <img v-else :src="infos.photos[0].link" :alt="infos.photos[0].title"
@@ -72,7 +95,10 @@ watch(() => props.liked, (newVal) => {
         <TheHeader :title="infos.title" class="mb-3 mt-6" />
         <section class="flex mb-6 gap-4">
             <p class="text-midnight-blue">{{ infos.location }}</p>
-            <p class="text-midnight-blue">{{ infos.theme }}</p>
+            <div v-if="infos.theme" class="flex flex-row items-center justify-between gap-2">
+                <img class="w-3 h-3" :src="infos.themeIcon" alt="" />
+                <p>{{ infos.theme }}</p>
+            </div>
         </section>
         <main class="flex flex-col gap-12">
             <section v-if="infos.distance">
@@ -140,9 +166,12 @@ watch(() => props.liked, (newVal) => {
                         :title="poi.title" :href="'/poi/' + poi.id" :thumbnail="poi.photos.link" />
                 </div>
             </section>
+            <section v-if="infos.quiz">
+                <Quiz :quiz="infos.quiz"/>
+            </section>
             <section v-if="infos.parkings || infos.is_handicap_accessible || infos.pois" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Infos Pratiques</h2>
-                <div v-if="infos.parkings" class="mb-8">
+                <div v-if="infos.parkings && infos.parkings.length > 0" class="mb-8">
                     <h3 class="font-bold text-midnight-blue mb-3">Parkings à proximité</h3>
                     <div class="flex flex-col gap-2">
                         <ExternalLink v-for="link in infos.parkings" :key="link.id" :href="link.url">{{ link.title }}</ExternalLink>
@@ -161,7 +190,7 @@ watch(() => props.liked, (newVal) => {
                     </div>
                 </div>
             </section>
-            <section v-if="infos.links" class="flex flex-col">
+            <section v-if="infos.links.length > 0" class="flex flex-col">
                 <h2 class="text-xl font-bold uppercase text-midnight-blue mb-4">Liens</h2>
                 <div class="flex flex-col gap-2">
                     <ExternalLink v-for="link in infos.links" :key="link.id" :href="link.url">
@@ -169,9 +198,8 @@ watch(() => props.liked, (newVal) => {
                 </div>
             </section>
             <div class="flex flex-row w-full gap-4">
-                <PrimaryButton v-if="type === 'path'" @click="router.visit(`/nav/${infos.id}`, { preserveState: true })"
-                    class="grow">Initier le parcours</PrimaryButton>
-                <PrimaryButton v-else @click="router.visit(`/nav/${infos.id}`, { preserveState: true })" class="grow">Voir les sentiers associés</PrimaryButton>
+                <PrimaryButton v-if="type === 'path'" @click="router.visit(`/map/${infos.id}`, { preserveState: true })" class="grow">Lancer le parcours</PrimaryButton>
+                <PrimaryButton v-if="type === 'poi'" @click="router.visit(`/related/${infos.id}`, { preserveState: true })" class="grow">Voir les sentiers associés</PrimaryButton>
             </div>
         </main>
     </ContentLayout>

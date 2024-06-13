@@ -26,4 +26,11 @@ class Question extends Model
     public function quizzes() {
         return $this->belongsTo(Quiz::class);
     }
+
+    /**
+     * Get the answers associated with the question.
+     */
+    public function answers() {
+        return $this->hasMany(Answer::class);
+    }
 }

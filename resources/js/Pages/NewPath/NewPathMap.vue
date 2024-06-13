@@ -61,6 +61,7 @@ const isOpen = ref(false);
 // Handle drawer close event from child
 const handleDrawerClose = (value) => {
     isOpen.value = value;
+    console.log(props.selectedPois);
 }
 
 // const handleDrawerClose = (value) => {
@@ -87,19 +88,41 @@ const extractLocality = (address) => {
     locality = locality.replace(/^\d{4}\s*/, ''); // Remove the 4-digit NPA if present
     return locality;
 };
-console.log("----- Path -----");
-console.log(props.path);
-if(props.path) {
-    console.log("----- Path features -----");
-    console.log(props.path.features);
-    console.log("----- Path segments -----");
-    console.log(props.path.features[0].properties.segments);
-    console.log("----- Path segments distance -----");
-    console.log(props.path.features[0].properties.segments[0].distance);
-    console.log("----- Path segments duration -----");
-    console.log(props.path.features[0].properties.segments[0].duration);
-    console.log("----- Path segments ascent -----");
-    console.log(props.path.features[0].properties.segments[0].ascent);
+// console.log("----- Path -----");
+// console.log(props.path);
+// if(props.path) {
+//     console.log("----- Path features -----");
+//     console.log(props.path.features);
+//     console.log("----- Path segments -----");
+//     console.log(props.path.features[0].properties.segments);
+//     console.log("----- Path segments distance -----");
+//     console.log(props.path.features[0].properties.segments[0].distance);
+//     console.log("----- Path segments duration -----");
+//     console.log(props.path.features[0].properties.segments[0].duration);
+//     console.log("----- Path segments ascent -----");
+//     console.log(props.path.features[0].properties.segments[0].ascent);
+// }
+
+// distance: Math.round(props.path.features[0].properties.segments[n-1].distance),
+function distance(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.distance, 0));
+    }
+    return 0;
+}
+// duration: Math.round(props.path.features[0].properties.segments[n-1].duration),
+function duration(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.duration, 0));
+    }
+    return 0;
+}
+// ascent: Math.round(props.path.features[0].properties.segments[n-1].ascent)
+function ascent(n) {
+    if(props.path) {
+        return Math.round(props.path.features[0].properties.segments.slice(0, n).reduce((acc, segment) => acc + segment.ascent, 0));
+    }
+    return 0;
 }
 
 const toForm = () => {
@@ -153,9 +176,9 @@ const toForm = () => {
                         :location="extractLocality(poi.adress_label)"
                         :border="true"
                         :navigationInfos="n > 0 ? {
-                            distance: props.path.features[0].properties.segments[n-1].distance,
-                            duration: props.path.features[0].properties.segments[n-1].duration,
-                            ascent: props.path.features[0].properties.segments[n-1].ascent
+                            distance: distance(n),
+                            duration: duration(n),
+                            ascent: ascent(n)
                         } : null"
                         :coordinates="[poi.lat, poi.long]"
                         @cardClick="console.log('card click')"
