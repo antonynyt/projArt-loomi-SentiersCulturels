@@ -31,7 +31,7 @@ props.options.forEach(option => {
         <option
             v-for="option in props.options"
             :value="option.value"
-            :disable="option.disable"
+            :disabled ="option.disabled"
             :selected="option.selected"
         >
             {{ option.text }}

@@ -17,6 +17,10 @@ const props = defineProps({
         type: Number,
         default: 3000,
     },
+    id: {
+        type: String,
+        required: false,
+    },
 });
 
 const input = ref(null);
@@ -61,6 +65,7 @@ watch(model, () => {
 <template>
     <div class="flex flex-col">
         <textarea
+            :id="props.id"
             class="textarea border-back focus:border-midnight-blue focus:ring-midnight-blue rounded-2xl shadow-sm"
             v-model="model"
             ref="input"

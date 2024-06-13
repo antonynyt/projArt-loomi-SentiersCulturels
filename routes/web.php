@@ -17,6 +17,7 @@ use App\Http\Controllers\EtapesController;
 use App\Http\Controllers\NewPathController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\NewPoiController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -67,6 +68,10 @@ Route::group(['middleware'=>'role:editor'],function(){
     Route::post('/new-path/form', [NewPathController::class, 'form']);
     Route::get('/new-path/form', function () { return Inertia::render('NewPath/NewPathForm'); });
     Route::post('/new-path/create', [NewPathController::class, 'create']);
+
+    Route::get('/new-poi{otherThanExistant}', function () { return redirect('new-poi/form'); })->where('otherThanExistant', '^(?!/form$).*');
+    Route::get('/new-poi/form', [NewPoiController::class, 'form']);
+    Route::post('/new-poi/create', [NewPoiController::class, 'create']);
 });
 
 Route::group(['middleware' => 'role:admin'], function () {

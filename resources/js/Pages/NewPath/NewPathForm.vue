@@ -107,7 +107,7 @@ function submitForm() {
             <InputError :message="form.errors.themeId" />
             <!-- description -->
             <InputLabel class="mt-6" required for="description">Description</InputLabel>
-            <TextAreaInput v-model="form.description" id="descr" />
+            <TextAreaInput v-model="form.description" id="description" />
             <InputError :message="form.errors.description" />
             <!-- pois -->
             <InputLabel class="mt-6" required for="pois">Étapes</InputLabel>
@@ -121,6 +121,8 @@ function submitForm() {
                     :number="n+1"
                 ></AppPoiSqareCard>
             </div>
+            <div class="h-3 mt-6 w-dvw bg-grey max-w-lg ms-[-1.25rem]"></div>
+            <!-- Infos about the path -->
             <Headline class="mt-12" rank="h2" type="m">Information pratiques</Headline>
             <!-- Parking -->
             <InformationText class="mt-9" type="m">Parking à proximité</InformationText>
@@ -198,7 +200,7 @@ function submitForm() {
                 <InputLabel for="is-handicap-accessible">Ce sentier est-il totalement accessible aux personnes à mobilité réduite ?</InputLabel>
                 <Toggle :active="isHandicapAccessible" @toggle="isHandicapAccessible = !isHandicapAccessible" />
             </div>
-            <!-- duration -->
+            <!-- Erreures de champs invisibles -->
             <InputError :message="form.errors.duration" />
             <InputError :message="form.errors.distance" />
             <InputError :message="form.errors.ascent" />

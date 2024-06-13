@@ -10,7 +10,7 @@ import { defineProps } from 'vue';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
-    pathId: {
+    poiId: {
         type: Number,
         required: true,
     },
@@ -19,17 +19,17 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="New Path Success"></Head>
+    <Head title="New Poi Success"></Head>
     <NewPathLayout :hasNavBar="false" class="success-frame h-dvh flex flex-col">
         <Headline rank="h1" type="l" style="margin-top: 11rem;">Bravo !</Headline>
         <InformationText class="mt-9">
-            Votre sentier viens d’être ajouté à la carte des sentiers culturels vaudois.
+            Votre point d'intérêt viens d’être ajouté.
         </InformationText>
         <InformationText class="mt-4">
-            Merci de votre contribution.
+            Merci de votre contribution !
         </InformationText>
         <div class="mt-auto w-full">
-            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.get(`/map/${props.pathId}`)">Voir sur la carte</PrimaryButton>
+            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.get(`/map/${props.pathId}`)">Voir la page du point d'intérêt</PrimaryButton>
             <SecondaryButton class="mt-4 justify-center w-full" @click="router.get('/dashboard')">Retourner sur mon profil</SecondaryButton>
         </div>
     </NewPathLayout>
