@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
+
 
 class PoiRequest extends FormRequest
 {
@@ -15,6 +17,54 @@ class PoiRequest extends FormRequest
             return true;
         }
         return false;
+    }
+
+    /**
+     * Decode the base64 image data.
+     *
+     * @param string $encodeData
+     * @param string|null $fileName
+     * @return array<string, string>
+     */
+    public function decodeFile($encodeData, $fileName = null): UploadedFile|null{
+        $extension = explode('/', explode(':', substr($encodeData, 0, strpos($encodeData, ';')))[1])[1]; //eg: .png .jpg
+        $replace = substr($encodeData, 0, strpos($encodeData, ',')+1);
+        // find substring fro replace here eg: data:image/png;base64,
+        $encodeData = str_replace($replace, '', $encodeData);
+        $encodeData = str_replace(' ', '+', $encodeData);
+        $encodeData = base64_decode($encodeData);
+        if(!$encodeData){
+            return null;
+        }
+        if(!$fileName){
+            $fileName = uniqid() . '.' . $extension;
+        } else {
+            $fileName = $fileName . '_' . uniqid() . '.' . $extension;
+        }
+        $filePath = sys_get_temp_dir() . '/' . $fileName;
+        file_put_contents($filePath, $encodeData);
+
+        return new UploadedFile($filePath, $fileName, mime_content_type($filePath), null, true);
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        if ($this->filled('pictureFile')) {
+            $file = $this->decodeFile($this->input('pictureFile'), $this->input('pictureTitle'));
+            if ($file) {
+                $this->merge(['pictureFile' => $file]);
+            }
+        }
+
+        if ($this->filled('audioFile')) {
+            $file = $this->decodeFile($this->input('audioFile'), $this->input('audioTitle'));
+            if ($file) {
+                $this->merge(['audioFile' => $file]);
+            }
+        }
     }
 
     /**
@@ -34,17 +84,18 @@ class PoiRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:3000'],
-            'funFact' => ['string', 'max:3000'],
+            'funFact' => ['nullable', 'string', 'max:3000'],
             'lat' => ['required', 'numeric', 'between:45.8,47.8'],
             'long' => ['required', 'numeric', 'between:5.9,7.6'],
+            'isHandicapAccessible' => ['required', 'boolean'],
 
-            'pictureFile' => ['required', 'image', 'file|size:2048', 'mimetypes:image/jpeg,image/webp', 'extensions:jpeg,jpg,webp', 'dimensions:min_width=600,min_height=600', 'dimensions:max_width=4096,max_height=4096', 'dimensions:max_ratio=1.5', 'dimensions:min_ratio=0.5'],
+            'pictureFile' => ['required', 'image', 'max:2048', 'mimetypes:image/jpeg,image/webp', 'extensions:jpeg,jpg,webp', 'dimensions:min_width=600,min_height=600', 'dimensions:max_width=4096,max_height=4096', 'dimensions:max_ratio=1.5', 'dimensions:min_ratio=0.5'],
             'pictureTitle' => ['required', 'string', 'max:255'],
             'pictureDescr' => ['required', 'string', 'max:3000'],
             'pictureAuthor' => ['required', 'string', 'max:255'],
             'pictureYear' => ['required', 'integer', 'min:1800', 'max:'.date('Y')],
 
-            'audioFile' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp4,audio/x-aac,audio/ogg', 'extensions:mp3,mp4a,aac,ogg', 'file|size:2048'],
+            'audioFile' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp4,audio/x-aac,audio/ogg', 'extensions:mp3,mp4a,aac,ogg', 'max:2048'],
             'audioTitle' => ['nullable', 'string', 'max:255', 'required_with:audioFile'],
             'audioDescr' => ['nullable', 'string', 'max:3000', 'required_with:audioFile'],
             'audioAuthor' => ['nullable', 'string', 'max:255', 'required_with:audioFile'],

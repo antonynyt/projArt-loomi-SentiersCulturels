@@ -29,7 +29,7 @@ const props = defineProps({
             Merci de votre contribution !
         </InformationText>
         <div class="mt-auto w-full">
-            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.get(`/map/${props.pathId}`)">Voir la page du point d'intérêt</PrimaryButton>
+            <PrimaryButton class="mt-8" style="width: 100%;" @click="router.get(`/poi/${props.poiId}`)">Voir la page du point d'intérêt</PrimaryButton>
             <SecondaryButton class="mt-4 justify-center w-full" @click="router.get('/dashboard')">Retourner sur mon profil</SecondaryButton>
         </div>
     </NewPathLayout>
