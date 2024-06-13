@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Poi;
+use App\Models\Photo;
 
-class PoiHistoryController extends Controller
+class LancementController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $photos = Photo::limit(3)->get();
+        return Inertia::render('Lancement/Lancement1', [
+            'photos' => $photos,
+        ]);
     }
 
     /**
